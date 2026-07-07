@@ -1,0 +1,196 @@
+.register-page {
+  min-height: 100vh;
+  padding: 131px 84px 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start; // giữ nguyên, card tự có height cố định rồi
+  background: url('/Bg/Bg_Sign_Up.png') center/cover no-repeat; // đổi path đúng asset của cậu
+}
+
+.register-card {
+  background: #FFFBE3;
+  border-radius: 50px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.25);
+  padding: 40px 80px;
+  width: 760px; // khớp với Login: 600px content + 80px*2 padding
+  height: 832px; // lấy theo số đo gốc trong Figma cậu gửi lúc đầu (height: 832.37px)
+  display: flex;
+  align-items: center; // căn giữa nội dung theo chiều dọc khi step ngắn hơn khung
+  justify-content: center;
+}
+
+.register-form {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  position: relative;
+
+  &.success {
+    text-align: center;
+  }
+}
+
+.title {
+  color: #AF7017;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-weight: 600;
+  font-size: 40px;
+  align-self: stretch;
+}
+
+.subtitle {
+  color: #AF7017;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-weight: 300;
+  font-size: 20px;
+  align-self: stretch;
+}
+
+.field {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    color: #AF7017;
+    font-family: 'Inclusive Sans', sans-serif;
+    font-weight: 600;
+    font-size: 20px;
+  }
+}
+
+input {
+  border: none;
+  border-bottom: 2px solid #AF7017;
+  background: transparent;
+  padding: 12px 16px;
+  font-size: 20px;
+  color: #AF7017;
+  outline: none;
+
+  &::placeholder {
+    color: #B3B3B3;
+  }
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input { flex: 1; }
+  .eye-icon {
+    position: absolute;
+    right: 16px;
+    cursor: pointer;
+    color: #AF7017;
+  }
+}
+
+.pill-btn {
+  align-self: stretch;
+  padding: 12px 38px;
+  background: #E0F8FF;
+  border: none;
+  border-radius: 38px;
+  box-shadow: 6px 6px 5px rgba(0, 0, 0, 0.25);
+  color: #AF7017;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-weight: 700;
+  font-size: 19px;
+  cursor: pointer;
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.or-divider {
+  color: #AF7017;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-weight: 500;
+}
+
+.signin-hint {
+  display: flex;
+  gap: 11px;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-size: 16px;
+  color: rgba(27, 31, 38, 0.72);
+
+  a {
+    text-decoration: underline;
+    font-weight: 500;
+    color: inherit;
+  }
+}
+
+.back-btn {
+  align-self: flex-start; // thay vì position: absolute
+  top: 0;
+   left: -60px; // đẩy sang trái, ra khỏi vùng chữ
+  width: 55px;
+  height: 55px;
+  border-radius: 9999px;
+  background: #AF7017;
+  color: white;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+   margin-bottom: 4px; // khoảng cách với title bên dưới
+}
+
+.phone-row {
+  align-self: stretch;
+  display: flex;
+  align-items: flex-end;
+  gap: 21px;
+
+  .prefix {
+    color: #AF7017;
+    font-size: 20px;
+    padding-bottom: 12px;
+  }
+  input { flex: 1; }
+}
+
+.otp-row {
+  align-self: stretch;
+  display: flex;
+  justify-content: center;
+  gap: 40px;
+}
+
+.otp-box {
+  width: 50px;
+  height: 60px;
+  text-align: center;
+  background: white;
+  border-radius: 5px;
+  border: none;
+  font-size: 24px;
+}
+
+.error {
+  color: #C0392B;
+  font-size: 14px;
+  align-self: stretch;
+}
+
+.dev-hint {
+  color: #999;
+  font-size: 14px;
+  font-style: italic;
+}
+
+ngxsmk-tel-input {
+  align-self: stretch;
+  --tel-border: #AF7017;
+  --tel-border-hover: #AF7017;
+  --tel-ring: #AF7017;
+  --tel-radius: 0;
+  --tel-fg: #AF7017;
+  --tel-placeholder: #B3B3B3;
+  --tel-focus-shadow: none;
+}

@@ -1,0 +1,112 @@
+<app-header></app-header>
+
+<div class="register-page">
+  <div class="register-card">
+
+    <!-- STEP: FORM -->
+    <ng-container *ngIf="step() === 'form'">
+      <div class="register-form">
+        <h1 class="title">Register today!</h1>
+        <p class="subtitle">Create an account with your Google or phone number</p>
+
+        <div class="field">
+          <label>Username</label>
+          <input type="text" [(ngModel)]="username" placeholder="Value" />
+        </div>
+
+        <div class="field">
+          <label>Password</label>
+          <div class="input-with-icon">
+            <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" placeholder="Value" />
+            <span class="eye-icon" (click)="showPassword = !showPassword">👁</span>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Confirm Password</label>
+          <div class="input-with-icon">
+            <input [type]="showConfirmPassword ? 'text' : 'password'" [(ngModel)]="confirmPassword" placeholder="Value" />
+            <span class="eye-icon" (click)="showConfirmPassword = !showConfirmPassword">👁</span>
+          </div>
+        </div>
+
+        <p class="error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+        <button class="pill-btn" (click)="onGoogleClick()" [disabled]="loading()">
+          Continue with Google
+        </button>
+
+        <div class="or-divider">or</div>
+
+        <button class="pill-btn" (click)="onPhoneOptionClick()" [disabled]="loading()">
+          Continue with phone number
+        </button>
+
+        <p class="signin-hint">
+          Already have an account? <a routerLink="/login">Sign in</a>
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- STEP: PHONE -->
+<ng-container *ngIf="step() === 'phone'">
+  <div class="register-form">
+    <button class="back-btn" (click)="goBack()">←</button>
+    <h1 class="title">Enter your phone number</h1>
+    <p class="subtitle">A verification code will be sent to you</p>
+
+    <app-phone-input [(ngModel)]="phone" name="phone"></app-phone-input>
+
+    <p class="error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+    <button class="pill-btn" (click)="onSendOtp()" [disabled]="loading()">Continue</button>
+
+    <p class="signin-hint">
+      Already have an account? <a routerLink="/login">Sign in</a>
+    </p>
+  </div>
+</ng-container>
+
+    <!-- STEP: OTP -->
+    <ng-container *ngIf="step() === 'otp'">
+      <div class="register-form">
+        <button class="back-btn" (click)="goBack()">←</button>
+        <h1 class="title">Enter verification code</h1>
+        <p class="subtitle">We have sent the code to your phone</p>
+        <p class="dev-hint" *ngIf="devOtpHint">(Demo OTP: {{ devOtpHint }})</p>
+
+       <div class="otp-row">
+  <input
+    *ngFor="let d of otpDigits; let i = index; trackBy: trackByIndex"
+    [id]="'otp-' + i"
+    type="text"
+    inputmode="numeric"
+    maxlength="1"
+    [value]="otpDigits[i]"
+    (input)="onOtpInput(i, $event)"
+    (keydown)="onOtpKeydown(i, $event)"
+    class="otp-box"
+  />
+</div>
+
+        <p class="error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+        <button class="pill-btn" (click)="onVerifyOtp()" [disabled]="loading()">Verify</button>
+        <button class="pill-btn" (click)="onResendOtp()">Send again</button>
+
+        <p class="signin-hint">
+          Already have an account? <a routerLink="/login">Sign in</a>
+        </p>
+      </div>
+    </ng-container>
+
+    <!-- STEP: SUCCESS -->
+    <ng-container *ngIf="step() === 'success'">
+      <div class="register-form success">
+        <h1 class="title">Register successfully!</h1>
+        <p class="subtitle">Time to start your journey. We'll head back to the home page after 5s.</p>
+      </div>
+    </ng-container>
+
+  </div>
+</div>

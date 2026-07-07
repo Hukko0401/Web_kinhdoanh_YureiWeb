@@ -1,0 +1,41 @@
+<div class="phone-input-wrapper">
+  <button type="button" class="country-select" (click)="toggleDropdown()">
+    <span class="flag">{{ selectedCountry.flag }}</span>
+    <span class="dial-code">{{ selectedCountry.dialCode }}</span>
+    <span class="caret">▾</span>
+  </button>
+
+  <input
+    type="tel"
+    [ngModel]="localNumber"
+    (ngModelChange)="onLocalNumberChange($event)"
+    placeholder="Số điện thoại"
+    class="phone-number-input"
+  />
+
+  <div class="country-dropdown" *ngIf="dropdownOpen">
+    <div class="group-label">Phổ biến</div>
+    <button
+      type="button"
+      class="country-option"
+      *ngFor="let c of preferred"
+      (click)="selectCountry(c)"
+    >
+      <span class="flag">{{ c.flag }}</span>
+      <span class="name">{{ c.name }}</span>
+      <span class="dial-code">{{ c.dialCode }}</span>
+    </button>
+
+    <div class="group-label">Tất cả quốc gia</div>
+    <button
+      type="button"
+      class="country-option"
+      *ngFor="let c of others"
+      (click)="selectCountry(c)"
+    >
+      <span class="flag">{{ c.flag }}</span>
+      <span class="name">{{ c.name }}</span>
+      <span class="dial-code">{{ c.dialCode }}</span>
+    </button>
+  </div>
+</div>

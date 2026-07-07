@@ -1,0 +1,168 @@
+<footer class="footer">
+    <div class="footer__container">
+
+    <div class="footer__top">
+
+    <div class="footer__social">
+      <span class="footer__follow">FOLLOW US</span>
+
+      <div class="footer__social-icons">
+
+        <a href="#" target="_blank">
+          <img src="/Icons/Ic_Youtube.png" alt="Youtube">
+        </a>
+
+        <a href="#" target="_blank">
+          <img src="/Icons/Ic_X.png" alt="X">
+        </a>
+
+        <a href="#" target="_blank">
+          <img src="/Icons/Ic_Ig.png" alt="Instagram">
+        </a>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer__content">
+
+    <div class="footer__left">
+
+      <h2 class="footer__title">
+        Join Our Community
+      </h2>
+
+      <p class="footer__subtitle">
+        Be the first to know....................
+      </p>
+
+      <div class="footer__subscribe">
+
+  <input
+  type="email"
+  [(ngModel)]="email"
+  (ngModelChange)="onEmailChange()"
+  [disabled]="isEmailLocked()"
+  placeholder="Enter your email">
+
+  <button
+  type="button"
+  [disabled]="isSubmitting() || isSubscribed()"
+  (click)="subscribe()">
+
+  {{
+    isSubmitting()
+      ? 'Subscribing...'
+      : isSubscribed()
+        ? 'Subscribed ✓'
+        : 'Subscribe'
+  }}
+
+</button>
+
+</div>
+
+<p
+  *ngIf="message()"
+  class="footer__message"
+  [class.footer__message--success]="messageType() === 'success'"
+  [class.footer__message--error]="messageType() === 'error'">
+
+  {{ message() }}
+
+</p>
+
+      <h2 class="footer__title footer__title--contact">
+        Contact Us
+      </h2>
+
+      <div class="footer__contact-card">
+
+        <div>
+
+          <h3>CUSTOMER SERVICE</h3>
+
+          <p>Monday - Sunday 8 a.m - 10 p.m</p>
+
+        </div>
+
+        <a routerLink="/contact">
+          Contact Us
+        </a>
+
+      </div>
+
+      <div class="footer__contact-card">
+
+        <div>
+
+          <h3>EMAIL</h3>
+
+          <p>Monday - Sunday 8 a.m - 10 p.m</p>
+
+        </div>
+
+        <a
+          [href]="'https://mail.google.com/mail/?view=cm&fs=1&to=' + supportEmail"
+  target="_blank"
+  rel="noopener">
+  Email Us
+
+        </a>
+
+      </div>
+
+    </div>
+
+    <div class="footer__links">
+
+      <div class="footer__column">
+
+        <h4>Gallery</h4>
+
+        <a
+          *ngFor="let item of galleryLinks"
+          [routerLink]="item.route">
+
+          {{ item.label }}
+
+        </a>
+
+      </div>
+
+      <div class="footer__column">
+
+        <h4>Information</h4>
+
+        <a
+          *ngFor="let item of informationLinks"
+          [routerLink]="item.route">
+
+          {{ item.label }}
+
+        </a>
+
+      </div>
+
+      <div class="footer__column">
+
+        <h4>Help</h4>
+
+        <a
+          *ngFor="let item of helpLinks"
+          [routerLink]="item.route">
+
+          {{ item.label }}
+
+        </a>
+
+      </div>
+
+    </div>
+
+  </div>
+    
+  </div>
+
+</footer>

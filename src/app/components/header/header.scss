@@ -1,0 +1,120 @@
+.app-header {
+  width: 100%;
+  max-width: 1440px;
+  height: 102px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: rgba(255, 250, 217, 0.7); // default
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+
+  &.header--transparent {
+    background: rgba(255, 249.87, 216.50, 0.20);
+  }
+
+
+.logo img { height: 48px; }
+
+.right-group {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.main-nav {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+
+    a, span {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #784400;
+    text-decoration: none;
+    cursor: pointer;
+
+    &.active {
+      color: #AF7017;        // đậm/nổi hơn màu thường thay vì mờ đi
+      font-weight: 800;      // đậm nét hơn chút
+      transform: translateY(1px); // hiệu ứng "lõm xuống", như đang được nhấn giữ
+    }
+}
+
+    .nav-dropdown {
+    position: relative;
+
+    .dropdown-menu {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        background: rgba(255, 250, 217, 0.95);
+        min-width: 140px;
+        padding: 0;
+        z-index: 10;
+
+        a {
+        display: block;
+        padding: 8px 16px;
+        font-weight: 500;
+        &:hover {
+        background: rgba(216, 245, 255, 0.9); // #D8F5FF với alpha 90%
+    }
+        }
+    }
+    }
+}
+
+.action-group {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+    &.guest {
+    .btn {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 15px;
+    color: #AF7017;
+    outline: 1px solid #AF7017;
+    outline-offset: -1px;
+    border-radius: 100px;
+    padding: 8px 24px;
+    text-decoration: none;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+        background: #AF7017;
+        color: #FFFAD9;      // đổi chữ sang màu nền header cho tương phản khi hover
+    }
+    }
+    }
+
+    &.user {
+    .stat-item img { width: 28px; height: 28px; }
+
+    .icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        img { width: 26px; height: 26px; }
+    }
+
+    .avatar-link {
+        display: block;
+        .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        }
+    }
+    } // đóng &.user
+  } // đóng .action-group
+} // đóng .app-header

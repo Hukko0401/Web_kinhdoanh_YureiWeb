@@ -1,0 +1,341 @@
+.inventory-page {
+  max-width: 1440px;
+  margin: 0 auto;
+ min-height: 100vh;
+  overflow-y: auto;  
+  padding: 200px 236px 40px;
+  position: relative;
+  background-color: #F3E4C0;
+  background-image: url('/Bg/Bg_Inventory.png');
+  background-size: 100% auto;
+  background-position: top center;
+  background-repeat: no-repeat;
+  display: flex;
+  flex-direction: column;
+
+  .inventory-heading {
+    margin-bottom: 24px;
+    flex-shrink: 0;
+
+    .page-title {
+      font-family: 'Inclusive Sans', sans-serif;
+      font-size: 48px;
+      font-weight: 400;
+      color: #000;
+      margin: 0;
+    }
+
+    .page-subtitle {
+      font-family: 'Inclusive Sans', sans-serif;
+      font-size: 32px;
+      font-weight: 400;
+      color: #000;
+      margin: 8px 0 0;
+    }
+  }
+
+  .inventory-controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 16px;
+    flex-shrink: 0;
+
+    .filter-label {
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #000;
+      margin-right: 12px;
+    }
+
+    .rarity-filters {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex-wrap: wrap;
+
+      .rarity-chip {
+        height: 28px;
+        padding: 0 14px;
+        border-radius: 20px;
+        border: 1px solid #DDC69F;
+        background: white;
+        font-family: 'Inter', sans-serif;
+        font-size: 14px;
+        color: #000;
+        cursor: pointer;
+        white-space: nowrap;
+
+        &.active {
+          background: #FFF8CB;
+          border-color: #F8D186;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        }
+      }
+    }
+
+    .sort-control {
+      display: flex;
+      align-items: center;
+
+      .sort-dropdown {
+        position: relative;
+
+        .sort-trigger {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          min-width: 234px;
+          height: 37px;
+          padding: 0 16px;
+          background: white;
+          border: none;
+          border-radius: 8px;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          font-family: 'Inter', sans-serif;
+          font-size: 14px;
+          color: #000;
+          cursor: pointer;
+          justify-content: space-between;
+        }
+
+        .sort-menu {
+          position: absolute;
+          top: 100%;
+          right: 0;
+          margin-top: 4px;
+          width: 234px;
+          background: white;
+          border-radius: 8px;
+          box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+          z-index: 20;
+          overflow: hidden;
+
+          .sort-option {
+            padding: 10px 16px;
+            font-family: 'Inter', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+
+            &:hover { background: #FFF8CB; }
+            &.active { background: #FEE5BA; font-weight: 700; }
+          }
+        }
+      }
+    }
+  }
+
+  .toolbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 12px;
+    height: 55px;
+    padding: 0 26px;
+    background: #FEFBF2;
+    border-radius: 10px;
+    outline: 1px solid #F8D186;
+    outline-offset: -1px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
+
+    .selected-count {
+      margin-right: auto;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #784500;
+    }
+
+    .btn-clear {
+      background: none;
+      border: none;
+      color: #AF7017;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .btn-ship {
+      background: #4EC26F;
+      border: none;
+      border-radius: 90px;
+      padding: 8px 20px;
+      color: white;
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+  }
+
+  // Vùng chứa card — đây là phần duy nhất cuộn được, nằm gọn trong "miệng túi"
+  .card-grid-wrapper {
+    max-height: 340px; // chiếm hết khoảng trống còn lại trong khung 100vh
+    overflow-y: auto;
+    padding-right: 8px; // chừa chỗ scrollbar, không đè lên card
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: #DDC69F;
+      border-radius: 10px;
+    }
+  }
+
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 221px); // đổi từ 4 -> 3 item/hàng
+    gap: 30px;
+
+    .item-card {
+      width: 221px;
+      background: #FFFDF8;
+      border: 1px solid #E5D3AA;
+      border-radius: 20px;
+      cursor: pointer;
+      overflow: hidden;
+      transition: box-shadow 0.15s ease;
+
+      &.selected {
+        box-shadow: 0 0 0 2px #AF7017;
+      }
+
+      .card-image {
+        position: relative;
+        width: 221px;
+        height: 213.58px;
+        overflow: hidden;
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+          border-radius: 20px 20px 0 0;
+        }
+
+        .checkbox {
+          position: absolute;
+          top: 15px;
+          right: 16px;
+          width: 21px;
+          height: 21px;
+          background: white;
+          border: 1px solid #D9D9D9;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+
+          &.checked {
+            background: #FFF3D6;
+            border-color: #DDC69F;
+
+            &::after {
+              content: '✓';
+              color: #AF7017;
+              font-size: 14px;
+              font-weight: 700;
+              line-height: 1;
+            }
+          }
+        }
+      }
+
+      .card-footer {
+        padding: 12px 16px 16px;
+
+        .item-name {
+          font-family: 'Inclusive Sans', sans-serif;
+          font-size: 18px;
+          color: #000;
+          margin-bottom: 8px;
+        }
+
+        .rarity-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          margin-bottom: 10px;
+
+          .rarity-badge {
+            height: 25.67px;
+          }
+
+          .item-quantity {
+            font-family: 'Inter', sans-serif;
+            font-size: 16px;
+            color: #000;
+          }
+        }
+
+        .btn-exchange {
+          width: 100%;
+          height: 25.67px;
+          background: #FEE5BA;
+          border: 1px solid #764A00;
+          border-radius: 20px;
+          color: #764A00;
+          font-family: 'Inter', sans-serif;
+          font-size: 16px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
+
+  .empty-text,
+  .loading-text,
+  .error-text {
+    font-family: 'Inter', sans-serif;
+    font-size: 16px;
+    color: #784500;
+    text-align: center;
+    margin-top: 40px;
+  }
+
+  .empty-state {
+    text-align: center;
+    margin-top: 40px;
+
+    .empty-text {
+      font-family: 'Inter', sans-serif;
+      font-size: 16px;
+      color: #784500;
+      margin-bottom: 16px;
+    }
+
+    .btn-roll {
+      background: #AF7017;
+      color: #FFFAD9;
+      border: none;
+      border-radius: 90px;
+      padding: 10px 32px;
+      font-family: 'Inter', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+
+      &:hover { background: #8f5b12; }
+    }
+  }
+}
+.toast {
+  position: fixed;
+  bottom: 40px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #4EC26F;
+  color: white;
+  padding: 12px 24px;
+  border-radius: 90px;
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  z-index: 200;
+}

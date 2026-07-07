@@ -1,0 +1,16 @@
+.village-container {
+  width: 100%;
+  height: 56.25rem; // ~900px, chỉnh theo tỷ lệ mong muốn, có thể đổi sang vh nếu muốn full màn hình
+  overflow: hidden;
+  position: relative;
+}
+
+.village-image {
+  height: 100%;
+  width: auto;
+  max-width: none; // bắt buộc để ảnh được rộng hơn viewport
+  position: absolute;
+  top: 0;
+  left: 0;
+  will-change: transform;
+}

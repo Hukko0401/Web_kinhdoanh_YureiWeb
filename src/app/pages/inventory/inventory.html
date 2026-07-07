@@ -1,0 +1,98 @@
+<app-header variant="transparent"></app-header>
+
+<div class="inventory-page">
+  <div class="inventory-heading">
+    <h1 class="page-title">Inventory</h1>
+    <p class="page-subtitle">
+      {{ inventoryService.totalItems() }} items . {{ inventoryService.totalCollections() }} collections
+    </p>
+  </div>
+
+  <div class="inventory-controls">
+    <div class="rarity-filters">
+      <span class="filter-label">Rarity:</span>
+      <button
+        *ngFor="let r of rarities"
+        class="rarity-chip"
+        [class.active]="inventoryService.selectedRarity() === r"
+        (click)="selectRarity(r)"
+      >
+        {{ r }} ({{ rarityCountFor(r) }})
+      </button>
+    </div>
+
+    <div class="sort-control">
+      <span class="filter-label">Sắp xếp theo:</span>
+      <div class="sort-dropdown">
+        <button class="sort-trigger" (click)="toggleSortDropdown()">
+          <span class="sort-arrow">▼</span>
+          <span class="sort-label">{{ currentSortLabel() }}</span>
+        </button>
+
+        <div class="sort-menu" *ngIf="isSortOpen">
+          <div
+            *ngFor="let opt of sortOptions"
+            class="sort-option"
+            [class.active]="inventoryService.sortKey() === opt.value"
+            (click)="selectSort(opt.value)"
+          >
+            {{ opt.label }}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="toolbar">
+  <span class="selected-count" *ngIf="inventoryService.selectedCount() > 0">
+    Selected {{ inventoryService.selectedCount() }} item
+  </span>
+  <button class="btn-clear" (click)="onClearAll()">Clear All</button>
+  <button class="btn-ship" (click)="onShipSelected()">Ship Selected</button>
+</div>
+
+  <p *ngIf="inventoryService.loading()" class="loading-text">Đang tải...</p>
+  <p *ngIf="inventoryService.error()" class="error-text">{{ inventoryService.error() }}</p>
+
+
+  <div class="card-grid-wrapper">
+    <div class="card-grid" *ngIf="!inventoryService.loading()">
+    <div
+      *ngFor="let item of inventoryService.displayItems()"
+      class="item-card"
+      [class.selected]="inventoryService.isSelected(item.userInventoryId)"
+      (click)="onCardClick(item.userInventoryId)"
+    >
+      <div class="card-image">
+        <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" />
+        <div class="checkbox" [class.checked]="inventoryService.isSelected(item.userInventoryId)"></div>
+      </div>
+
+      <div class="card-footer">
+        <div class="item-name">{{ item.name }}</div>
+        <div class="rarity-row">
+          <img class="rarity-badge" [src]="inventoryService.getRarityBadgePath(item.rarity)" [alt]="item.rarity" />
+          <span class="item-quantity">x{{ item.quantity }}</span>
+        </div>
+        <!-- Đổi chỗ gọi onExchange, truyền nguyên item -->
+        <button class="btn-exchange" (click)="onExchange($event, item)">Exchange</button>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="!inventoryService.loading() && inventoryService.displayItems().length === 0" class="empty-state">
+  <p class="empty-text">You don't have any character yet.</p>
+  <button class="btn-roll" routerLink="/banner">Let's Roll!</button>
+</div>
+  </div>
+    
+</div>
+<!-- Thêm vào cuối file, ngoài div.inventory-page -->
+<app-exchange-modal
+  *ngIf="exchangingItem() as item"
+  [item]="item"
+  (close)="onCloseExchangeModal()"
+  (exchanged)="onExchangeSuccess($event)"
+></app-exchange-modal>
+
+<div class="toast" *ngIf="toastMessage()">{{ toastMessage() }}</div>

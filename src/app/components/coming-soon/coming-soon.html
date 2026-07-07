@@ -1,0 +1,31 @@
+<section class="coming-soon">
+  <div class="coming-soon__title-wrap">
+    <h2 class="coming-soon__title">Coming soon!</h2>
+  </div>
+
+  <div class="coming-soon__list">
+    <div class="coming-soon-card" *ngFor="let item of items">
+
+      <video *ngIf="item.videoUrl"
+             #videoEl
+             [src]="item.videoUrl"
+             class="coming-soon-card__image"
+             loop
+             playsinline
+             preload="metadata">
+      </video>
+
+      <img *ngIf="!item.videoUrl && item.imageUrl"
+           [src]="item.imageUrl"
+           [alt]="item.title"
+           class="coming-soon-card__image" />
+
+      <div *ngIf="!item.videoUrl && !item.imageUrl"
+           class="coming-soon-card__image coming-soon-card__image--placeholder">
+      </div>
+
+      <h3 class="coming-soon-card__title">{{ item.title }}</h3>
+      <p class="coming-soon-card__desc">{{ item.description }}</p>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,134 @@
+.hero {
+width: 100%;
+min-height: clamp(20rem, 71vw, 64rem);
+  background-image: url('/Bg/Bg_intro.png'); // ảnh nền KHÔNG có chữ
+background-size: cover;
+background-position: center;
+display: flex;
+align-items: center;
+padding: clamp(1.5rem, 4vw, 3.5rem) clamp(1.25rem, 5.6vw, 5rem);
+
+&__logo {
+    width: min(28rem, 40%); // ~852px ở 1440px, co theo % khi màn nhỏ
+    max-width: 100%;
+    height: auto;
+}
+
+&__content {
+    max-width: min(31.25rem, 45%);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+&__title {
+font-family: 'Inclusive Sans', sans-serif;
+  font-weight: 400; // regular
+  font-size: clamp(1.5rem, 2.3vw, 2.25rem); // ~28px → 45px ở 1440
+color: #2c2c2c;
+margin: 0;
+line-height: 1.2;
+}
+
+&__desc {
+font-family: 'Inclusive Sans', sans-serif;
+font-weight: 400;
+  font-size: clamp(1rem, 1.4vw, 1.375rem); // ~24px → 38px ở 1440
+line-height: 1.5;
+color: #2c2c2c;
+margin: 0;
+}
+
+&__btn {
+display: inline-flex;
+align-items: center;
+justify-content: center;
+gap: 0.5rem;
+align-self: flex-start;
+  padding: 0.9rem 2.5rem; // dài ra
+min-width: 14rem;
+background: #2c2c2c;
+color: #fff;
+font-size: 1rem;
+border-radius: 0.4rem;
+text-decoration: none;
+    &-icon {
+    width: 0.8rem;
+    height: 0.8rem;
+    border: 0.1rem solid #fff;
+    display: inline-block;
+    }
+}
+}
+.collection-section {
+width: 100%;
+  min-height: 56.25rem; // ~900px ở 1440, sẽ co giãn theo nội dung thật tế
+  padding: clamp(0.8rem, 1.4vw, 1.25rem) clamp(1.5rem, 3.2vw, 2.875rem); // 20px / 46px ở 1440
+background:
+    linear-gradient(180deg, rgba(255,255,255,0) 13%, #FFF4B7 100%),
+    url('/Bg/Bg_intro_2.png'); // TODO: đổi path đúng theo file thật trong public/
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.collect-all-section {
+  width: 100%;
+  max-width: 100vw;
+  overflow: hidden; // chặn tràn ngang
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 2.2vw, 2.2rem); // ~31.61px ở 1440
+  padding: clamp(1.5rem, 2.8vw, 2.8rem) 0;
+  background:
+    linear-gradient(180deg, #FFF4B7 0%, #FDF4CB 40%, #FAF4E0 100%),
+    linear-gradient(180deg, #FFF4B7 0%, rgba(255,255,255,0) 100%);
+
+  &__title {
+  font-family: 'Patrick Hand', cursive;
+  font-weight: 400; // Patrick Hand chỉ có 1 weight (regular), không có 700
+  font-size: clamp(2rem, 4.4vw, 4rem);
+  color: #784600;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, opacity 0.2s ease;
+
+  &:hover { transform: scale(1.03); opacity: 0.85; }
+}
+
+  &__desc {
+    max-width: 74rem; // ~1190px ở 1440
+    text-align: center;
+    color: #000;
+    font-family: 'Inclusive Sans', sans-serif;
+    font-size: clamp(1rem, 1.7vw, 1.53rem); // ~24.48px ở 1440
+    margin: 0;
+  }
+}
+
+.artists-section {
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(1.5rem, 2.8vw, 2.8rem) clamp(1rem, 2vw, 2rem); // giảm padding ngang từ 7.3vw xuống 2vw
+  margin-top: -2px; // đè khít lên section trước, chặn khe hở subpixel
+  background-color: #BEE3F8; // màu fallback trùng đầu ảnh nền, tránh lộ trắng khi ảnh chưa phủ kín
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-image: url('/Bg/Bg_Artist.png'); // TODO: đổi path ảnh nền thật
+
+  &__title {
+    font-family: 'Patrick Hand', cursive;
+    font-weight: 400;
+    color: #AF7017;
+    font-size: clamp(2rem, 4.4vw, 4rem); // ~64px
+    margin: 0 0 1rem 0;
+  }
+}

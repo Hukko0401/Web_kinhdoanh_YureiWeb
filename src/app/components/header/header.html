@@ -1,0 +1,52 @@
+<header class="app-header" [class.header--transparent]="variant === 'transparent'">
+<a routerLink="/" class="logo">
+    <img src="/Icons/logo.png" alt="Yurei" />
+</a>
+
+<div class="right-group">
+    <nav class="main-nav">
+    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+        Home
+    </a>
+
+    <div class="nav-dropdown"
+        (mouseenter)="toggleCollections(true)"
+        (mouseleave)="toggleCollections(false)">
+        <span>Collections</span>
+        <div class="dropdown-menu" *ngIf="isCollectionsOpen">
+          <a *ngFor="let c of activeCollections" [routerLink]="['/collections', c.id]">
+            {{ c.name }}
+        </a>
+        </div>
+    </div>
+
+      <a *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active">
+        {{ link.label }}
+    </a>
+    </nav>
+
+    <!-- Guest -->
+    <div class="action-group guest" *ngIf="!isLoggedIn">
+    <a routerLink="/login" class="btn">Log In</a>
+    <a routerLink="/register" class="btn">Sign Up</a>
+    </div>
+
+    <!-- Logged-in -->
+    <div class="action-group user" *ngIf="isLoggedIn">
+    <div class="stat-item">
+        <img src="/Icons/coins.png" alt="Coins" />
+    </div>
+    <div class="stat-item">
+    <a routerLink="/inventory">
+        <img src="/Icons/inventory.png" alt="Inventory" />
+    </a>
+</div>
+    <button class="icon-btn" routerLink="/notifications">
+        <img src="/Icons/notification.png" alt="notifications" />
+    </button>
+    <a routerLink="/profile" class="avatar-link">
+        <img src="/Icons/profile.png" alt="profile" class="avatar" />
+    </a>
+    </div>
+</div>
+</header>

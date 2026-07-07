@@ -1,0 +1,119 @@
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 100;
+}
+
+.modal-content {
+  background: #FFFDF8;
+  border-radius: 24px;
+  padding: 32px;
+  width: 360px;
+  position: relative;
+  text-align: center;
+
+  .close-btn {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: none;
+    border: none;
+    font-size: 24px;
+    color: #784500;
+    cursor: pointer;
+  }
+
+  .modal-title {
+    font-family: 'Inclusive Sans', sans-serif;
+    font-size: 24px;
+    color: #000;
+    margin: 0 0 16px;
+  }
+
+  .item-image {
+    width: 160px;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 16px;
+    margin-bottom: 12px;
+  }
+
+  .rarity-info {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #333;
+
+    .rarity-badge { height: 22px; }
+  }
+
+  .quantity-selector {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+
+    .qty-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      border: 1px solid #AF7017;
+      background: white;
+      color: #AF7017;
+      font-size: 18px;
+      cursor: pointer;
+
+      &:disabled { opacity: 0.4; cursor: not-allowed; }
+    }
+
+    .qty-value {
+      font-family: 'Inclusive Sans', sans-serif;
+      font-size: 20px;
+      min-width: 30px;
+    }
+  }
+
+  .exchange-preview {
+    display: flex;
+    justify-content: space-between;
+    background: #FEE5BA;
+    border-radius: 12px;
+    padding: 12px 20px;
+    margin-bottom: 16px;
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    color: #764A00;
+
+    .coin-amount { font-weight: 700; }
+  }
+
+  .error-text {
+    color: #C0392B;
+    font-size: 13px;
+    margin-bottom: 12px;
+  }
+
+  .confirm-btn {
+    width: 100%;
+    background: #4EC26F;
+    border: none;
+    border-radius: 90px;
+    padding: 12px;
+    color: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+
+    &:disabled { opacity: 0.6; cursor: not-allowed; }
+  }
+}

@@ -1,0 +1,88 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.coming-soon {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap: clamp(1rem, 2.2vw, 2rem); // ~32px ở 1440
+  padding: clamp(2rem, 4vw, 3.6rem) clamp(1.5rem, 3.5vw, 3.13rem); // ~58px/50px
+  background-image: url('/Bg/Bg_ComingSoon.png'); // TODO: cậu đổi đúng path ảnh thật
+  background-size: cover;
+  background-position: center top;
+  background-repeat: no-repeat;
+
+  &__title-wrap {
+    flex: 1 1 0;
+    padding: clamp(3rem, 10.4vw, 9.4rem) 0; // ~150px
+    display: flex;
+    align-items: center;
+  }
+
+  &__title {
+    font-family: 'Patrick Hand', cursive;
+    font-weight: 400;
+    color: #AF7017;
+    font-size: clamp(2.5rem, 6.25vw, 5.63rem); // ~90px
+    line-height: 1.1;
+    margin: 0;
+    max-width: 25.3rem; // ~405px
+  }
+
+  &__list {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(2rem, 5.4vw, 4.88rem); // ~78.11px
+    padding: clamp(2rem, 6.9vw, 6.25rem) clamp(1rem, 2.7vw, 2.44rem); // ~100px/39px
+  }
+}
+
+.coming-soon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(1rem, 1.9vw, 1.71rem); // ~27.34px
+  padding: clamp(1rem, 1.6vw, 1.44rem); // ~23.03px
+  background: rgba(255, 248, 203, 0.4);
+  border-radius: clamp(0.6rem, 1.1vw, 0.98rem); // ~15.62px
+
+  &__image {
+    width: 100%;
+    max-width: 42.2rem; // ~675px
+    aspect-ratio: 675 / 416;
+    border-radius: clamp(0.5rem, 0.81vw, 0.73rem); // ~11.72px
+    object-fit: cover;
+  }
+
+  &__image--placeholder {
+    background-image:
+      linear-gradient(45deg, #ccc 25%, transparent 25%),
+      linear-gradient(-45deg, #ccc 25%, transparent 25%),
+      linear-gradient(45deg, transparent 75%, #ccc 75%),
+      linear-gradient(-45deg, transparent 75%, #ccc 75%);
+    background-size: 20px 20px;
+    background-position: 0 0, 0 10px, 10px -10px, -10px 0;
+    background-color: #f5f5f5;
+  }
+
+  &__title {
+    align-self: stretch;
+    color: #000;
+    font-family: 'Inclusive Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1.5rem, 5.2vw, 4.69rem); // ~74.98px
+    margin: 0;
+  }
+
+  &__desc {
+    align-self: stretch;
+    color: #000;
+    font-family: 'Inclusive Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(1rem, 2.4vw, 2.16rem); // ~34.54px
+    margin: 0;
+  }
+}

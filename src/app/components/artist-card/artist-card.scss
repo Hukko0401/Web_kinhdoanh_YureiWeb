@@ -1,0 +1,57 @@
+:host {
+  display: block;
+}
+
+.artist-card {
+  width: clamp(14rem, 26.6vw, 26.6rem); // ~383px ở 1440
+  height: clamp(19rem, 36.1vw, 36.1rem); // ~520px ở 1440
+  padding: clamp(1.2rem, 2.5vw, 2.53rem) clamp(1rem, 2.1vw, 2.13rem); // ~36.3px/30.63px
+  background-image: url('/Images/Artist_frame.png'); // TODO: đổi khi có ảnh khung thật
+  background-size: 100% 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: clamp(1rem, 1.97vw, 1.97rem); // ~28.36px
+  overflow: hidden;
+  transition: all 0.4s ease;
+  flex-shrink: 0;
+
+  &--center {
+    width: clamp(20rem, 37.2vw, 37.2rem); // ~536px ở 1440
+    height: clamp(26rem, 50.4vw, 50.4rem); // ~726px ở 1440
+    padding: clamp(1.7rem, 3.5vw, 3.52rem) clamp(1.5rem, 2.97vw, 2.97rem); // ~50.74px/42.81px
+    gap: clamp(1.4rem, 2.75vw, 2.75rem); // ~39.64px
+  }
+
+  &__image {
+    flex: 1 1 0;
+    align-self: stretch;
+    object-fit: contain;
+    min-height: 0; // quan trọng, chặn flex item tràn container
+  }
+
+  &__name {
+    align-self: stretch;
+    text-align: center;
+    color: #000;
+    font-family: 'Inclusive Sans', sans-serif;
+    font-weight: 500;
+    font-size: clamp(0.9rem, 1.5vw, 1.5rem); // ~21.55px
+  }
+
+  &__bio {
+    align-self: stretch;
+    text-align: center;
+    color: #000;
+    font-family: 'Inclusive Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(0.8rem, 1.5vw, 1.5rem); // ~21.55px
+    line-height: 1.4;
+  }
+
+  &--center &__name,
+  &--center &__bio {
+    font-size: clamp(1.2rem, 2.1vw, 2.1rem); // ~30.13px cho center
+  }
+}

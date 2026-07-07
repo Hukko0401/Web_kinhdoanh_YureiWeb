@@ -1,0 +1,15 @@
+<div class="showcase-track">
+  <div
+    *ngFor="let item of items; let i = index; trackBy: trackByItemId"
+    class="showcase-item"
+    [class.is-center]="getOffset(i) === 0"
+    [class.is-hidden]="abs(getOffset(i)) > 2"
+    [style.width.px]="getWidth(getOffset(i))"
+    [style.height.px]="getHeight(getOffset(i))"
+    [style.transform]="'translate(-50%, -50%) translateX(' + getTranslateX(getOffset(i)) + 'px)'"
+    [style.z-index]="10 - abs(getOffset(i))"
+    (click)="selectByIndex(i)"
+  >
+    <img [src]="item.imageUrl" [alt]="item.name" />
+  </div>
+</div>

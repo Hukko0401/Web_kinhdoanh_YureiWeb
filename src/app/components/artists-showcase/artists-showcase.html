@@ -1,0 +1,13 @@
+<div class="artists-track">
+  <div
+    *ngFor="let artist of positioned; trackBy: trackByArtist"
+    class="artist-slot"
+    [class.artist-slot--center]="artist.distance === 0"
+    [class.artist-slot--hidden]="abs(artist.distance) > 2"
+    [style.--distance]="artist.distance"
+    [style.zIndex]="10 - abs(artist.distance)"
+    (click)="selectByDistance(artist.distance)"
+  >
+    <app-artist-card [data]="artist" [isCenter]="artist.distance === 0"></app-artist-card>
+  </div>
+</div>

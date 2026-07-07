@@ -1,0 +1,53 @@
+<app-header></app-header>
+
+<!-- Hero section -->
+<section class="hero">
+<img
+    *ngIf="!isLoggedIn"
+    src="/Icons/Yurei_font.png"
+    alt="Yurei"
+    class="hero__logo"
+/>
+
+  <div class="hero__content" *ngIf="isLoggedIn">
+    <h1 class="hero__title">Welcome...</h1>
+    <p class="hero__desc">
+    Lorem ipsum dolor sit amet consectetur. Eget id eleifend nulla proin massa.
+    Cras feugiat faucibus pharetra id a gravida bibendum enim ut. Suspendisse
+    nibh tortor a scelerisque fringilla consectetur feugiat elit vitae.
+    Consectetur neque viverra fermentum vitae risus venenatis massa magna tincidunt.
+    </p>
+    <a routerLink="/about" class="hero__btn">
+    Learn more about us
+    <span class="hero__btn-icon"></span>
+    </a>
+</div>
+</section>
+<section class="collection-section">
+<app-carousel [slideCount]="mockCollections.length">
+    <app-collection-slide *ngFor="let c of mockCollections" [data]="c"></app-collection-slide>
+</app-carousel>
+</section>
+
+<section class="collect-all-section">
+  <a routerLink="/banner" class="collect-all-section__title">
+    COLLECT THEM ALL!!!
+  </a>
+  <p class="collect-all-section__desc">
+    Lorem ipsum dolor sit amet consectetur. Eget id eleifend nulla proin massa. Cras feugiat faucibus pharetra id a gravida bibendum enim ut.
+  </p>
+  <app-collect-showcase [items]="mockSpotlightItems"></app-collect-showcase>
+</section>
+
+<app-village-banner></app-village-banner>
+
+<app-coming-soon [items]="comingSoonItems"></app-coming-soon>
+
+<section class="artists-section">
+  <h2 class="artists-section__title">Meet Our Artists</h2>
+  <app-artists-showcase [artists]="mockArtists"></app-artists-showcase>
+</section>
+
+<app-footer></app-footer>
+
+<!-- các section tiếp theo (Collections, Collect them all,...) sẽ nối bên dưới -->

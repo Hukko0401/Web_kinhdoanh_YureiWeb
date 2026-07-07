@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<div class="login-page">
+  <div class="login-card">
+    <div class="login-form">
+      <h1 class="title">Welcome back!</h1>
+
+      <div class="field">
+        <label>Email or Phone Number</label>
+        <input type="text" [(ngModel)]="identifier" placeholder="Value" />
+      </div>
+
+      <div class="field">
+        <label>Password</label>
+        <div class="input-with-icon">
+          <input [type]="showPassword ? 'text' : 'password'" [(ngModel)]="password" placeholder="Value" />
+          <span class="eye-icon" (click)="showPassword = !showPassword">👁</span>
+        </div>
+      </div>
+
+      <div class="options-row">
+        <label class="remember-me">
+          <input type="checkbox" [(ngModel)]="rememberMe" />
+          Remember me
+        </label>
+        <span class="forgot-password" routerLink="/forgot-password">Forgot password?</span>
+      </div>
+
+      <p class="error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+      <button class="pill-btn" (click)="onSignIn()" [disabled]="loading()">Sign In</button>
+      <button class="pill-btn" (click)="onGoogleClick()" [disabled]="loading()">Log in with Google</button>
+
+      <p class="signup-hint">
+        Don't have an account? <a routerLink="/register">Sign up</a>
+      </p>
+    </div>
+  </div>
+</div>

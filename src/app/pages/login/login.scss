@@ -1,0 +1,138 @@
+.login-page {
+  min-height: 100vh;
+  padding: 180px 84px 40px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  background: url('/Bg/Bg_Sign_In.png') center/cover no-repeat;
+}
+
+.login-card {
+  background: #FFFBE3;
+  border-radius: 50px;
+  box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.25);
+  padding: 60px 80px;
+}
+
+.login-form {
+  width: 600px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.title {
+  color: #AF7017;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-weight: 600;
+  font-size: 64px;
+  align-self: stretch;
+}
+
+.field {
+  align-self: stretch;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  label {
+    color: #AF7017;
+    font-family: 'Inclusive Sans', sans-serif;
+    font-weight: 600;
+    font-size: 25.79px;
+  }
+}
+
+input[type="text"], input[type="password"], input[type="email"] {
+  border: none;
+  border-bottom: 2.58px solid #AF7017;
+  background: transparent;
+  padding: 15px 20px;
+  font-size: 25.79px;
+  color: #AF7017;
+  outline: none;
+
+  &::placeholder { color: #B3B3B3; }
+}
+
+.input-with-icon {
+  position: relative;
+  display: flex;
+  align-items: center;
+
+  input { flex: 1; }
+  .eye-icon {
+    position: absolute;
+    right: 16px;
+    cursor: pointer;
+    color: #AF7017;
+  }
+}
+
+.options-row {
+  align-self: stretch;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-right: 13px;
+
+  .remember-me {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(27, 31, 38, 0.72);
+    font-family: 'Inclusive Sans', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+
+    input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      accent-color: #AF7017;
+    }
+  }
+
+  .forgot-password {
+    color: rgba(128, 128, 128, 0.55);
+    font-family: 'Inclusive Sans', sans-serif;
+    font-size: 18px;
+    cursor: pointer;
+  }
+}
+
+.pill-btn {
+  align-self: stretch;
+  padding: 12.89px 38.68px;
+  background: #E0F8FF;
+  border: none;
+  border-radius: 38.68px;
+  box-shadow: 6.4px 6.4px 5.2px rgba(0, 0, 0, 0.25);
+  color: #AF7017;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-weight: 700;
+  font-size: 19.34px;
+  cursor: pointer;
+
+  &:disabled { opacity: 0.6; cursor: not-allowed; }
+}
+
+.signup-hint {
+  display: flex;
+  gap: 11px;
+  font-family: 'Inclusive Sans', sans-serif;
+  font-size: 16.73px;
+  color: rgba(27, 31, 38, 0.72);
+
+  a {
+    text-decoration: underline;
+    font-weight: 500;
+    color: inherit;
+  }
+}
+
+.error {
+  color: #C0392B;
+  font-size: 14px;
+  align-self: stretch;
+}

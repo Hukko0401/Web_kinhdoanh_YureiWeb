@@ -1,0 +1,30 @@
+:host {
+  display: block;
+  width: 100%;
+  overflow: hidden;
+}
+
+.artists-track {
+  position: relative;
+  width: 100%;
+  height: clamp(26rem, 50.4vw, 50.4rem); // bằng chiều cao card center, ~726px ở 1440
+  --step: clamp(17rem, 34vw, 34rem); // khoảng cách giữa các card, ~427px ở 1440
+}
+
+.artist-slot {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(calc(-50% + var(--distance) * var(--step)), -50%);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  cursor: pointer;
+
+  &--center {
+    cursor: default;
+  }
+
+  &--hidden {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

@@ -1,0 +1,31 @@
+<div class="modal-backdrop" (click)="onBackdropClick()">
+  <div class="modal-content" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="close.emit()">×</button>
+
+    <h2 class="modal-title">Exchange {{ item.name }}</h2>
+
+    <img class="item-image" [src]="item.image || '/placeholder-item.png'" [alt]="item.name" />
+
+    <div class="rarity-info">
+      <img class="rarity-badge" [src]="inventoryServiceBadge()" [alt]="item.rarity" />
+      <span>You're having: x{{ item.quantity }}</span>
+    </div>
+
+    <div class="quantity-selector">
+      <button class="qty-btn" (click)="decrement()" [disabled]="quantity() <= 1">-</button>
+      <span class="qty-value">{{ quantity() }}</span>
+      <button class="qty-btn" (click)="increment()" [disabled]="quantity() >= item.quantity">+</button>
+    </div>
+
+    <div class="exchange-preview">
+      <span>You'll receive:</span>
+      <span class="coin-amount">{{ totalCoin() }} coin</span>
+    </div>
+
+    <p *ngIf="error()" class="error-text">{{ error() }}</p>
+
+    <button class="confirm-btn" (click)="confirmExchange()" [disabled]="loading()">
+      {{ loading() ? 'On processing...' : 'Confirm Exchange' }}
+    </button>
+  </div>
+</div>
