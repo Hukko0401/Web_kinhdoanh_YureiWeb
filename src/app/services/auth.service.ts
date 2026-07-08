@@ -184,6 +184,12 @@ export class AuthService {
     return this.currentUserSubject.value
   }
 
+  async getCurrentUserAsync(): Promise<User | null> {
+    const { data: { user } } = await supabase.auth.getUser()
+    this.currentUserSubject.next(user)
+    return user
+  }
+
   setRememberMe(remember: boolean) {
   localStorage.setItem('yurei_remember_me', remember ? 'true' : 'false')
 }

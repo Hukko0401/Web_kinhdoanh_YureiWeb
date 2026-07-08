@@ -1,0 +1,153 @@
+<app-header variant="transparent"></app-header>
+
+<div class="order-history-page">
+  <div class="order-history-layout" [class.split]="selectedOrderForReturn()">
+
+    <div class="order-list-section">
+      <div class="order-list-inner">
+        <div class="order-heading">
+          <h1 class="page-title">Order History</h1>
+          <p class="page-subtitle">Manage and follow your order</p>
+        </div>
+
+        <div class="status-filters">
+          <button
+            *ngFor="let s of statusFilters"
+            class="status-chip"
+            [class.active]="orderService.statusFilter() === s"
+            (click)="selectStatus(s)"
+          >
+            {{ filterLabelFor(s) }}
+          </button>
+        </div>
+
+        <p *ngIf="orderService.loading()" class="loading-text">Đang tải...</p>
+        <p *ngIf="orderService.error()" class="error-text">{{ orderService.error() }}</p>
+
+        <div class="order-list-wrapper" *ngIf="!orderService.loading()">
+          <div class="order-list">
+            <div
+              class="order-card"
+              *ngFor="let order of orderService.filteredOrders()"
+              [class.selected]="selectedOrderForReturn()?.order_id === order.order_id"
+            >
+              <div class="order-card-inner">
+                <div class="order-info">
+                  <div class="order-code">ORDER #{{ order.order_code }}</div>
+                  <div class="order-date">{{ orderService.formatDate(order.created_at) }}</div>
+                </div>
+
+                <div class="order-items">
+                  <div class="order-item" *ngFor="let item of order.items">
+                    <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" />
+                    <div class="item-info-row">
+                      <span class="item-name">{{ item.name }}</span>
+                      <span class="item-qty">x{{ item.quantity }}</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="order-side">
+                  <div class="status-row">
+                    <div
+                      class="status-badge"
+                      [ngClass]="{
+                        'status-processing': order.status === 'processing',
+                        'status-shipping': order.status === 'shipping',
+                        'status-completed': order.status === 'completed',
+                        'status-cancelled': order.status === 'cancelled'
+                      }"
+                    >
+                      {{ order.status | titlecase }}
+                    </div>
+                  </div>
+
+                  <div class="order-total">
+                    <span class="total-label">Total</span>
+                    <span class="total-value">{{ orderService.formatCurrency(order.total) }}</span>
+                  </div>
+
+                  <div class="order-actions">
+                    <button
+                      *ngIf="order.status === 'completed' && hasReturnableItems(order)"
+                      class="btn-action btn-return"
+                      (click)="onRequestReturn($event, order.order_id)"
+                    >
+                      Request Return
+                    </button>
+
+                    <button
+                      class="btn-action btn-details"
+                      (click)="onViewDetails($event, order.order_id)"
+                    >
+                      View Details
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div
+            *ngIf="!orderService.loading() && orderService.filteredOrders().length === 0"
+            class="empty-state"
+          >
+            <p class="empty-text">You don't have any order yet.</p>
+            <button class="btn-roll" routerLink="/banner">Let's Roll!</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="return-panel" *ngIf="selectedOrderForReturn() as order">
+      <div class="return-breadcrumb">
+        <span class="crumb-link" (click)="closeReturnPanel()">Order History</span>
+        <span class="crumb-sep">&gt;</span>
+        <span class="crumb-link" (click)="closeReturnPanel()">ORDER#{{ order.order_code }}</span>
+        <span class="crumb-current">&gt; Request Return</span>
+      </div>
+
+      <h2 class="return-title">Items in Order #{{ order.order_code }}</h2>
+
+      <div class="return-items-list">
+        <div
+          class="return-item"
+          *ngFor="let item of returnableItems(order)"
+          [class.selected]="isReturnItemSelected(item.item_id)"
+          (click)="toggleReturnItem(item.item_id)"
+        >
+          <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" class="return-item-img" />
+          <div class="return-item-name">{{ item.name }}</div>
+          <div class="return-item-qty">x{{ item.quantity }}</div>
+          <div class="return-item-checkbox" [class.checked]="isReturnItemSelected(item.item_id)"></div>
+        </div>
+      </div>
+
+      <h3 class="return-section-label">Return Reason</h3>
+      <textarea
+        class="return-reason-input"
+        placeholder="Nhập lý do trả hàng..."
+        [value]="returnReason()"
+        (input)="onReasonInput($event)"
+      ></textarea>
+
+      <h3 class="return-section-label">Photo Evidence</h3>
+      <div class="return-photo-box">
+        <div class="return-photo-preview" *ngFor="let photo of returnPhotos(); let i = index">
+          <img [src]="photo" alt="Evidence" />
+          <button class="remove-photo-btn" (click)="removePhoto(i)">×</button>
+        </div>
+
+        <label class="return-photo-upload" *ngIf="returnPhotos().length < 4">
+          <input type="file" accept="image/*" multiple hidden (change)="onPhotoSelected($event)" />
+          <span>+</span>
+        </label>
+      </div>
+
+      <button class="btn-submit-return" (click)="onSubmitReturnRequest()">
+        Submit Return Request
+      </button>
+    </div>
+
+  </div>
+</div>
