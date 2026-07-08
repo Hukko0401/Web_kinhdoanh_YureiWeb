@@ -6,7 +6,7 @@ export const authGuard = async () => {
 const auth = inject(AuthService)
 const router = inject(Router)
 
-const user = await auth.getCurrentUser()
+const user = await auth.getCurrentUserAsync()
 
 if (user) {
     return true        // ← có login → cho vào
