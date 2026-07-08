@@ -1,0 +1,455 @@
+// src/app/pages/create-order/create-order.scss
+
+.create-order-page {
+  max-width: 1440px;
+  margin: 0 auto;
+  min-height: 100vh;
+  padding: 200px 124px 80px;
+  display: flex;
+  gap: 40px;
+  background: url('/Bg/Bg_CreateOrder.png') center/cover no-repeat;
+
+  .panel-title {
+    font-family: 'Roboto', sans-serif;
+    font-size: 22px;
+    font-weight: 500;
+    color: #CB8368;
+    margin: 0;
+  }
+
+  .panel-subtitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 11px;
+    color: #937B6B;
+    margin: 4px 0 0;
+  }
+
+  // ===== Cột trái: item đã chọn =====
+  .selected-items-panel {
+    width: 437px;
+    background: #FFF8EC;
+    border: 10px solid #E2D4BB;
+    border-radius: 20px;
+    padding: 24px;
+    max-height: 750px;
+    overflow-y: auto;
+
+    .items-list {
+      margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .item-row {
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: white;
+      border-radius: 10px;
+      padding: 8px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+
+      .remove-btn {
+        position: absolute;
+        top: -6px;
+        right: -6px;
+        width: 22px;
+        height: 22px;
+        background: none;
+        border: none;
+        padding: 0;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+          width: 20px;
+          height: 20px;
+          display: block;
+        }
+      }
+
+      .item-thumb {
+        width: 72px;
+        height: 72px;
+        border-radius: 12px;
+        object-fit: cover;
+      }
+
+      .item-info {
+        flex: 1;
+
+        .item-name {
+          font-family: 'Roboto', sans-serif;
+          font-weight: 600;
+          font-size: 15px;
+          color: #000;
+        }
+
+        .item-collection {
+          font-family: 'Roboto', sans-serif;
+          font-size: 11px;
+          color: #7D6A6A;
+        }
+
+        .rarity-badge {
+          height: 18px;
+          margin-top: 4px;
+        }
+      }
+
+      .qty-control {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+
+        button {
+          width: 22px;
+          height: 22px;
+          border-radius: 50%;
+          border: 1px solid #AF7017;
+          background: white;
+          color: #AF7017;
+          cursor: pointer;
+          font-size: 13px;
+
+          &:disabled { opacity: 0.3; cursor: not-allowed; }
+        }
+
+        span {
+          min-width: 18px;
+          text-align: center;
+          font-family: 'Roboto', sans-serif;
+          font-size: 13px;
+        }
+      }
+    }
+  }
+
+  // ===== Cột phải =====
+  .order-panel {
+    flex: 1;
+    background: #FFF8EC;
+    border: 10px solid #E2D4BB;
+    border-radius: 20px;
+    padding: 24px 50px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    max-height: 750px;
+    overflow-y: auto;
+
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+
+      .add-address-icon-btn {
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 0;
+
+        img { width: 48px; height: 48px; display: block; }
+      }
+    }
+
+    .empty-address {
+      background: #FFF8EC;
+      border: 2px solid #C1A3A3;
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+
+      h3 {
+        font-family: 'Roboto', sans-serif;
+        font-size: 24px;
+        color: #693030;
+        margin: 0 0 8px;
+      }
+
+      p {
+        font-size: 13px;
+        color: #333;
+        margin: 0 0 16px;
+      }
+
+      .btn-add-first {
+        width: 60px;
+        height: 44px;
+        background: #B7D59C;
+        border: 1px solid #9F9082;
+        border-radius: 20px;
+        color: #507E27;
+        font-size: 24px;
+        font-weight: 700;
+        cursor: pointer;
+      }
+    }
+
+    .address-book {
+      .address-card {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        background: white;
+        border: 1.5px solid #E2D4BB;
+        border-radius: 20px;
+        padding: 12px 16px;
+        cursor: pointer;
+        margin-bottom: 10px;
+
+        &.selected {
+          background: #FFFCDF;
+          border-color: #DFC89E;
+        }
+
+        .address-info {
+          .address-label {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            color: #7C330D;
+          }
+
+          .address-detail {
+            font-family: 'Roboto', sans-serif;
+            font-size: 11px;
+            color: #937B6B;
+          }
+        }
+
+        .expand-btn {
+          background: none;
+          border: none;
+          color: #7C330D;
+          cursor: pointer;
+          font-size: 14px;
+        }
+
+        .address-actions {
+          display: flex;
+          gap: 8px;
+
+          .action-btn {
+            width: 26px;
+            height: 26px;
+            border-radius: 0;
+            border: none;
+            background: none;
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            img {
+              width: 22px;
+              height: 22px;
+              display: block;
+            }
+          }
+        }
+      }
+    }
+
+    // ===== Payment method (grid 3 cột, fix tràn ngang) =====
+    .payment-section {
+      background: #FFFCDF;
+      border: 3px solid #F5EEAD;
+      border-radius: 20px;
+      padding: 15px 20px;
+
+      h3 {
+        font-family: 'Inclusive Sans', sans-serif;
+        font-size: 14px;
+        font-weight: 700;
+        color: #7C330D;
+        margin: 0 0 10px;
+      }
+
+      .payment-options {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 10px;
+      }
+
+      .payment-option {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 10px;
+        border-radius: 16px;
+        cursor: pointer;
+        min-width: 0;
+
+        img {
+          width: 30px;
+          height: 30px;
+          flex-shrink: 0;
+        }
+
+        span {
+          font-family: 'Inclusive Sans', sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          color: #CB8368;
+          white-space: nowrap;
+        }
+
+        .radio-dot {
+          width: 14px;
+          height: 14px;
+          border-radius: 50%;
+          background: #F6F6F6;
+          border: 1px solid #DDC69F;
+          flex-shrink: 0;
+        }
+
+        &.active .radio-dot {
+          background: #AF7017;
+        }
+      }
+    }
+
+    .order-summary {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #FFFCDF;
+      border: 3px solid #F5EEAD;
+      border-radius: 20px;
+      padding: 18px 20px;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+
+      .summary-icon { width: 70px; height: 70px; }
+
+      .summary-details {
+        flex: 1;
+
+        h3 {
+          font-family: 'Roboto', sans-serif;
+          font-size: 20px;
+          color: #B6AE66;
+          margin: 0 0 10px;
+        }
+
+        .summary-row {
+          display: flex;
+          justify-content: space-between;
+          font-family: 'Roboto', sans-serif;
+          font-size: 14px;
+          color: #7C330D;
+          padding: 6px 0;
+          border-bottom: 0.5px solid #9A8077;
+
+          &.total {
+            border-bottom: none;
+            color: #D62D30;
+            font-weight: 600;
+            font-size: 18px;
+          }
+        }
+      }
+    }
+
+    .error-text {
+      color: #C0392B;
+      font-size: 13px;
+      text-align: center;
+    }
+
+    // ===== Nút Back / Create (canh icon + chữ thẳng hàng) =====
+    .action-buttons {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+
+      button {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        line-height: 1;
+        padding: 12px 28px;
+        border-radius: 30px;
+        border: none;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 600;
+        font-size: 14px;
+        cursor: pointer;
+
+        img {
+          width: 22px;
+          height: 22px;
+          display: block;
+        }
+      }
+
+      .btn-back {
+        background: #7DD4FF;
+        color: #183C80;
+      }
+
+      .btn-confirm {
+        background: #FFC562;
+        color: #6E382B;
+
+        &:disabled { opacity: 0.5; cursor: not-allowed; }
+      }
+    }
+  }
+}
+
+// ===== Modal Success =====
+.success-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 200;
+
+  .success-modal {
+    background: #FFFEF6;
+    border: 12px solid #FFFAD9;
+    border-radius: 30px;
+    padding: 60px 40px;
+    text-align: center;
+    max-width: 600px;
+
+    h1 {
+      font-family: 'Sour Gummy', sans-serif;
+      font-size: 48px;
+      color: #AF7017;
+      margin: 0 0 20px;
+    }
+
+    p {
+      font-family: 'Sour Gummy', sans-serif;
+      font-size: 20px;
+      color: #AF7017;
+      margin: 0 0 10px;
+    }
+
+    .signature { margin-top: 20px; }
+
+    .btn-ok {
+      margin-top: 30px;
+      background: #E4FFE0;
+      border: none;
+      border-radius: 30px;
+      padding: 14px 40px;
+      font-family: 'Sour Gummy', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: #AF7017;
+      cursor: pointer;
+      box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.15);
+    }
+  }
+}

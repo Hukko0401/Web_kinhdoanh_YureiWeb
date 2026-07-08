@@ -10,4 +10,9 @@ export const routes: Routes = [
   { path: 'login', loadComponent: () => import('./pages/login/login').then(m => m.Login) },
   { path: 'forgot-password', loadComponent: () => import('./pages/forgot-password/forgot-password').then(m => m.ForgotPassword) },
   { path: 'reset-password', loadComponent: () => import('./pages/reset-password/reset-password').then(m => m.ResetPassword) },
+  { path: 'create-order', loadComponent: () => import('./pages/create-order/create-order').then(m => m.CreateOrder), canActivate: [authGuard] },
+  {
+  path: 'payment-return',
+  loadComponent: () => import('./pages/payment-return/payment-return').then(m => m.PaymentReturn),
+},
 ]

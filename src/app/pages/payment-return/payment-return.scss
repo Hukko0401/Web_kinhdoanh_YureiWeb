@@ -1,0 +1,68 @@
+.payment-return-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: url('/Bg/Bg_CreateOrder.png') center/cover no-repeat;
+  padding: 24px;
+}
+
+.result-card {
+  background: #FFF8EC;
+  border: 10px solid #E2D4BB;
+  border-radius: 20px;
+  padding: 50px 60px;
+  max-width: 480px;
+  text-align: center;
+}
+
+.state-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+
+  h2 {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    color: #7C330D;
+    margin: 0;
+  }
+
+  p {
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+    color: #937B6B;
+    margin: 0 0 10px;
+  }
+
+  .result-icon {
+    width: 72px;
+    height: 72px;
+  }
+
+  .btn-primary {
+    padding: 12px 32px;
+    border-radius: 30px;
+    border: none;
+    background: #FFC562;
+    color: #6E382B;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 15px;
+    cursor: pointer;
+  }
+}
+
+.spinner {
+  width: 48px;
+  height: 48px;
+  border: 5px solid #E2D4BB;
+  border-top-color: #AF7017;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}

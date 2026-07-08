@@ -1,0 +1,184 @@
+<app-header variant="transparent"></app-header>
+
+<div class="create-order-page">
+  <!-- Cột trái: item đã chọn -->
+  <div class="selected-items-panel">
+    <h2 class="panel-title">{{ itemCount() }} Items selected</h2>
+
+    <div class="items-list">
+      <div class="item-row" *ngFor="let item of orderDraftService.selectedItems()">
+        <!-- Nút xóa item bên trái -->
+        <button class="remove-btn" (click)="removeItemFromDraft(item.userInventoryId)">
+        <img src="/Icons/delete.png" alt="Xóa" />
+        </button>
+
+        <img class="item-thumb" [src]="item.image || '/placeholder-item.png'" [alt]="item.name" />
+
+        <div class="item-info">
+  <div class="item-name">{{ item.name }}</div>
+  <div class="item-collection">{{ item.collectionName }}</div>
+  <img class="rarity-badge" [src]="inventoryService.getRarityBadgePath(item.rarity)" [alt]="item.rarity" />
+</div>
+
+        <div class="qty-control">
+          <button (click)="decrementQty(item)" [disabled]="getShipQty(item.userInventoryId) <= 1">-</button>
+          <span>{{ getShipQty(item.userInventoryId) }}</span>
+          <button (click)="incrementQty(item)" [disabled]="getShipQty(item.userInventoryId) >= item.quantity">+</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cột phải: Shipping Book + Payment + Summary -->
+  <div class="order-panel">
+    <div class="section-header">
+      <div>
+        <h2 class="panel-title">Shipping Book</h2>
+        <p class="panel-subtitle">Manage your delivery addresses</p>
+      </div>
+      <button class="add-address-icon-btn" (click)="openAddAddressModal()">
+        <img src="/Icons/add-home.png" alt="Add address" />
+      </button>
+    </div>
+
+    <!-- Trạng thái: chưa có địa chỉ nào -->
+    <div class="empty-address" *ngIf="shippingAddressService.addresses().length === 0">
+      <h3>Add New Address</h3>
+      <p>Choose where your treasures should arrive</p>
+      <button class="btn-add-first" (click)="openAddAddressModal()">+</button>
+    </div>
+
+    <!-- Trạng thái: đã có địa chỉ -->
+    <div class="address-book" *ngIf="shippingAddressService.addresses().length > 0">
+      <!-- Card đang chọn, thu gọn -->
+      <div class="address-card selected" *ngIf="!addressListExpanded() && selectedAddress() as addr">
+        <div class="address-info">
+          <div class="address-label">{{ addr.label || 'Address' }}</div>
+          <div class="address-detail">{{ addr.recipientName }}</div>
+          <div class="address-detail">{{ addr.phoneNumber }}</div>
+          <div class="address-detail">{{ addr.address }}</div>
+        </div>
+        <button class="expand-btn" (click)="toggleAddressList()">▼</button>
+      </div>
+
+      <!-- Danh sách xổ ra, chọn địa chỉ khác -->
+      <div class="address-list-expanded" *ngIf="addressListExpanded()">
+        <div
+          class="address-card"
+          *ngFor="let addr of shippingAddressService.addresses()"
+          [class.selected]="addr.addressId === selectedAddressId()"
+          (click)="selectAddress(addr.addressId)"
+        >
+          <div class="address-info">
+            <div class="address-label">{{ addr.label || 'Address' }}</div>
+            <div class="address-detail">{{ addr.recipientName }}</div>
+            <div class="address-detail">{{ addr.phoneNumber }}</div>
+            <div class="address-detail">{{ addr.address }}</div>
+          </div>
+          <div class="address-actions">
+            <button class="action-btn check" *ngIf="addr.addressId === selectedAddressId()">
+              <img src="/Icons/check.png" alt="Đã chọn" />
+            </button>
+            <button class="action-btn edit" (click)="openEditAddressModal(addr, $event)">
+    <img src="/Icons/edit.png" alt="Sửa" />
+  </button>
+            <!-- Nút xóa địa chỉ -->
+            <button class="action-btn delete" (click)="deleteAddress(addr.addressId, $event)">
+              <img src="/Icons/delete.png" alt="Xóa" />
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Payment method -->
+    <div class="payment-section" *ngIf="shippingAddressService.addresses().length > 0">
+      <h3>Choose Your Payment Method</h3>
+      <div class="payment-options">
+        <div
+          class="payment-option"
+          [class.active]="selectedPayment() === 'vnpay'"
+          (click)="selectPayment('vnpay')"
+        >
+          <img [src]="getPaymentIcon('vnpay')" alt="VNPay" />
+          <span>VNPay</span>
+          <div class="radio-dot"></div>
+        </div>
+        <div
+          class="payment-option"
+          [class.active]="selectedPayment() === 'momo'"
+          (click)="selectPayment('momo')"
+        >
+          <img [src]="getPaymentIcon('momo')" alt="MoMo" />
+          <span>MoMo</span>
+          <div class="radio-dot"></div>
+        </div>
+        <div
+          class="payment-option"
+          [class.active]="selectedPayment() === 'zalopay'"
+          (click)="selectPayment('zalopay')"
+        >
+          <img [src]="getPaymentIcon('zalopay')" alt="ZaloPay" />
+          <span>ZaloPay</span>
+          <div class="radio-dot"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Order Summary -->
+    <div class="order-summary" *ngIf="shippingAddressService.addresses().length > 0">
+      <img class="summary-icon" src="/Icons/box.png" alt="" />
+      <div class="summary-details">
+        <h3>Order Summary</h3>
+        <div class="summary-row">
+          <span>Shipping fee</span>
+          <span>{{ shippingFee() | number }}đ</span>
+        </div>
+        <div class="summary-row">
+          <span>Treasures</span>
+          <span>{{ itemCount() }} items</span>
+        </div>
+        <div class="summary-row total">
+          <span>Total</span>
+          <span>{{ totalAmount() | number }}đ</span>
+        </div>
+      </div>
+    </div>
+
+    <p *ngIf="errorMsg()" class="error-text">{{ errorMsg() }}</p>
+
+    <!-- Action buttons cuối trang -->
+<div class="action-buttons">
+  <button class="btn-back" (click)="goBackInventory()">
+    <img src="/Icons/back-inventory.png" alt="" />
+    Back Inventory
+  </button>
+  <button
+    class="btn-confirm"
+    (click)="confirmCreateOrder()"
+    [disabled]="submitting() || shippingAddressService.addresses().length === 0"
+  >
+    <img src="/Icons/create-order.png" alt="" />
+    {{ submitting() ? 'Đang xử lý...' : 'Create Order' }}
+  </button>
+</div>
+  </div>
+</div>
+
+<!-- Modal Add Address -->
+<app-add-address-modal
+  *ngIf="showAddAddressModal()"
+  [editingAddress]="editingAddress()"
+  (close)="closeAddAddressModal()"
+  (added)="onAddressAdded()"
+></app-add-address-modal>
+
+<!-- Modal Success -->
+<div class="success-modal-backdrop" *ngIf="showSuccessModal()">
+  <div class="success-modal">
+    <h1>Successful!</h1>
+    <p>Thank you for your order!<br />Your treasures will soon begin their journey.</p>
+    <p class="signature">With love,<br />Yuréi</p>
+    <button class="btn-ok" (click)="onSuccessClose()">OK!</button>
+  </div>
+</div>

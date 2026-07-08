@@ -1,0 +1,68 @@
+<div class="modal-backdrop">
+  <div class="modal-content">
+    <h2>{{ isEditMode ? 'Edit Your Address' : 'Add New Address' }}</h2>
+    <p class="subtitle">Choose where your treasures should arrive</p>
+
+    <div class="divider">
+      <span class="flower">🌸</span>
+      <span class="line"></span>
+      <span class="dot">✦</span>
+      <span class="line"></span>
+      <span class="flower">🌸</span>
+    </div>
+
+    <div class="form-group">
+      <label><img src="/Icons/label-sign.png" alt="" /> Address Label</label>
+      <input
+        type="text"
+        placeholder="Home, Company..."
+        [ngModel]="label()"
+        (ngModelChange)="label.set($event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label><img src="/Icons/recipient-badge.png" alt="" /> Recipient Name</label>
+      <input
+        type="text"
+        [ngModel]="recipientName()"
+        (ngModelChange)="recipientName.set($event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label><img src="/Icons/phone-envelope.png" alt="" /> Phone</label>
+      <input
+        type="text"
+        [ngModel]="phoneNumber()"
+        (ngModelChange)="phoneNumber.set($event)"
+      />
+    </div>
+
+    <div class="form-group">
+      <label><img src="/Icons/address-letter.png" alt="" /> Address</label>
+      <textarea
+        [ngModel]="address()"
+        (ngModelChange)="address.set($event)"
+      ></textarea>
+    </div>
+
+    <label class="checkbox-row">
+      <input
+        type="checkbox"
+        [ngModel]="isDefault()"
+        (ngModelChange)="isDefault.set($event)"
+      />
+      Set as default address
+    </label>
+
+    <p *ngIf="error()" class="error-text">{{ error() }}</p>
+
+    <div class="modal-actions">
+      <button class="btn-back" (click)="onBackdropClick()" [disabled]="submitting()">Back</button>
+      <button class="btn-save" (click)="save()" [disabled]="submitting()">
+        {{ submitting() ? 'Đang lưu...' : 'Save' }}
+      </button>
+    </div>
+  </div>
+</div>

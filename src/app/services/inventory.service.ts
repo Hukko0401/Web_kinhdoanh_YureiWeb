@@ -2,6 +2,8 @@
 import { Injectable, signal, computed } from '@angular/core';
 import { supabase } from '../supabase.client'; // giống AuthService, import trực tiếp
 import { AuthService } from './auth.service';
+import { Router } from '@angular/router';
+import { OrderDraftService } from './order-draft.service';
 
 export type Rarity = 'Common' | 'Rare' | 'Epic' | 'Legendary' | 'Secret';
 export type SortKey = 'newest' | 'rarity_desc' | 'rarity_asc' | 'qty_desc' | 'qty_asc';
@@ -36,8 +38,12 @@ export class InventoryService {
   sortKey = signal<SortKey>('newest');
   selectedIds = signal<Set<string>>(new Set());
 
-  constructor(private authService: AuthService) {}
-
+  constructor(
+  private authService: AuthService,
+  private router: Router,
+  private orderDraftService: OrderDraftService
+) {}
+  
   async loadInventory(): Promise<void> {
     this.loading.set(true);
     this.error.set(null);
@@ -162,9 +168,12 @@ export class InventoryService {
   }
 
   shipSelected(): void {
-    const items = this.getSelectedItems();
-    console.log('Ship Selected:', items);
-  }
+  const items = this.getSelectedItems();
+  if (items.length === 0) return;
+
+  this.orderDraftService.setDraft(items);
+  this.router.navigate(['/create-order']);
+}
 
   getRarityBadgePath(rarity: Rarity): string {
     return `/Rarity/${rarity.toLowerCase()}.png`;

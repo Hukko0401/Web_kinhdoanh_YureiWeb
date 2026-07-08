@@ -59,6 +59,9 @@
         },
         "serve": {
           "builder": "@angular/build:dev-server",
+           "options": {
+              "allowedHosts": ["cannon-poppylike-nonabstractly.ngrok-free.dev"]
+                              },
           "configurations": {
             "production": {
               "buildTarget": "yurei-web:build:production"

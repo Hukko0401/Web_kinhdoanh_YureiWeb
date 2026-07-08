@@ -1,0 +1,31 @@
+<div class="payment-return-page">
+  <div class="result-card">
+    <ng-container [ngSwitch]="state()">
+      <div *ngSwitchCase="'checking'" class="state-block">
+        <div class="spinner"></div>
+        <h2>Đang xác nhận thanh toán...</h2>
+        <p>Vui lòng đợi trong giây lát, đừng tắt trang này.</p>
+      </div>
+
+      <div *ngSwitchCase="'success'" class="state-block success">
+        <img src="/Icons/success-check.png" alt="" class="result-icon" />
+        <h2>Thanh toán thành công!</h2>
+        <p>Đơn hàng của cậu đang được xử lý.</p>
+        <button class="btn-primary" (click)="goToOrders()">Xem đơn hàng</button>
+      </div>
+
+      <div *ngSwitchCase="'failed'" class="state-block failed">
+        <img src="/Icons/failed-x.png" alt="" class="result-icon" />
+        <h2>Thanh toán không thành công</h2>
+        <p>Giao dịch đã bị hủy hoặc gặp lỗi. Cậu có thể thử lại.</p>
+        <button class="btn-primary" (click)="goToInventory()">Về Inventory</button>
+      </div>
+
+      <div *ngSwitchCase="'not_found'" class="state-block failed">
+        <h2>Không tìm thấy thông tin giao dịch</h2>
+        <p>Đường dẫn không hợp lệ hoặc đã hết hạn.</p>
+        <button class="btn-primary" (click)="goToInventory()">Về Inventory</button>
+      </div>
+    </ng-container>
+  </div>
+</div>
