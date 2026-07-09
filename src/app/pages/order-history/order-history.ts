@@ -5,6 +5,8 @@ import { OrderService, StatusFilter, OrderWithDetails } from '../../services/ord
 import { ReturnRequestService } from '../../services/return.service';
 import { AuthService } from '../../services/auth.service';
 import { Header } from '../../components/header/header';
+import { Transaction } from '../../models/transaction.model';
+import { ShippingAddressService } from '../../services/shipping-address.service';
 
 @Component({
   selector: 'app-order-history',
@@ -16,6 +18,7 @@ import { Header } from '../../components/header/header';
 export class OrderHistory implements OnInit {
   orderService = inject(OrderService);
   returnRequestService = inject(ReturnRequestService);
+  shippingAddressService = inject(ShippingAddressService);
   private authService = inject(AuthService);
   private router = inject(Router);
 
@@ -27,6 +30,10 @@ export class OrderHistory implements OnInit {
   returnReason = signal('');
   returnPhotos = signal<string[]>([]);
 
+  // ===== State cho panel View Details =====
+  selectedOrderForDetails = signal<OrderWithDetails | null>(null);
+  selectedOrderTransaction = signal<Transaction | null>(null);
+
   filterLabelFor(status: StatusFilter): string {
     const label = status === 'All' ? 'All' : status.charAt(0).toUpperCase() + status.slice(1);
     return `${label} (${this.orderService.statusCountFor(status)})`;
@@ -36,15 +43,13 @@ export class OrderHistory implements OnInit {
     this.orderService.setStatusFilter(status);
   }
 
-  onViewDetails(event: Event, orderId: string) {
-    event.stopPropagation();
-    this.router.navigate(['/order-detail', orderId]);
-  }
-
   // ===== Request Return panel =====
 
   onRequestReturn(event: Event, orderId: string) {
     event.stopPropagation();
+    this.selectedOrderForDetails.set(null);
+    this.selectedOrderTransaction.set(null);
+
     const order = this.orderService.orders().find(o => o.order_id === orderId);
     if (!order) return;
 
@@ -148,8 +153,69 @@ export class OrderHistory implements OnInit {
       return;
     }
     await this.orderService.loadOrderHistory(userId);
+    await this.shippingAddressService.loadAddresses();
 
     const orderIds = this.orderService.orders().map(o => o.order_id);
     await this.returnRequestService.loadReturnedItems(orderIds);
+  }
+
+  // ===== View Details panel =====
+  async onViewDetails(event: Event, orderId: string) {
+      event.stopPropagation();
+      const order = this.orderService.orders().find(o => o.order_id === orderId);
+      if (!order) return;
+
+      this.selectedOrderForReturn.set(null); // đóng panel Return nếu đang mở
+      this.selectedOrderTransaction.set(null);
+
+      const matchedAddress = this.shippingAddressService.addresses().find(
+        a => a.address === order.address
+      );
+
+      this.selectedOrderForDetails.set({
+        ...order,
+        address_label: matchedAddress?.label ?? null
+      });
+
+      const transaction = await this.orderService.getTransactionForOrder(orderId);
+      this.selectedOrderTransaction.set(transaction);
+  }
+
+  closeDetailsPanel() {
+      this.selectedOrderForDetails.set(null);
+      this.selectedOrderTransaction.set(null);
+  }
+
+  statusStepIndex(status: string): number {
+      switch (status) {
+        case 'processing': return 0;
+        case 'shipping': return 1;
+        case 'completed': return 2;
+        default: return 0;
+      }
+  }
+
+  canCancelInDetail(order: OrderWithDetails): boolean {
+      return order.status === 'processing' || order.status === 'shipping';
+  }
+
+  async onCancelOrderDetail() {
+      const order = this.selectedOrderForDetails();
+      if (!order) return;
+      if (!confirm('Bạn có chắc muốn huỷ đơn hàng này?')) return;
+
+      const success = await this.orderService.cancelOrder(order.order_id);
+      if (success) {
+        this.selectedOrderForDetails.set({ ...order, status: 'cancelled' });
+      }
+  }
+
+  paymentGatewayLabel(gateway: string | undefined): string {
+      switch (gateway) {
+        case 'vnpay': return 'VNPay';
+        case 'momo': return 'MoMo';
+        case 'zalopay': return 'ZaloPay';
+        default: return 'N/A';
+      }
   }
 }
