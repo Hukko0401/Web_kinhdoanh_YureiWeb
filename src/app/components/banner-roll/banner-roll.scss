@@ -1,0 +1,99 @@
+.banner-roll {
+  position: absolute;
+  left: 3.125cqw;
+  top: 13.18cqh;
+  width: 93.75cqw;
+  padding: 1.736cqw;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  align-items: stretch;   // 2 cột cao bằng nhau
+  gap: 2.083cqw;
+  box-sizing: border-box;
+
+  &__sidebar {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7cqw;
+    height: 100%;   // stretch theo hàng grid
+
+    .history-btn {
+      flex-shrink: 0;   // nút history giữ nguyên chiều cao, không bị kéo giãn
+    }
+
+    app-collection-nav {
+      flex: 1;          // phần nav chiếm hết chiều cao còn lại sau history-btn
+      min-height: 0;
+    }
+  }
+
+  &__main {
+    position: relative;
+    min-width: 0;
+  }
+
+  &__stage {
+    position: relative;
+    width: 100%;
+    max-width: 76.39cqw;
+    aspect-ratio: 1100 / 800;
+    border-radius: 2.083cqw;
+    overflow: hidden;
+    outline: 0.347cqw solid #698c52;
+    outline-offset: -0.347cqw;
+  }
+
+  &__video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+}
+
+.history-btn {
+  padding: 0.7cqw 1.7cqw;
+  background: #e0f8ff;
+  box-shadow: 0.2cqw 0.2cqw 0.2cqw rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 1.4cqw;
+  color: #af7017;
+  font-family: 'Sour Gummy', sans-serif;
+  font-weight: 700;
+  font-size: clamp(12px, 1.25cqw, 18px);
+  cursor: pointer;
+}
+
+.roll-btn {
+  position: absolute;
+  width: 14.44cqw;
+  aspect-ratio: 1 / 1;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #af7017;
+  font-family: 'Fuggles', cursive;
+  font-size: clamp(12px, 3.5cqw, 50px);
+  box-shadow: 0.43cqw 0.57cqw 0.14cqw rgba(0, 0, 0, 0.25);
+  background: url('/Icons/roll.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  border: none;
+
+  &--x5 {
+    left: 68.9%;
+    top: 43.5%;
+  }
+
+  &--x1 {
+    left: 50%;
+    top: 62.5%;
+  }
+
+  &--disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}

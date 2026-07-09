@@ -1,0 +1,54 @@
+.item-card {
+  position: relative;
+  width: 157.5px;
+  height: 315px;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: width 0.25s ease, height 0.25s ease;
+
+  &__bg {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.5);
+    transition: opacity 0.25s ease;
+  }
+
+  &__name {
+    position: absolute;
+    left: 25.2px;
+    top: 55.13px;
+    color: white;
+    font-size: 15.75px;
+    font-family: 'Figma Hand', sans-serif;
+    font-weight: 700;
+    word-wrap: break-word;
+    transition: all 0.25s ease;
+  }
+
+  &--highlighted {
+    width: 300px;
+    height: 600px;
+    z-index: 1;
+
+    &::after {
+      opacity: 0;
+    }
+
+    .item-card__name {
+      left: 48px;
+      top: 105px;
+      color: #70460c;
+      font-size: 30px;
+    }
+  }
+}

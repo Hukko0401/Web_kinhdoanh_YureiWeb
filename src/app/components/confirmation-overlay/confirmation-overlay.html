@@ -1,0 +1,10 @@
+<div class="overlay-backdrop" (click)="onBackdropClick($event)">
+    <div class="overlay-card">
+      <div class="overlay-title">{{ title() }}</div>
+      <div class="overlay-message">{{ message() }}</div>
+      <div class="overlay-actions">
+        <button class="overlay-btn" (click)="confirm.emit()">{{ confirmText() }}</button>
+        <button class="overlay-btn" (click)="cancel.emit()">{{ cancelText() }}</button>
+      </div>
+    </div>
+  </div>

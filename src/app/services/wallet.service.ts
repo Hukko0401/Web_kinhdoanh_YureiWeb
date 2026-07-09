@@ -27,7 +27,7 @@ export interface WalletTransaction {
 @Injectable({ providedIn: 'root' })
 export class WalletService {
 
-  // Lấy số dư ví 
+  // Lấy số dư ví
   async getBalance(user_id: string): Promise<{ data: number; error: string | null }> {
     const { data, error } = await supabase.rpc('get_wallet_balance', {
       p_user_id: user_id

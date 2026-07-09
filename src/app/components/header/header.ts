@@ -29,7 +29,7 @@ export class Header implements OnInit, OnDestroy {
   ];
 
   navLinks = [
-    { label: 'Banner', path: '/banner' },
+    { label: 'Banner', path: '/gacha' },
     { label: 'How to Roll', path: '/how-to-roll' },
     { label: 'About Us', path: '/about' }
   ];

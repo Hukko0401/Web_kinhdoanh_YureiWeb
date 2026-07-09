@@ -1,0 +1,29 @@
+.gacha-page {
+  position: relative;   // để làm reference cho header absolute bên trong
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: url('/Bg/Bg_Gacha.png') center/cover no-repeat;
+}
+
+.gacha-header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 10;   // đè lên trên canvas
+}
+
+.gacha-canvas {
+  position: relative;
+  width: min(100vw, calc(100vh * 1440 / 1024));
+  height: min(100vh, calc(100vw * 1024 / 1440));
+  max-width: 1440px;
+  max-height: 1024px;
+
+  container-type: size;
+  container-name: gacha-canvas;
+}
