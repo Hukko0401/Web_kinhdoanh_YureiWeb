@@ -1,0 +1,20 @@
+<div
+  class="gacha-card"
+  [class.is-flipped]="isFlipped"
+  [attr.data-rarity]="rarityKey"
+  (click)="toggleFlip()"
+>
+  <div class="gacha-card__inner">
+    <div class="gacha-card__face gacha-card__face--front">
+      <img [src]="image" [alt]="name" class="gacha-card__image" />
+    </div>
+
+    <div class="gacha-card__face gacha-card__face--back">
+      <img [src]="resolvedBackImage" [alt]="name" class="gacha-card__bg" />
+      <div class="gacha-card__content">
+        <h3 class="gacha-card__title">{{ name }}</h3>
+        <span class="gacha-card__rarity">{{ rarity }}</span>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,102 @@
+.book {
+  position: relative;
+  width: 530px;
+  height: 722px;
+  perspective: 1600px;
+  transition: width 0.4s ease-in-out;
+
+  &--open {
+    width: 1064px; // 530*2 + 4px gáy sách
+  }
+
+  &__cover {
+    width: 100%;
+    height: 100%;
+    background: #fffce7;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transform-style: preserve-3d;
+    transform-origin: left center;
+    transition: transform 0.4s ease-in-out;
+
+    &--flipping {
+      transform: rotateY(-90deg);
+    }
+  }
+
+  &__cover-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  &__open {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    background: #fffce7;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+  }
+
+  &__spine {
+    width: 4px;
+    background: rgba(0, 0, 0, 0.15);
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  }
+
+  &__page {
+    flex: 1;
+    height: 100%;
+    transform-style: preserve-3d;
+    transition: transform 0.4s ease-in-out;
+
+    &--left {
+      transform-origin: right center;
+    }
+
+    &--right {
+      transform-origin: left center;
+    }
+
+    &--flipping.book__page--right {
+      transform: rotateY(90deg);
+    }
+  }
+
+  &__page-inner {
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+  }
+
+  &__nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(0, 0, 0, 0.4);
+    color: white;
+    border: none;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 5;
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+
+    &--prev { left: -18px; }
+    &--next { right: -18px; }
+  }
+}

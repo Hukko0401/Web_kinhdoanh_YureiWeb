@@ -1,0 +1,39 @@
+<app-header></app-header>
+
+<ng-container *ngIf="!isLoading(); else loadingTpl">
+  <ng-container *ngIf="collection() as c">
+    <section class="collection-hero">
+      <img class="collection-hero__bg" [src]="c.image" [alt]="c.name" />
+      <div class="collection-hero__desc">{{ c.description }}</div>
+    </section>
+
+    <section class="collection-book" [style.backgroundImage]="'url(' + backgrounds().book + ')'">
+      <div class="collection-book__flip-label">Flip the pages</div>
+      <app-book-flip [coverImage]="bookCoverImage" [pages]="bookPages"></app-book-flip>
+    </section>
+
+    <section class="collection-grid" [style.backgroundImage]="'url(' + backgrounds().framecard + ')'">
+      <div class="collection-grid__overlay"></div>
+      <h2 class="collection-grid__title">LET'S ROLL!!</h2>
+      <div class="collection-grid__cards">
+        <app-gacha-card
+          *ngFor="let item of c.items"
+          [rarity]="item.rarity"
+          [name]="item.name"
+          [image]="item.image"
+        ></app-gacha-card>
+      </div>
+    </section>
+
+    <section class="collection-quote" [style.backgroundImage]="'url(' + backgrounds().quote + ')'">
+      <p class="collection-quote__text">{{ quoteText }}</p>
+      <p class="collection-quote__title">- {{ quoteAuthor }}</p>
+    </section>
+  </ng-container>
+</ng-container>
+
+<ng-template #loadingTpl>
+  <div class="collection-loading">Loading collection...</div>
+</ng-template>
+
+<app-footer></app-footer>
