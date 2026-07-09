@@ -1,0 +1,45 @@
+.wallet-shell {
+  position: relative;
+  width: min(100%, 90rem); // 1440px
+  aspect-ratio: 1440 / 1024;
+  margin: 0 auto;
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+}
+
+.tab-hit {
+  position: absolute;
+  left: 0;
+  width: 36%;
+  display: block;
+  // background: rgba(255, 0, 0, 0.15); // bỏ comment lúc dev để canh cho dễ thấy
+
+  &--balance {
+    top: 28%;
+    height: 13.9%;
+  }
+  &--topup {
+    top: 41.9%;
+    height: 12.1%;
+  }
+  &--history {
+    top: 54%;
+    height: 21.2%;
+  }
+}
+
+.wallet-content {
+  position: absolute;
+  left: 24%;
+  top: 27%;
+  width: 54%;
+  height: 63%;
+  overflow-y: auto;
+  scrollbar-width: none;      // Firefox
+  -ms-overflow-style: none;   // IE/Edge cũ
+
+  &::-webkit-scrollbar {      // Chrome/Safari/Edge mới
+    display: none;
+  }
+}

@@ -1,0 +1,46 @@
+<div class="balance">
+  <div class="card card--coin">
+    <div class="coin-text">
+      <div class="card__title">My Coin Balance</div>
+      <div class="coin-row">
+        <img src="/Icons/coin.png" alt="coin" class="coin-icon" />
+        <span class="coin-amount">{{ balance() }}</span>
+      </div>
+      <p class="card__desc">Use coin to roll gacha, exchange items or pay shipping fees.</p>
+    </div>
+    <img src="/Icons/coin_bottle.png" alt="coin jar" class="coin-jar" />
+  </div>
+
+  <div class="card card--info">
+    <div class="card__title">Quick Info</div>
+    <div class="divider"></div>
+    <div class="info-row">
+      <span>Total Top-up</span>
+      <span class="info-value">
+        {{ quickInfo().totalTopup }}
+        <img src="/Icons/coin.png" alt="coin" class="coin-icon coin-icon--sm" />
+      </span>
+    </div>
+    <div class="divider"></div>
+    <div class="info-row">
+      <span>Total Spent</span>
+      <span class="info-value">
+        -{{ quickInfo().totalSpent }}
+        <img src="/Icons/coin.png" alt="coin" class="coin-icon coin-icon--sm" />
+      </span>
+    </div>
+    <div class="divider"></div>
+    <div class="info-row">
+      <span>Transaction Count</span>
+      <span class="info-value">{{ quickInfo().transactionCount }}</span>
+    </div>
+  </div>
+
+  <div class="card card--cta">
+    <div class="cta-text">
+      <div class="cta-title">Need more Coin?</div>
+      <div class="cta-desc">Top-up now and enjoy more fun!</div>
+    </div>
+    <a routerLink="/wallet/topup" class="cta-btn">Top-up Coin &gt;</a>
+  </div>
+</div>

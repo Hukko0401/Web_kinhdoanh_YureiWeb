@@ -1,0 +1,51 @@
+<div class="topup">
+  <div class="section">
+    <div class="section__title">1. Choose a top-up package</div>
+    <div class="packages">
+      <div
+        *ngFor="let pkg of packages()"
+        class="package-card"
+        [class.package-card--selected]="selectedPackageId() === pkg.packageId"
+        [style.--accent]="packageColor(pkg.name)"
+        (click)="selectPackage(pkg.packageId)"
+      >
+        <div class="package-card__name">{{ pkg.name }}</div>
+        <img [src]="packageIcon(pkg.name)" alt="coin" class="package-card__icon" />
+        <div class="package-card__coin-label">Coin</div>
+        <div class="package-card__coin-amount">{{ pkg.coinAmount }}</div>
+        <div class="package-card__bonus" [class.package-card__bonus--empty]="pkg.bonusCoin === 0">
+  <div class="package-card__bonus-label">Bonus</div>
+  <div class="package-card__bonus-value">+{{ pkg.bonusCoin }} coin</div>
+</div>
+       <div class="package-card__price">{{ formatPrice(pkg.price) }} VNĐ</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section__title">2. Choose payment method</div>
+    <div class="payment-methods">
+      <div
+        *ngFor="let m of methods"
+        class="payment-method"
+        [class.payment-method--selected]="selectedMethod() === m.id"
+        (click)="selectMethod(m.id)"
+      >
+        <img [src]="m.icon" [alt]="m.label" class="payment-method__icon" />
+        <span class="payment-method__label">{{ m.label }}</span>
+        <span class="payment-method__radio" [class.payment-method__radio--checked]="selectedMethod() === m.id"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="save-payment" (click)="toggleSavePayment()">
+    <span class="save-payment__box" [class.save-payment__box--checked]="savePayment()"></span>
+    <span>Save this payment method for next time</span>
+  </div>
+
+  <p class="error-msg" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+  <button class="submit-btn" [disabled]="!canSubmit()" (click)="submit()">
+    {{ submitLabel() }}
+  </button>
+</div>

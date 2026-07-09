@@ -1,0 +1,119 @@
+.balance {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.75rem);
+  height: 100%;
+  font-family: 'Inclusive Sans', sans-serif;
+  color: #744214;
+}
+
+.card {
+  background: #FFF6D9;
+  border: 1px solid #E5D3AA;
+  border-radius: 0.5rem;
+  padding: clamp(1rem, 1.8vw, 1.5rem) clamp(1.2rem, 2.2vw, 1.75rem);
+}
+
+.card__title {
+  font-weight: 700;
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  margin-bottom: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.card--coin {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(1rem, 2vw, 2rem);
+}
+
+.coin-text {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.coin-jar {
+  width: clamp(5rem, 8vw, 7rem);
+  height: auto;
+  flex-shrink: 0;
+  align-self: flex-start;
+  margin-top: 0.25rem;
+}
+
+.coin-row {
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.2vw, 1.2rem);
+}
+
+.coin-icon {
+  width: clamp(1.75rem, 2.8vw, 2.2rem);
+  height: clamp(1.75rem, 2.8vw, 2.2rem);
+
+  &--sm {
+    width: 1.25rem;
+    height: 1.25rem;
+  }
+}
+
+.coin-amount {
+  font-size: clamp(1.5rem, 2.5vw, 2.25rem);
+  font-weight: 700;
+}
+
+.card__desc {
+  font-size: clamp(0.9rem, 1.2vw, 1.125rem);
+  margin: 0;
+}
+
+.divider {
+  height: 1px;
+  background: #E5D3AA;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: clamp(0.6rem, 1.1vw, 0.9rem) 0;
+  font-size: clamp(0.9rem, 1.2vw, 1.125rem);
+}
+
+.info-value {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.card--cta {
+  display: flex;
+  width: 70%;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.cta-title {
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.2vw, 1.125rem);
+}
+
+.cta-desc {
+  font-size: clamp(0.9rem, 1.2vw, 1.125rem);
+}
+
+.cta-btn {
+  background: #7A8F09;
+  color: white;
+  border: none;
+  border-radius: 1.25rem;
+  padding: clamp(0.6rem, 1vw, 0.75rem) clamp(1.2rem, 1.8vw, 1.5rem);
+  font-weight: 700;
+  font-size: clamp(0.9rem, 1.2vw, 1.125rem);
+  text-decoration: none;
+  white-space: nowrap;
+  cursor: pointer;
+}

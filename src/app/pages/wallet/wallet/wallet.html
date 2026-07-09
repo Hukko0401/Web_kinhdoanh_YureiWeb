@@ -1,0 +1,10 @@
+<app-header variant="transparent"></app-header>
+<div class="wallet-shell" [style.background-image]="'url(' + bgImage + ')'">
+  <a routerLink="/wallet/balance" class="tab-hit tab-hit--balance" aria-label="Balance"></a>
+  <a routerLink="/wallet/topup" class="tab-hit tab-hit--topup" aria-label="Top-up"></a>
+  <a routerLink="/wallet/history" class="tab-hit tab-hit--history" aria-label="History"></a>
+
+  <div class="wallet-content">
+    <router-outlet></router-outlet>
+  </div>
+</div>

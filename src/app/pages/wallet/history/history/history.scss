@@ -1,0 +1,122 @@
+.history {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(1rem, 2vw, 1.5rem);
+  height: 100%;
+  font-family: 'Inclusive Sans', sans-serif;
+  color: #744214;
+}
+
+.filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  gap: clamp(0.75rem, 1.5vw, 1.25rem);
+}
+
+.filter-select {
+  background: #FFF7EA;
+  border: 1px solid #E5D3AA;
+  border-radius: 0.6rem;
+  padding: 0.5rem 0.75rem;
+  font-family: inherit;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+  color: #744214;
+  cursor: pointer;
+}
+
+.date-range {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: #FFF7EA;
+  border: 1px solid #E5D3AA;
+  border-radius: 0.6rem;
+  padding: 0.35rem 0.75rem;
+}
+
+.date-input {
+  border: none;
+  background: transparent;
+  font-family: inherit;
+  font-size: clamp(0.8rem, 0.95vw, 0.95rem);
+  color: #744214;
+}
+
+.date-sep {
+  color: #744214;
+}
+
+.table {
+  border: 1px solid #AF7017;
+  border-radius: 0.3rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 0;
+}
+
+.table__header,
+.table__row {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr 1fr 1.2fr 1fr;
+  align-items: center;
+  gap: 0.5rem;
+  padding: clamp(0.6rem, 1vw, 0.9rem) clamp(1rem, 1.8vw, 1.5rem);
+}
+
+.table__header {
+  background: #FFDDAA;
+  font-weight: 700;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+}
+
+.table__body {
+  overflow-y: auto;
+  scrollbar-width: none;      // Firefox
+  -ms-overflow-style: none;   // IE/Edge cũ
+
+  &::-webkit-scrollbar {      // Chrome/Safari/Edge mới
+    display: none;
+  }
+}
+
+.table__row {
+  background: #FFF7D9;
+  border-top: 1px solid #E5D3AA;
+  font-size: clamp(0.85rem, 1vw, 1rem);
+}
+
+.table__time {
+  white-space: pre-line;
+  font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+}
+
+.badge {
+  justify-self: start;
+  padding: 0.25rem 0.75rem;
+  border-radius: 1rem;
+  font-size: clamp(0.75rem, 0.9vw, 0.9rem);
+  text-align: center;
+
+  &--success {
+    background: #F2EFD6;
+    color: #515E2A;
+  }
+  &--failed {
+    background: #FCDCD5;
+    color: #C34C5C;
+  }
+  &--pending {
+    background: #F0E4C8;
+    color: #8A6D1F;
+  }
+}
+
+.table__empty {
+  padding: 2rem;
+  text-align: center;
+  color: #A08658;
+}
