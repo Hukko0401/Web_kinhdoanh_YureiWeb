@@ -1,0 +1,152 @@
+:host {
+  position: absolute;
+  inset: 0;
+  display: block;
+  z-index: 1000;
+}
+
+.history-dim {
+  width: 100%;
+  height: 100%;
+  background:transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2cqw;
+  box-sizing: border-box;
+}
+
+.history-frame {
+  position: relative;
+  width: 75cqw;
+  max-width: 880px;
+  height: 75cqh;
+  max-height: 720px;
+  background-image: url('/Bg/Bg_RollHistory.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  // background-color: #fffef6;
+  border-radius: 0.83cqw;
+  box-sizing: border-box;
+}
+
+.close-btn {
+  position: absolute;
+  top: 8cqw;
+  right: 3cqw;
+  width: 4cqw;
+  height: 3.6cqw;
+  background: #e0f8ff;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+  border: none;
+  border-radius: 10%;
+  color: #af7017;
+  font-size: clamp(16px, 1.6cqw, 22px);
+  font-family: 'Sour Gummy', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.history-content {
+  position: absolute;
+  inset: 16% 12%;         // padding trong = % của frame, tự scale theo mọi kích thước frame
+  display: flex;
+  flex-direction: column;
+  gap: 3%;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+.history-title {
+  color: #70460c;
+  font-size: clamp(20px, 2cqw, 26px);
+  font-family: 'Sour Gummy', sans-serif;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.banner-select select {
+  padding: 0.6cqw 1.2cqw;
+  border-radius: 1.2cqw;
+  border: 1px solid #70460c;
+  background: #fffef6;
+  color: #70460c;
+  font-family: 'Delicious Handrawn', sans-serif;
+  font-size: clamp(13px, 1.1cqw, 16px);
+  cursor: pointer;
+}
+
+.history-table-wrap {
+  flex: 1;
+  min-height: 0;
+  overflow: hidden;
+}
+
+.history-table {
+  width: 100%;
+  height: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+
+  th, td {
+    padding: 0.8cqw 0.7cqw;
+    text-align: center;
+    border: 1px solid rgba(112, 70, 12, 0.25);
+    color: #70460c;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  th {
+    background: rgba(112, 70, 12, 0.08);
+    font-family: 'Delicious Handrawn', sans-serif;
+    font-size: clamp(13px, 1.25cqw, 18px);
+  }
+
+  td {
+    font-family: 'Figma Hand', sans-serif;
+    font-size: clamp(11px, 1cqw, 14px);
+  }
+
+  &__empty-row td {
+    color: transparent;
+  }
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.2cqw;
+  flex-shrink: 0;
+
+  &__arrow {
+    background: none;
+    border: none;
+    color: #70460c;
+    font-size: clamp(16px, 1.7cqw, 24px);
+    cursor: pointer;
+
+    &:disabled {
+      opacity: 0.3;
+      cursor: default;
+    }
+  }
+
+  &__current {
+    color: #70460c;
+    font-size: clamp(14px, 1.3cqw, 20px);
+    font-family: 'Delicious Handrawn', sans-serif;
+  }
+}

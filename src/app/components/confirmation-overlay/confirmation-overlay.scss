@@ -1,0 +1,74 @@
+.overlay-backdrop {
+  position: absolute;   // đổi từ fixed
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1.4cqw;
+}
+
+.overlay-card {
+  width: clamp(280px, 28cqw, 500px);
+  min-height: 18cqh;
+  padding: clamp(16px, 1.4cqw, 32px) clamp(20px, 2.1cqw, 40px);
+  background: #FFFEF6;
+  box-shadow: 0.7cqw 1.4cqw 0.28cqw rgba(0, 0, 0, 0.25);
+  border-radius: 2.1cqw;
+  outline: 0.7cqw #FFFAD9 solid;
+  outline-offset: -0.7cqw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(20px, 3.5cqw, 48px);
+  box-sizing: border-box;
+}
+
+.overlay-title {
+  text-align: center;
+  color: #AF7017;
+  font-family: 'Sour Gummy', sans-serif;
+  font-weight: 700;
+  font-size: clamp(22px, 3.5cqw, 42px);
+}
+
+.overlay-message {
+  text-align: center;
+  color: #AF7017;
+  font-family: 'Sour Gummy', sans-serif;
+  font-weight: 700;
+  font-size: clamp(14px, 1.8cqw, 22px);
+}
+
+.overlay-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: clamp(12px, 2.8cqw, 32px);
+  flex-wrap: wrap;
+}
+
+.overlay-btn {
+  min-width: 100px;
+  height: 44px;
+  padding: 8px clamp(14px, 1.4cqw, 20px);
+  background: #E0F8FF;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
+  border-radius: 1.4cqw;
+  border: none;
+  cursor: pointer;
+  color: #AF7017;
+  font-family: 'Sour Gummy', sans-serif;
+  font-weight: 700;
+  font-size: clamp(14px, 1.4cqw, 20px);
+  transition: transform 0.1s ease;
+
+  &:hover {
+    transform: scale(1.03);
+  }
+
+  &:active {
+    transform: scale(0.97);
+  }
+}

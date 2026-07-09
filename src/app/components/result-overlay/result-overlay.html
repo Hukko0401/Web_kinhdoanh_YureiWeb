@@ -1,0 +1,18 @@
+<div class="result-dim">
+  <div class="result-frame">
+    <button class="close-btn" (click)="close.emit()">→</button>
+
+    <div class="result-content">
+      <div class="items-row">
+        @for (item of items(); track item.rollHistoryId; let i = $index) {
+          <app-result-item-card
+            [itemName]="item.itemName"
+            [imageUrl]="item.imageUrl"
+            [isHighlighted]="isActive(i)"
+            (hovered)="onItemHover(i)"
+          />
+        }
+      </div>
+    </div>
+  </div>
+</div>

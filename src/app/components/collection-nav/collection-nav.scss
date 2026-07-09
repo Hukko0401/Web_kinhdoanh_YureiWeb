@@ -1,0 +1,53 @@
+:host {
+  display: flex;
+  height: 100%;
+  max-width: 12cqw;   // khớp đúng với cột grid bên banner-roll
+  overflow: hidden;   // chặn nội dung tràn ra ngoài cột, không đè lên main banner
+}
+
+.collection-nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  padding: 0.694cqw;
+  box-sizing: border-box;
+
+  &__line {
+    width: 2px;
+    flex: 1 1 0;
+    min-height: 12px;
+    background: #70460C;
+    opacity: 0.4;
+  }
+
+  &__item {
+    flex-shrink: 0;
+    width: 100%;
+    max-width: 10.12cqw;
+    padding: 4px 0;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: center;
+    color: #70460C;
+    font-family: 'Delicious Handrawn', cursive;
+    font-size: clamp(12px, 1.4cqw, 20px); // giảm nhẹ so với trước để chữ dễ vừa khung hơn
+
+    white-space: normal;      // đổi lại cho phép xuống dòng tự nhiên nếu tên dài
+    overflow: hidden;
+    text-overflow: ellipsis;
+    word-break: break-word;
+    transform: scale(1);
+    transform-origin: center;
+    transition: transform 0.2s ease;
+
+    &--active {
+      transform: scale(1.25); // giảm nhẹ scale để bớt tràn khi active
+      text-shadow: 0px 4px 7px rgba(255, 250, 217, 0.70);
+      z-index: 1;
+      position: relative;
+    }
+  }
+}

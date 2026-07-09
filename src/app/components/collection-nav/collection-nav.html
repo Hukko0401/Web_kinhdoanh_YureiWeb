@@ -1,0 +1,14 @@
+<nav class="collection-nav">
+  @for (c of collections(); track c.id; let first = $first) {
+    @if (!first) {
+      <div class="collection-nav__line"></div>
+    }
+    <button
+      class="collection-nav__item"
+      [class.collection-nav__item--active]="c.id === activeId()"
+      (click)="onSelect(c.id)"
+    >
+      {{ c.name }}
+    </button>
+  }
+</nav>

@@ -1,0 +1,78 @@
+<div class="banner-roll">
+  <div class="banner-roll__sidebar">
+    @if (isLoggedIn) {
+      <button class="history-btn" (click)="onOpenHistory()">History</button>
+    }
+    <app-collection-nav
+      [collections]="collections()"
+      [activeId]="activeCollectionId()"
+      (select)="onSelectCollection($event)"
+    />
+  </div>
+
+  <div class="banner-roll__main">
+    <div class="banner-roll__stage">
+      <video #rollVideo class="banner-roll__video" (ended)="onVideoEnded()" muted playsinline preload="auto">
+        <source [src]="activeVideoUrl()" type="video/mp4" />
+      </video>
+
+      @if (phase() === 'idle') {
+        @if (isLoggedIn) {
+          <button class="roll-btn roll-btn--x5" (click)="onRollClick('x5')">Roll x5</button>
+          <button class="roll-btn roll-btn--x1" (click)="onRollClick('x1')">Roll x1</button>
+        } @else {
+          <div class="roll-btn roll-btn--disabled">Roll x5</div>
+          <div class="roll-btn roll-btn--disabled">Roll x1</div>
+        }
+      }
+    </div>
+  </div>
+</div>
+
+@switch (overlay().type) {
+  @case ('confirm-roll') {
+    <app-confirmation-overlay
+      title="Confirm Roll"
+      [message]="'Roll ' + confirmRollType() + '? This will use your coins.'"
+      confirmText="Roll"
+      cancelText="Cancel"
+      (confirm)="onConfirmRoll()"
+      (cancel)="onCancelConfirm()"
+    />
+  }
+  @case ('insufficient-coin') {
+    <app-confirmation-overlay
+      title="Not enough coins"
+      message="You don't have enough coins for this roll."
+      confirmText="Top Up"
+      cancelText="Cancel"
+      (confirm)="onGoTopUp()"
+      (cancel)="onCancelConfirm()"
+    />
+  }
+  @case ('error') {
+    <app-confirmation-overlay
+      title="Something went wrong"
+      [message]="errorMessage()"
+      confirmText="OK"
+      cancelText="Close"
+      (confirm)="onCancelConfirm()"
+      (cancel)="onCancelConfirm()"
+    />
+  }
+  @case ('result') {
+    <app-result-overlay [items]="resultItems()" (close)="onCloseResult()" />
+  }
+  @case ('history') {
+    <app-history-overlay
+      [rows]="historyRows()"
+      [banners]="historyBanners()"
+      [selectedBannerId]="selectedBannerId()"
+      [currentPage]="historyCurrentPage()"
+      [totalPages]="historyTotalPages()"
+      (close)="onCloseHistory()"
+      (pageChange)="onHistoryPageChange($event)"
+      (bannerChange)="onHistoryBannerChange($event)"
+    />
+  }
+}
