@@ -14,25 +14,25 @@
 }
 
 .packages {
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(0.75rem, 1.5vw, 1.5rem);
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: clamp(0.5rem, 1vw, 1rem);
 }
 
 .package-card {
   --accent: #839236;
-  width: clamp(6.5rem, 12vw, 8.7rem);
   background: #FFFDF8;
   border: 1px solid #E5D3AA;
   border-radius: 0.5rem;
-  padding: clamp(0.5rem, 1vw, 0.9rem);
+  padding: clamp(0.4rem, 0.8vw, 0.75rem);
   text-align: center;
   cursor: pointer;
   transition: box-shadow 0.15s ease;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.25rem;
+  gap: 0.2rem;
+  min-width: 0; // quan trọng: cho phép grid item co nhỏ hơn nội dung mặc định
 
   &:hover {
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
@@ -93,6 +93,7 @@
 }
 
 .payment-methods {
+  width: 70%;
   display: flex;
   flex-direction: column;
   gap: clamp(0.4rem, 0.8vw, 0.75rem);

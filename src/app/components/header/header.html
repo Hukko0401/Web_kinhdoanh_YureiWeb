@@ -1,54 +1,64 @@
-<header class="app-header" [class.header--transparent]="variant === 'transparent'">
-<a routerLink="/" class="logo">
-    <img src="/Icons/logo.png" alt="Yurei" />
+<header class="app-header-wrapper" [class.header--transparent]="variant === 'transparent'">
+  <div class="app-header">
+    <a routerLink="/" class="logo" (click)="closeMobileMenu()">
+      <img src="/Icons/logo.png" alt="Yurei" />
+    </a>
+
+    <button class="menu-toggle" (click)="toggleMobileMenu()" [class.is-open]="isMobileMenuOpen" aria-label="Toggle menu">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="right-group" [class.is-open]="isMobileMenuOpen">
+      <nav class="main-nav">
+        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">
+          Home
+        </a>
+
+        <div class="nav-dropdown"
+          (mouseenter)="toggleCollections(true)"
+          (mouseleave)="toggleCollections(false)">
+          <span>Collections</span>
+          <div class="dropdown-menu" *ngIf="isCollectionsOpen">
+            <a *ngFor="let c of activeCollections" [routerLink]="['/collections', c.id]" (click)="closeMobileMenu()">
+              {{ c.name }}
+            </a>
+          </div>
+        </div>
+
+        <a *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active" (click)="closeMobileMenu()">
+          {{ link.label }}
+        </a>
+      </nav>
+
+      <div class="action-group guest" *ngIf="!isLoggedIn">
+        <a routerLink="/login" class="btn" (click)="closeMobileMenu()">Log In</a>
+        <a routerLink="/register" class="btn" (click)="closeMobileMenu()">Sign Up</a>
+      </div>
+
+      <div class="action-group user" *ngIf="isLoggedIn">
+        <a routerLink="/wallet" class="icon-item coin-item" (click)="closeMobileMenu()">
+  <img src="/Icons/coins.png" alt="Coins" />
+  <span class="coin-balance">{{ coinBalance() }}</span>
 </a>
 
-<div class="right-group">
-    <nav class="main-nav">
-    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-        Home
-    </a>
-
-    <div class="nav-dropdown"
-        (mouseenter)="toggleCollections(true)"
-        (mouseleave)="toggleCollections(false)">
-        <span>Collections</span>
-        <div class="dropdown-menu" *ngIf="isCollectionsOpen">
-          <a *ngFor="let c of activeCollections" [routerLink]="['/collections', c.id]">
-            {{ c.name }}
+        <a routerLink="/inventory" class="icon-item" (click)="closeMobileMenu()">
+          <img src="/Icons/inventory.png" alt="Inventory" />
         </a>
-        </div>
+
+        <a routerLink="/order-history" class="icon-item" (click)="closeMobileMenu()">
+         <img src="/Icons/order_history.png" alt="order history" />
+        </a>
+
+        <a routerLink="/notifications" class="icon-item" (click)="closeMobileMenu()">
+          <img src="/Icons/notification.png" alt="notifications" />
+        </a>
+
+        <a routerLink="/profile" class="icon-item avatar-link" (click)="closeMobileMenu()">
+          <img src="/Icons/profile.png" alt="profile" class="avatar" />
+        </a>
+      </div>
     </div>
-
-      <a *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active">
-        {{ link.label }}
-    </a>
-    </nav>
-
-    <!-- Guest -->
-    <div class="action-group guest" *ngIf="!isLoggedIn">
-    <a routerLink="/login" class="btn">Log In</a>
-    <a routerLink="/register" class="btn">Sign Up</a>
-    </div>
-
-    <!-- Logged-in -->
-<div class="action-group user" *ngIf="isLoggedIn">
-  <div class="stat-item">
-    <a routerLink="/wallet">
-      <img src="/Icons/coins.png" alt="Coins" />
-    </a>
   </div>
-    <div class="stat-item">
-    <a routerLink="/inventory">
-        <img src="/Icons/inventory.png" alt="Inventory" />
-    </a>
-</div>
-    <button class="icon-btn" routerLink="/notifications">
-        <img src="/Icons/notification.png" alt="notifications" />
-    </button>
-    <a routerLink="/profile" class="avatar-link">
-        <img src="/Icons/profile.png" alt="profile" class="avatar" />
-    </a>
-    </div>
-</div>
 </header>

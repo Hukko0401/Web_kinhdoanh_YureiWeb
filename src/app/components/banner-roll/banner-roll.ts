@@ -9,6 +9,7 @@ import { CollectionNav, CollectionNavItem } from '../collection-nav/collection-n
 import { ResultOverlay, RollResultItem } from '../result-overlay/result-overlay';
 import { HistoryOverlay, RollHistoryRow, BannerOption } from '../history-overlay/history-overlay';
 import { ConfirmationOverlay } from '../confirmation-overlay/confirmation-overlay';
+import { WalletService } from '../../services/wallet.service';
 
 type RollPhase = 'idle' | 'playing' | 'done';
 
@@ -78,7 +79,8 @@ export class BannerRoll implements OnInit, OnDestroy {
     private authService: AuthService,
     private gachaService: GachaService,
     private collectionService: CollectionService,
-    private router: Router
+    private router: Router,
+    private walletService: WalletService
   ) {}
 
   ngOnInit(): void {
@@ -121,7 +123,7 @@ export class BannerRoll implements OnInit, OnDestroy {
     this.overlay.set({ type: 'confirm-roll', rollType: type });
   }
 
-  async onConfirmRoll(): Promise<void> {
+ async onConfirmRoll(): Promise<void> {
     const rollType = this.confirmRollType();
     const collectionId = this.activeCollectionId();
 
@@ -142,10 +144,14 @@ export class BannerRoll implements OnInit, OnDestroy {
       return;
     }
 
+    // Roll xong = đã trừ coin ở backend -> fetch lại balance mới nhất
+    this.walletService.refreshBalance(this.currentUserId);
+
     this.pendingResultItems = data ?? [];
     this.phase.set('playing');
     this.rollVideo?.nativeElement.play();
   }
+
 
   onCancelConfirm(): void {
     this.overlay.set({ type: 'none' });

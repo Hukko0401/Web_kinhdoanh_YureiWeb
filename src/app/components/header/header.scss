@@ -1,13 +1,6 @@
-.app-header {
+.app-header-wrapper {
   width: 100%;
-  max-width: 1440px;
-  height: 102px;
-  margin: 0 auto;
-  padding: 0 40px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255, 250, 217, 0.7); // default
+  background: rgba(255, 250, 217, 0.7);
   position: absolute;
   top: 0;
   left: 0;
@@ -17,40 +10,78 @@
   &.header--transparent {
     background: rgba(255, 249.87, 216.50, 0.20);
   }
+}
 
+.app-header {
+  width: 100%;
+  max-width: 1440px;
+  height: 102px;
+  margin: 0 auto;
+  padding: 0 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-.logo img { height: 48px; }
+  .logo img { height: 48px; }
 
-.right-group {
+  .menu-toggle {
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 28px;
+    height: 20px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    z-index: 11;
+
+    span {
+      display: block;
+      height: 2px;
+      width: 100%;
+      background: #784400;
+      border-radius: 2px;
+      transition: transform 0.2s ease, opacity 0.2s ease;
+    }
+
+    &.is-open {
+      span:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+      span:nth-child(2) { opacity: 0; }
+      span:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+    }
+  }
+
+  .right-group {
     display: flex;
     align-items: center;
     gap: 40px;
-}
+  }
 
-.main-nav {
+  .main-nav {
     display: flex;
     align-items: center;
     gap: 32px;
 
     a, span {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: #784400;
-    text-decoration: none;
-    cursor: pointer;
+      font-family: 'Roboto', sans-serif;
+      font-weight: 700;
+      font-size: 15px;
+      color: #784400;
+      text-decoration: none;
+      cursor: pointer;
 
-    &.active {
-      color: #AF7017;        // đậm/nổi hơn màu thường thay vì mờ đi
-      font-weight: 800;      // đậm nét hơn chút
-      transform: translateY(1px); // hiệu ứng "lõm xuống", như đang được nhấn giữ
+      &.active {
+        color: #AF7017;
+        font-weight: 800;
+        transform: translateY(1px);
+      }
     }
-}
 
     .nav-dropdown {
-    position: relative;
+      position: relative;
 
-    .dropdown-menu {
+      .dropdown-menu {
         position: absolute;
         top: 100%;
         left: 0;
@@ -60,61 +91,158 @@
         z-index: 10;
 
         a {
-        display: block;
-        padding: 8px 16px;
-        font-weight: 500;
-        &:hover {
-        background: rgba(216, 245, 255, 0.9); // #D8F5FF với alpha 90%
-    }
+          display: block;
+          padding: 8px 16px;
+          font-weight: 500;
+          &:hover { background: rgba(216, 245, 255, 0.9); }
         }
+      }
     }
-    }
-}
+  }
 
-.action-group {
+  .action-group {
     display: flex;
     align-items: center;
     gap: 16px;
 
     &.guest {
-    .btn {
-    font-family: 'Roboto', sans-serif;
-    font-weight: 700;
-    font-size: 15px;
-    color: #AF7017;
-    outline: 1px solid #AF7017;
-    outline-offset: -1px;
-    border-radius: 100px;
-    padding: 8px 24px;
-    text-decoration: none;
-    transition: background 0.15s ease, color 0.15s ease;
+      .btn {
+        font-family: 'Roboto', sans-serif;
+        font-weight: 700;
+        font-size: 15px;
+        color: #AF7017;
+        outline: 1px solid #AF7017;
+        outline-offset: -1px;
+        border-radius: 100px;
+        padding: 8px 24px;
+        text-decoration: none;
+        transition: background 0.15s ease, color 0.15s ease;
 
-    &:hover {
-        background: #AF7017;
-        color: #FFFAD9;      // đổi chữ sang màu nền header cho tương phản khi hover
-    }
-    }
+        &:hover {
+          background: #AF7017;
+          color: #FFFAD9;
+        }
+      }
     }
 
     &.user {
-    .stat-item img { width: 28px; height: 28px; }
-
-    .icon-btn {
-        background: none;
-        border: none;
-        cursor: pointer;
-        img { width: 26px; height: 26px; }
-    }
-
-    .avatar-link {
-        display: block;
-        .avatar {
+      .icon-item {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 40px;
         height: 40px;
         border-radius: 50%;
-        cursor: pointer;
+        text-decoration: none;
+        color: #784400;
+        transition: background 0.15s ease;
+
+        img { width: 26px; height: 26px; object-fit: contain; }
+        svg { width: 24px; height: 24px; }
+
+        &:hover { background: rgba(175, 112, 23, 0.12); }
+      }
+
+      .coin-item {
+  width: auto;
+  gap: 6px;
+  padding: 6px 14px 6px 8px;
+  border-radius: 100px;
+  background: rgba(255, 255, 255, 0.55);
+  border: 1px solid rgba(175, 112, 23, 0.35);
+  transition: background 0.15s ease, border-color 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.8);
+    border-color: rgba(175, 112, 23, 0.55);
+  }
+
+  .coin-balance {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    color: #784400;
+  }
+}
+
+      .avatar-link {
+        &:hover { background: none; }
+        .avatar {
+          width: 40px;
+          height: 40px;
+          border-radius: 50%;
+          object-fit: cover;
+          cursor: pointer;
         }
+      }
     }
-    } // đóng &.user
-  } // đóng .action-group
-} // đóng .app-header
+  }
+}
+
+// ===== Responsive =====
+@media (max-width: 1200px) {
+  .app-header {
+    padding: 0 24px;
+    .main-nav { gap: 20px; }
+    .right-group { gap: 24px; }
+  }
+}
+
+@media (max-width: 900px) {
+  .app-header {
+    height: 72px;
+    padding: 0 20px;
+
+    .menu-toggle { display: flex; }
+
+    .right-group {
+      position: absolute;
+      top: 72px;
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      background: #FFFAD9;
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.25s ease;
+
+      &.is-open {
+        max-height: 480px;
+        padding: 16px 20px 24px;
+        border-top: 1px solid rgba(175, 112, 23, 0.2);
+      }
+
+      .main-nav {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 16px;
+        width: 100%;
+
+        .nav-dropdown .dropdown-menu {
+          position: static;
+          background: transparent;
+          padding-left: 12px;
+        }
+      }
+
+      .action-group {
+        width: 100%;
+        margin-top: 16px;
+
+        &.guest {
+          flex-direction: column;
+          align-items: stretch;
+          gap: 12px;
+          .btn { text-align: center; }
+        }
+
+        &.user {
+          justify-content: flex-start;
+          gap: 20px;
+        }
+      }
+    }
+  }
+}

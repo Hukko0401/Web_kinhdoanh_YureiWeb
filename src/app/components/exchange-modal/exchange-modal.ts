@@ -2,6 +2,7 @@
 import { Component, Input, Output, EventEmitter, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { InventoryItem, InventoryService } from '../../services/inventory.service';
+import { WalletService } from '../../services/wallet.service';
 
 @Component({
   selector: 'app-exchange-modal',
@@ -19,7 +20,10 @@ export class ExchangeModal {
   loading = signal(false);
   error = signal<string | null>(null);
 
-  constructor(private inventoryService: InventoryService) {}
+  constructor(
+    private inventoryService: InventoryService,
+    private walletService: WalletService   // thêm dòng này
+  ) {}
 
   coinRate = computed(() => this.inventoryService.exchangeRates()[this.item.rarity]);
   totalCoin = computed(() => this.coinRate() * this.quantity());
@@ -56,6 +60,9 @@ export class ExchangeModal {
       this.error.set(result.error ?? 'Có lỗi xảy ra, thử lại sau');
       return;
     }
+
+    // Đã có sẵn newBalance từ response -> đẩy thẳng vào balance$, khỏi gọi thêm API
+    this.walletService.setBalance(result.newBalance!);
 
     this.exchanged.emit({
       coinReceived: result.coinReceived!,
