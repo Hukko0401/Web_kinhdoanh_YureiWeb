@@ -86,18 +86,22 @@ export class BannerRoll implements OnInit, OnDestroy {
       this.isLoggedIn = !!user;
       this.currentUserId = user?.id ?? null;
     });
-
+  
     this.collectionService.getCollections().then(({ data, error }) => {
       if (error) {
         console.error('Load collections failed:', error);
         return;
       }
       if (data.length === 0) return;
-
+  
       this.collections.set(
         data.map(c => ({ id: c.id, name: c.name, videoUrl: c.videoUrl }))
       );
       this.activeCollectionId.set(data[0].id);
+  
+      // <source> đã được render với DEFAULT_VIDEO lúc đầu (trước khi có data thật),
+      // cần ép load lại để trình duyệt đọc đúng activeVideoUrl() vừa cập nhật
+      this.rollVideo?.nativeElement.load();
     });
   }
 
