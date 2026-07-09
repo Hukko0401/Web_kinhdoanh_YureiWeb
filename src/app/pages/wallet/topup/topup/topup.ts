@@ -1,6 +1,7 @@
 import { Component, OnInit, computed, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WalletService, TopupPackage } from '../../../../services/wallet.service';
+import { AuthService } from '../../../../services/auth.service';
 
 type PaymentMethod = 'momo' | 'zalopay' | 'vnpay';
 
@@ -18,6 +19,7 @@ export class Topup implements OnInit {
   savePayment = signal(false);
   submitting = signal(false);
   errorMsg = signal<string | null>(null);
+  private currentUserId: string | null = null;
 
   methods: { id: PaymentMethod; label: string; icon: string }[] = [
     { id: 'momo', label: 'Momo', icon: '/Icons/momo.png' },
@@ -50,10 +52,16 @@ export class Topup implements OnInit {
 
   canSubmit = computed(() => !!this.selectedPackageId() && !!this.selectedMethod() && !this.submitting());
 
-  constructor(private walletService: WalletService) {}
+  constructor(
+    private walletService: WalletService,
+    private authService: AuthService   // thêm dòng này
+  ) {}
 
-  async ngOnInit(): Promise<void> {
+   async ngOnInit(): Promise<void> {
     this.packages.set(await this.walletService.getTopupPackages());
+    this.authService.currentUser$.subscribe(user => {
+    this.currentUserId = user?.id ?? null;
+    });
   }
 
   packageColor(name: string): string {
@@ -94,6 +102,9 @@ export class Topup implements OnInit {
     }
 
     if (mock) {
+      if (this.currentUserId) {
+        await this.walletService.refreshBalance(this.currentUserId);
+      }
       alert('Top-up thành công!');
       window.location.href = '/wallet/balance';
       return;

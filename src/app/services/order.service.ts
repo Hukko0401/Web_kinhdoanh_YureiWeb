@@ -1,6 +1,7 @@
 import { Injectable, signal, computed } from '@angular/core'
 import { supabase } from '../supabase.client'
 import { Order } from '../models/order.model';
+import { Transaction } from '../models/transaction.model';
 
 export interface OrderDetailItem {
   item_id: string;
@@ -14,6 +15,7 @@ export interface OrderWithDetails extends Order {
   order_code: string;
   total: number;
   items: OrderDetailItem[];
+  address_label?: string | null;
 }
 
 export type StatusFilter = 'All' | Order['status'];
@@ -130,7 +132,39 @@ async loadOrderHistory(user_id: string) {
 }
 
   // Huỷ order (trong 30 phút)
-async cancelOrder(order_id: string) {}
+async cancelOrder(order_id: string): Promise<boolean> {
+    this.loading.set(true);
+    this.error.set(null);
+
+    const current = this.rawOrders().find(o => o.order_id === order_id);
+
+    if (current) {
+      const diffMinutes = (Date.now() - new Date(current.created_at).getTime()) / (1000 * 60);
+      if (diffMinutes > 30) {
+        this.error.set('Đơn hàng chỉ có thể huỷ trong vòng 30 phút sau khi đặt.');
+        this.loading.set(false);
+        return false;
+      }
+    }
+
+    const { error } = await supabase
+      .from('ORDER')
+      .update({ status: 'cancelled' })
+      .eq('order_id', order_id);
+
+    if (error) {
+      this.error.set(error.message);
+      this.loading.set(false);
+      return false;
+    }
+
+    this.rawOrders.update(list =>
+      list.map(o => o.order_id === order_id ? { ...o, status: 'cancelled' as const } : o)
+    );
+
+    this.loading.set(false);
+    return true;
+  }
 
   // Lấy chi tiết order
 async getOrderById(order_id: string): Promise<OrderWithDetails | null> {
@@ -165,6 +199,21 @@ async getOrderById(order_id: string): Promise<OrderWithDetails | null> {
     if (!data) return null;
 
     return this.mapOrderRow(data);
+  }
+
+async getTransactionForOrder(orderId: string): Promise<Transaction | null> {
+    const { data, error } = await supabase
+      .from('TRANSACTION')
+      .select('transaction_id, wallet_id, type, amount, gateway_transaction_id, payment_gateway, reference_id, time, status')
+      .eq('reference_id', orderId)
+      .eq('type', 'order')
+      .maybeSingle();
+
+    if (error || !data) {
+      return null;
+    }
+
+    return data as Transaction;
   }
 
 }

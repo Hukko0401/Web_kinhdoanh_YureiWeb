@@ -4,7 +4,6 @@ import { supabase } from '../supabase.client'
 export interface ActiveCollection {
   id: string;
   name: string;
-  imageUrl: string | null;
   videoUrl: string | null;
 }
 
@@ -21,7 +20,6 @@ export class CollectionService {
     const mapped: ActiveCollection[] = (data ?? []).map((row: any) => ({
       id: row.collection_id,
       name: row.name,
-      imageUrl: row.image,
       videoUrl: row.video,
     }))
   

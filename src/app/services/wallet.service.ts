@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
 import { supabase } from '../supabase.client'
+import { BehaviorSubject } from 'rxjs'
 
 export interface TopupPackage {
   packageId: string;
@@ -27,7 +28,12 @@ export interface WalletTransaction {
 @Injectable({ providedIn: 'root' })
 export class WalletService {
 
-  // Lấy số dư ví
+  
+  private balanceSubject = new BehaviorSubject<number>(0);
+  balance$ = this.balanceSubject.asObservable();
+  
+
+  // Lấy số dư ví (giữ nguyên logic cũ)
   async getBalance(user_id: string): Promise<{ data: number; error: string | null }> {
     const { data, error } = await supabase.rpc('get_wallet_balance', {
       p_user_id: user_id
@@ -37,9 +43,23 @@ export class WalletService {
       return { data: 0, error: error.message }
     }
 
-    // RPC trả về numeric đơn (không phải mảng), Postgres NULL nếu không tìm thấy wallet
     return { data: data ?? 0, error: null }
   }
+  
+
+  // Gọi lại getBalance rồi bắn giá trị mới vào balance$
+  // -> mọi component đang subscribe (header, wallet page...) tự update
+  async refreshBalance(user_id: string): Promise<void> {
+    const { data, error } = await this.getBalance(user_id);
+    if (!error) {
+      this.balanceSubject.next(data);
+    }
+  }
+  // 👇 thêm hàm này ngay đây
+  setBalance(newBalance: number): void {
+    this.balanceSubject.next(newBalance);
+  }
+
 
   // Helper nội bộ: lấy wallet_id (cần cho query TRANSACTION), không đụng tới getBalance
   private async getWalletId(user_id: string): Promise<string | null> {

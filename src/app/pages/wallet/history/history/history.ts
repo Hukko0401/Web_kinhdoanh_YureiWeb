@@ -113,15 +113,16 @@ export class History implements OnInit {
   }
 
   signedAmount(tx: WalletTransaction): number {
-    if (tx.type === 'topup' || tx.type === 'exchange') return tx.amount;
-    return -tx.amount;
-  }
+  const abs = Math.abs(tx.amount);
+  if (tx.type === 'topup' || tx.type === 'exchange') return abs;
+  return -abs;
+}
 
-  changeLabel(tx: WalletTransaction): string {
-    const signed = this.signedAmount(tx);
-    return signed >= 0 ? `+ ${tx.amount}` : `- ${tx.amount}`;
-  }
-
+ changeLabel(tx: WalletTransaction): string {
+  const abs = Math.abs(tx.amount);
+  if (tx.type === 'topup' || tx.type === 'exchange') return `+ ${abs}`;
+  return `- ${abs}`;
+}
   formatDate(time: string): string {
     const d = new Date(time);
     const pad = (n: number) => n.toString().padStart(2, '0');

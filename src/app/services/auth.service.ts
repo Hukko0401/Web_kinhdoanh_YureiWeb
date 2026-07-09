@@ -47,16 +47,16 @@ export class AuthService {
   if (identifier.includes('@')) {
     email = identifier.trim()
   } else {
-    const { data, error } = await supabase
-      .from('user_lookup')
-      .select('email')
-      .eq('phone_number', identifier.trim())
-      .maybeSingle()
+   const { data, error } = await supabase
+  .from('user_lookup')
+  .select('email')
+  .eq('phone_number', identifier.trim())
+  .maybeSingle()
 
-    if (error || !data) {
-      throw new Error('Không tìm thấy tài khoản với số điện thoại này')
-    }
-    email = data.email
+if (error || !data) {
+  throw new Error('Không tìm thấy tài khoản với số điện thoại này')
+}
+email = data.email
   }
 
   const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({ email, password })
@@ -145,36 +145,47 @@ export class AuthService {
    * rồi insert profile vào bảng USER.
    */
   async completePhoneRegistration(phone: string, password: string, username: string) {
-    const fakeEmail = this.generateFakeEmail(phone)
+  const fakeEmail = this.generateFakeEmail(phone)
 
-    const { data, error } = await supabase.auth.signUp({
+  const { data, error } = await supabase.auth.signUp({
+    email: fakeEmail,
+    password
+  })
+  if (error) throw error
+
+  let user = data.user
+  if (!user) throw new Error('Không tạo được tài khoản')
+
+  // Confirm email đang bật (cần cho luồng email thật) -> signUp() ở nhánh phone này
+  // sẽ KHÔNG trả session, vì fake email không có hộp thư thật để confirm.
+  // Chủ động sign in lại ngay để có session hợp lệ, né RLS.
+  if (!data.session) {
+    const { data: signInData, error: signInError } = await supabase.auth.signInWithPassword({
       email: fakeEmail,
       password
     })
-    if (error) throw error
+    if (signInError) throw signInError
+    user = signInData.user
+  }
 
-    const user = data.user
-    if (!user) throw new Error('Không tạo được tài khoản')
+  const { error: insertError } = await supabase.from('USER').insert({
+    user_id: user.id,
+    email: fakeEmail,
+    phone_number: phone,
+    username,
+    role: 'customer'
+  })
+  if (insertError) throw insertError
 
-    const { error: insertError } = await supabase.from('USER').insert({
-      user_id: user.id,
-      email: fakeEmail,
-      phone_number: phone,
-      username,
-      role: 'customer'
-    })
-    if (insertError) throw insertError
-
-    // Thêm dòng này — bắt buộc vì USER_INVENTORY và các bảng khác FK tới CUSTOMER
   const { error: customerError } = await supabase.from('CUSTOMER').insert({ user_id: user.id })
   if (customerError) throw customerError
 
   const { error: walletError } = await supabase.from('WALLET').insert({ user_id: user.id, balance: 0 })
   if (walletError) throw walletError
 
-    this.otpStore.delete(phone)
-    return user
-  }
+  this.otpStore.delete(phone)
+  return user
+}
 
   async logout() {
     await supabase.auth.signOut()

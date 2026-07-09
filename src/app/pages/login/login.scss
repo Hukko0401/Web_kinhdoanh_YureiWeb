@@ -136,3 +136,32 @@ input[type="text"], input[type="password"], input[type="email"] {
   font-size: 14px;
   align-self: stretch;
 }
+.mode-tabs {
+  display: inline-flex;   // đổi từ flex -> inline-flex, không chiếm hết chiều ngang
+  gap: 4px;
+  margin-bottom: 16px;
+  padding: 4px;
+  background: rgba(175, 112, 23, 0.08);   // nền mờ bao ngoài cho cụm tab, tạo cảm giác "khung"
+  border-radius: 100px;
+  width: fit-content;   // chỉ rộng vừa đủ nội dung, không kéo hết row
+   align-self: flex-start;
+
+  .mode-tab {
+    flex: none;   // bỏ flex:1 cũ, không ép giãn đều nữa
+    padding: 6px 20px;
+    border: none;   // bỏ border viền, giờ dựa vào nền .mode-tabs bao ngoài
+    background: transparent;
+    border-radius: 100px;
+    font-family: 'Roboto', sans-serif;
+    font-weight: 600;
+    font-size: 13px;
+    color: #784400;
+    cursor: pointer;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &.active {
+      background: #AF7017;
+      color: #FFFAD9;
+    }
+  }
+}
