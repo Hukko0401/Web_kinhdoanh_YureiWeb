@@ -8,6 +8,11 @@ import { CollectionService } from '../../services/collection.service';
 import { WalletService } from '../../services/wallet.service';
 import { toSignal } from '@angular/core/rxjs-interop';
 
+interface CollectionMenuItem {
+  id: string | null; // null = chưa có data thật, chỉ minh họa
+  name: string;
+}
+
 @Component({
   selector: 'app-header',
   standalone: true,
@@ -28,19 +33,14 @@ export class Header implements OnInit, OnDestroy {
 
   private authSub?: Subscription;
 
-  activeCollections = [
-    { id: '1', name: 'Menu 1' },
-    { id: '2', name: 'Menu 2' },
-    { id: '3', name: 'Menu 3' },
-    { id: '4', name: 'Menu 4' },
-    { id: '5', name: 'Menu 5' }
-  ];
-
+  activeCollections: CollectionMenuItem[] = [];
   navLinks = [
     { label: 'Banner', path: '/gacha' },
     { label: 'How to Roll', path: '/how-to-roll' },
     { label: 'About Us', path: '/about' }
   ];
+
+  private readonly MENU_SLOT_COUNT = 5; // số ô hiển thị trong dropdown
 
   constructor(
     private authService: AuthService,
@@ -59,6 +59,37 @@ export class Header implements OnInit, OnDestroy {
         this.walletService.refreshBalance(user.id);
       }
     });
+
+    this.loadCollections();
+  }
+
+  private async loadCollections(): Promise<void> {
+    try {
+      const { data: collections, error } = await this.collectionService.getCollections();
+
+      if (error) {
+        console.error('Load collections for header failed:', error);
+      }
+
+      const real: CollectionMenuItem[] = (collections ?? []).map(c => ({
+        id: c.id,
+        name: c.name
+      }));
+
+      const placeholderCount = Math.max(this.MENU_SLOT_COUNT - real.length, 0);
+      const placeholders: CollectionMenuItem[] = Array.from(
+        { length: placeholderCount },
+        (_, i) => ({ id: null, name: `Coming Soon ${i + 1}` })
+      );
+
+      this.activeCollections = [...real, ...placeholders];
+    } catch (e) {
+      console.error('Load collections for header failed:', e);
+      this.activeCollections = Array.from(
+        { length: this.MENU_SLOT_COUNT },
+        (_, i) => ({ id: null, name: `Coming Soon ${i + 1}` })
+      );
+    }
   }
 
   ngOnDestroy(): void {
@@ -68,7 +99,6 @@ export class Header implements OnInit, OnDestroy {
   toggleCollections(state: boolean): void {
     this.isCollectionsOpen = state;
   }
-
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }

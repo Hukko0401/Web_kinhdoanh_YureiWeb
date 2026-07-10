@@ -3,17 +3,21 @@
 <ng-container *ngIf="!isLoading(); else loadingTpl">
   <ng-container *ngIf="collection() as c">
     <section class="collection-hero">
-      <img class="collection-hero__bg" [src]="c.image" [alt]="c.name" />
-      <div class="collection-hero__desc">{{ c.description }}</div>
+      <img class="collection-hero__bg" [src]="c.bg_intro" [alt]="c.name" />
+      <!-- <div class="collection-hero__desc">{{ c.description }}</div> -->
     </section>
 
-    <section class="collection-book" [style.backgroundImage]="'url(' + backgrounds().book + ')'">
-      <div class="collection-book__flip-label">Flip the pages</div>
-      <app-book-flip [coverImage]="bookCoverImage" [pages]="bookPages"></app-book-flip>
+    <section class="collection-book" [style.backgroundImage]="'url(' + c.bg_book + ')'">
+      <div class="collection-book__flip-label">Flip me</div>
+      <app-book-flip
+        [coverImage]="bookCoverImage"
+        [coverBackImage]="bookCoverBackImage"
+        [rightPageImage]="bookRightPageImage"
+      ></app-book-flip>
     </section>
 
-    <section class="collection-grid" [style.backgroundImage]="'url(' + backgrounds().framecard + ')'">
-      <div class="collection-grid__overlay"></div>
+    <section class="collection-grid" [style.backgroundImage]="'url(' + c.bg_framecard + ')'">
+      <!-- <div class="collection-grid__overlay"></div> -->
       <h2 class="collection-grid__title">LET'S ROLL!!</h2>
       <div class="collection-grid__cards">
         <app-gacha-card
@@ -25,7 +29,7 @@
       </div>
     </section>
 
-    <section class="collection-quote" [style.backgroundImage]="'url(' + backgrounds().quote + ')'">
+    <section class="collection-quote" [style.backgroundImage]="'url(' + c.bg_quotes + ')'">
       <p class="collection-quote__text">{{ quoteText }}</p>
       <p class="collection-quote__title">- {{ quoteAuthor }}</p>
     </section>

@@ -1,42 +1,17 @@
 <div class="book" [class.book--open]="isOpen">
-  <div
-    class="book__cover"
-    *ngIf="!isOpen"
-    [class.book__cover--flipping]="isFlipping"
-    (click)="openBook()"
-  >
-    <img [src]="coverImage" alt="Book cover" class="book__cover-image" />
+  <div class="book__right-page">
+    <div
+      class="book__page-inner"
+      [style.backgroundImage]="'url(' + rightPageImage + ')'"
+    ></div>
   </div>
 
-  <div class="book__open" *ngIf="isOpen">
-    <div class="book__page book__page--left" [class.book__page--flipping]="isFlipping">
-      <div
-        class="book__page-inner"
-        [style.backgroundImage]="'url(' + (currentSpread[0]?.image ?? '') + ')'"
-      ></div>
+  <div class="book__cover" (click)="toggle()">
+    <div class="book__cover-face book__cover-face--front">
+      <img [src]="coverImage" alt="Book cover" />
     </div>
-
-    <div class="book__spine"></div>
-
-    <div class="book__page book__page--right" [class.book__page--flipping]="isFlipping">
-      <div
-        class="book__page-inner"
-        [style.backgroundImage]="'url(' + (currentSpread[1]?.image ?? '') + ')'"
-      ></div>
+    <div class="book__cover-face book__cover-face--back">
+      <img [src]="coverBackImage" alt="Inside cover" />
     </div>
   </div>
-
-  <button
-    class="book__nav book__nav--prev"
-    (click)="prevPage()"
-    [disabled]="!hasPrev"
-    aria-label="Previous page"
-  >‹</button>
-
-  <button
-    class="book__nav book__nav--next"
-    (click)="nextPage()"
-    [disabled]="!hasNext"
-    aria-label="Next page"
-  >›</button>
 </div>

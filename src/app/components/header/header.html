@@ -1,62 +1,147 @@
 <header class="app-header-wrapper" [class.header--transparent]="variant === 'transparent'">
   <div class="app-header">
+
+    <!-- Logo -->
     <a routerLink="/" class="logo" (click)="closeMobileMenu()">
       <img src="/Icons/logo.png" alt="Yurei" />
     </a>
 
-    <button class="menu-toggle" (click)="toggleMobileMenu()" [class.is-open]="isMobileMenuOpen" aria-label="Toggle menu">
+    <!-- Mobile Toggle -->
+    <button
+      class="menu-toggle"
+      (click)="toggleMobileMenu()"
+      [class.is-open]="isMobileMenuOpen"
+      aria-label="Toggle menu">
+
       <span></span>
       <span></span>
       <span></span>
     </button>
 
+    <!-- Right -->
     <div class="right-group" [class.is-open]="isMobileMenuOpen">
+
+      <!-- Navigation -->
       <nav class="main-nav">
-        <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" (click)="closeMobileMenu()">
+
+        <a
+          routerLink="/"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: true }"
+          (click)="closeMobileMenu()">
           Home
         </a>
 
-        <div class="nav-dropdown"
+        <!-- Collections -->
+        <div
+          class="nav-dropdown"
           (mouseenter)="toggleCollections(true)"
           (mouseleave)="toggleCollections(false)">
+
           <span>Collections</span>
+
           <div class="dropdown-menu" *ngIf="isCollectionsOpen">
-            <a *ngFor="let c of activeCollections" [routerLink]="['/collections', c.id]" (click)="closeMobileMenu()">
+
+            <a
+              *ngFor="let c of activeCollections"
+              [routerLink]="c.id ? ['/collections', c.id] : null"
+              [class.disabled]="!c.id"
+              (click)="closeMobileMenu()">
+
               {{ c.name }}
+
             </a>
+
           </div>
         </div>
 
-        <a *ngFor="let link of navLinks" [routerLink]="link.path" routerLinkActive="active" (click)="closeMobileMenu()">
+        <a
+          *ngFor="let link of navLinks"
+          [routerLink]="link.path"
+          routerLinkActive="active"
+          (click)="closeMobileMenu()">
+
           {{ link.label }}
+
         </a>
+
       </nav>
 
+      <!-- Guest -->
       <div class="action-group guest" *ngIf="!isLoggedIn">
-        <a routerLink="/login" class="btn" (click)="closeMobileMenu()">Log In</a>
-        <a routerLink="/register" class="btn" (click)="closeMobileMenu()">Sign Up</a>
+
+        <a
+          routerLink="/login"
+          class="btn"
+          (click)="closeMobileMenu()">
+          Log In
+        </a>
+
+        <a
+          routerLink="/register"
+          class="btn"
+          (click)="closeMobileMenu()">
+          Sign Up
+        </a>
+
       </div>
 
+      <!-- Logged In -->
       <div class="action-group user" *ngIf="isLoggedIn">
-        <a routerLink="/wallet" class="icon-item coin-item" (click)="closeMobileMenu()">
-  <img src="/Icons/coins.png" alt="Coins" />
-  <span class="coin-balance">{{ coinBalance() }}</span>
-</a>
 
-        <a routerLink="/inventory" class="icon-item" (click)="closeMobileMenu()">
+        <!-- Wallet -->
+        <a
+          routerLink="/wallet"
+          class="icon-item coin-item"
+          (click)="closeMobileMenu()">
+
+          <img src="/Icons/coins.png" alt="Coins" />
+          <span class="coin-balance">
+            {{ coinBalance() }}
+          </span>
+
+        </a>
+
+        <!-- Inventory -->
+        <a
+          routerLink="/inventory"
+          class="icon-item"
+          (click)="closeMobileMenu()">
+
           <img src="/Icons/inventory.png" alt="Inventory" />
+
         </a>
 
-        <a routerLink="/order-history" class="icon-item" (click)="closeMobileMenu()">
-         <img src="/Icons/order_history.png" alt="order history" />
+        <!-- Order History -->
+        <a
+          routerLink="/order-history"
+          class="icon-item"
+          (click)="closeMobileMenu()">
+
+          <img src="/Icons/order_history.png" alt="Order History" />
+
         </a>
 
-        <a routerLink="/notifications" class="icon-item" (click)="closeMobileMenu()">
-          <img src="/Icons/notification.png" alt="notifications" />
+        <!-- Notifications -->
+        <a
+          routerLink="/notifications"
+          class="icon-item"
+          (click)="closeMobileMenu()">
+
+          <img src="/Icons/notification.png" alt="Notifications" />
+
         </a>
 
-        <a routerLink="/profile" class="icon-item avatar-link" (click)="closeMobileMenu()">
-          <img src="/Icons/profile.png" alt="profile" class="avatar" />
+        <!-- Profile -->
+        <a
+          routerLink="/profile"
+          class="icon-item avatar-link"
+          (click)="closeMobileMenu()">
+
+          <img
+            src="/Icons/profile.png"
+            alt="Profile"
+            class="avatar" />
         </a>
       </div>
     </div>

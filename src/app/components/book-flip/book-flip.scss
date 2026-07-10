@@ -1,73 +1,61 @@
 .book {
   position: relative;
-  width: 530px;
-  height: 722px;
-  perspective: 1600px;
-  transition: width 0.4s ease-in-out;
+  width: clamp(34rem, 66vw, 65.375rem); // 2 trang (~1060px @1440)
+  height: clamp(24rem, 46vw, 45.125rem);
+  perspective: 2200px;
 
-  &--open {
-    width: 1064px; // 530*2 + 4px gáy sách
+  &__right-page,
+  &__cover {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 50%;
+    height: 100%;
+  }
+
+  &__right-page {
+    z-index: 1;
+    border-radius: 0 8px 8px 0;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }
 
   &__cover {
-    width: 100%;
-    height: 100%;
-    background: #fffce7;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    z-index: 2;
     cursor: pointer;
     transform-style: preserve-3d;
     transform-origin: left center;
-    transition: transform 0.4s ease-in-out;
-
-    &--flipping {
-      transform: rotateY(-90deg);
-    }
+    transition: transform 0.8s cubic-bezier(0.4, 0.1, 0.2, 1);
+    border-radius: 0 8px 8px 0;
   }
 
-  &__cover-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+  &--open &__cover {
+    transform: rotateY(-180deg);
+    border-radius: 8px 0 0 8px;
   }
 
-  &__open {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    background: #fffce7;
-    border-radius: 8px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  &__cover-face {
+    position: absolute;
+    inset: 0;
+    backface-visibility: hidden;
     overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
   }
 
-  &__spine {
-    width: 4px;
-    background: rgba(0, 0, 0, 0.15);
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
+  &__cover-face--front {
+    border-radius: 0 8px 8px 0;
   }
 
-  &__page {
-    flex: 1;
-    height: 100%;
-    transform-style: preserve-3d;
-    transition: transform 0.4s ease-in-out;
-
-    &--left {
-      transform-origin: right center;
-    }
-
-    &--right {
-      transform-origin: left center;
-    }
-
-    &--flipping.book__page--right {
-      transform: rotateY(90deg);
-    }
+  &__cover-face--back {
+    transform: rotateY(180deg);
+    border-radius: 8px 0 0 8px;
   }
 
   &__page-inner {
@@ -75,28 +63,5 @@
     height: 100%;
     background-size: cover;
     background-position: center;
-  }
-
-  &__nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    background: rgba(0, 0, 0, 0.4);
-    color: white;
-    border: none;
-    width: 36px;
-    height: 36px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    z-index: 5;
-
-    &:disabled {
-      opacity: 0.3;
-      cursor: default;
-    }
-
-    &--prev { left: -18px; }
-    &--next { right: -18px; }
   }
 }

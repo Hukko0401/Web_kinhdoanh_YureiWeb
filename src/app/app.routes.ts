@@ -4,7 +4,10 @@ import { authGuard } from './guards/auth.guard'
 
 export const routes: Routes = [
   { path: '', component: Home },
+
   { path: 'gacha', loadComponent: () => import('./pages/gacha/gacha').then(m => m.Gacha) },
+
+  { path: 'collections/:id', loadComponent: () => import('./pages/collection/collection').then(m => m.Collection) },
   { path: 'inventory', loadComponent: () => import('./pages/inventory/inventory').then(m => m.Inventory), canActivate: [authGuard] },
   { path: 'order-history', loadComponent: () => import('./pages/order-history/order-history').then(m => m.OrderHistory), canActivate: [authGuard] },
   { path: 'register', loadComponent: () => import('./pages/register/register').then(m => m.Register) },
