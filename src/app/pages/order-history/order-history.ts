@@ -1,4 +1,4 @@
-import { Component, OnInit, inject, signal } from '@angular/core';
+import { Component, OnInit, inject, signal, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
 import { OrderService, StatusFilter, OrderWithDetails } from '../../services/order.service';
@@ -41,6 +41,21 @@ export class OrderHistory implements OnInit {
 
   selectStatus(status: StatusFilter) {
     this.orderService.setStatusFilter(status);
+  }
+
+  // ===== Scale nội dung theo bề rộng màn hình =====
+  private readonly DESIGN_WIDTH = 1440; // bề rộng thiết kế gốc (đo theo Figma/ảnh 1)
+
+  pageScale = signal(1);
+
+  @HostListener('window:resize')
+  onWindowResize() {
+    this.updatePageScale();
+  }
+
+  private updatePageScale() {
+    const scale = Math.min(window.innerWidth / this.DESIGN_WIDTH, 1);
+    this.pageScale.set(scale);
   }
 
   // ===== Request Return panel =====
@@ -147,6 +162,7 @@ export class OrderHistory implements OnInit {
   }
 
   async ngOnInit() {
+    this.updatePageScale();
     const userId = this.authService.getCurrentUser()?.id;
     if (!userId) {
       this.orderService.error.set('Bạn cần đăng nhập để xem lịch sử đơn hàng.');

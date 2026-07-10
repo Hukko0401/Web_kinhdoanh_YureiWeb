@@ -1,254 +1,256 @@
 <app-header variant="transparent"></app-header>
 
-<div class="order-history-page">
-  <div class="order-history-layout" [class.split]="selectedOrderForReturn() || selectedOrderForDetails()">
+<div class="order-history-page-outer">
+  <div class="order-history-page" [style.transform]="'scale(' + pageScale() + ')'">
+    <div class="order-history-layout" [class.split]="selectedOrderForReturn() || selectedOrderForDetails()">
 
-    <div class="order-list-section">
-      <div class="order-list-inner">
-        <div class="order-heading">
-          <h1 class="page-title">Order History</h1>
-          <p class="page-subtitle">Manage and follow your order</p>
-        </div>
+      <div class="order-list-section">
+        <div class="order-list-inner">
+          <div class="order-heading">
+            <h1 class="page-title">Order History</h1>
+            <p class="page-subtitle">Manage and follow your order</p>
+          </div>
 
-        <div class="status-filters">
-          <button
-            *ngFor="let s of statusFilters"
-            class="status-chip"
-            [class.active]="orderService.statusFilter() === s"
-            (click)="selectStatus(s)"
-          >
-            {{ filterLabelFor(s) }}
-          </button>
-        </div>
-
-        <p *ngIf="orderService.loading()" class="loading-text">Đang tải...</p>
-        <p *ngIf="orderService.error()" class="error-text">{{ orderService.error() }}</p>
-
-        <div class="order-list-wrapper" *ngIf="!orderService.loading()">
-          <div class="order-list">
-            <div
-              class="order-card"
-              *ngFor="let order of orderService.filteredOrders()"
-              [class.selected]="selectedOrderForReturn()?.order_id === order.order_id"
+          <div class="status-filters">
+            <button
+              *ngFor="let s of statusFilters"
+              class="status-chip"
+              [class.active]="orderService.statusFilter() === s"
+              (click)="selectStatus(s)"
             >
-              <div class="order-card-inner">
-                <div class="order-info">
-                  <div class="order-code">ORDER #{{ order.order_code }}</div>
-                  <div class="order-date">{{ orderService.formatDate(order.created_at) }}</div>
-                </div>
+              {{ filterLabelFor(s) }}
+            </button>
+          </div>
 
-                <div class="order-items">
-                  <div class="order-item" *ngFor="let item of order.items">
-                    <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" />
-                    <div class="item-info-row">
-                      <span class="item-name">{{ item.name }}</span>
-                      <span class="item-qty">x{{ item.quantity }}</span>
+          <p *ngIf="orderService.loading()" class="loading-text">Đang tải...</p>
+          <p *ngIf="orderService.error()" class="error-text">{{ orderService.error() }}</p>
+
+          <div class="order-list-wrapper" *ngIf="!orderService.loading()">
+            <div class="order-list">
+              <div
+                class="order-card"
+                *ngFor="let order of orderService.filteredOrders()"
+                [class.selected]="selectedOrderForReturn()?.order_id === order.order_id"
+              >
+                <div class="order-card-inner">
+                  <div class="order-info">
+                    <div class="order-code">ORDER #{{ order.order_code }}</div>
+                    <div class="order-date">{{ orderService.formatDate(order.created_at) }}</div>
+                  </div>
+
+                  <div class="order-items">
+                    <div class="order-item" *ngFor="let item of order.items">
+                      <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" />
+                      <div class="item-info-row">
+                        <span class="item-name">{{ item.name }}</span>
+                        <span class="item-qty">x{{ item.quantity }}</span>
+                      </div>
                     </div>
                   </div>
-                </div>
 
-                <div class="order-side">
-                  <div class="status-row">
-                    <div
-                      class="status-badge"
-                      [ngClass]="{
-                        'status-processing': order.status === 'processing',
-                        'status-shipping': order.status === 'shipping',
-                        'status-completed': order.status === 'completed',
-                        'status-cancelled': order.status === 'cancelled'
-                      }"
-                    >
-                      {{ order.status | titlecase }}
+                  <div class="order-side">
+                    <div class="status-row">
+                      <div
+                        class="status-badge"
+                        [ngClass]="{
+                          'status-processing': order.status === 'processing',
+                          'status-shipping': order.status === 'shipping',
+                          'status-completed': order.status === 'completed',
+                          'status-cancelled': order.status === 'cancelled'
+                        }"
+                      >
+                        {{ order.status | titlecase }}
+                      </div>
                     </div>
-                  </div>
 
-                  <div class="order-total">
-                    <span class="total-label">Total</span>
-                    <span class="total-value">{{ orderService.formatCurrency(order.total) }}</span>
-                  </div>
+                    <div class="order-total">
+                      <span class="total-label">Total</span>
+                      <span class="total-value">{{ orderService.formatCurrency(order.total) }}</span>
+                    </div>
 
-                  <div class="order-actions">
-                    <button
-                      *ngIf="order.status === 'completed' && hasReturnableItems(order)"
-                      class="btn-action btn-return"
-                      (click)="onRequestReturn($event, order.order_id)"
-                    >
-                      Request Return
-                    </button>
+                    <div class="order-actions">
+                      <button
+                        *ngIf="order.status === 'completed' && hasReturnableItems(order)"
+                        class="btn-action btn-return"
+                        (click)="onRequestReturn($event, order.order_id)"
+                      >
+                        Request Return
+                      </button>
 
-                    <button
-                      class="btn-action btn-details"
-                      (click)="onViewDetails($event, order.order_id)"
-                    >
-                      View Details
-                    </button>
+                      <button
+                        class="btn-action btn-details"
+                        (click)="onViewDetails($event, order.order_id)"
+                      >
+                        View Details
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
 
+            <div
+              *ngIf="!orderService.loading() && orderService.filteredOrders().length === 0"
+              class="empty-state"
+            >
+              <p class="empty-text">You don't have any order yet.</p>
+              <button class="btn-roll" routerLink="/banner">Let's Roll!</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="return-panel" *ngIf="selectedOrderForReturn() as order">
+        <div class="return-breadcrumb">
+          <span class="crumb-link" (click)="closeReturnPanel()">Order History</span>
+          <span class="crumb-sep">&gt;</span>
+          <span class="crumb-link" (click)="closeReturnPanel()">ORDER#{{ order.order_code }}</span>
+          <span class="crumb-current">&gt; Request Return</span>
+        </div>
+
+        <h2 class="return-title">Items in Order #{{ order.order_code }}</h2>
+
+        <div class="return-items-list">
           <div
-            *ngIf="!orderService.loading() && orderService.filteredOrders().length === 0"
-            class="empty-state"
+            class="return-item"
+            *ngFor="let item of returnableItems(order)"
+            [class.selected]="isReturnItemSelected(item.item_id)"
+            (click)="toggleReturnItem(item.item_id)"
           >
-            <p class="empty-text">You don't have any order yet.</p>
-            <button class="btn-roll" routerLink="/banner">Let's Roll!</button>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="return-panel" *ngIf="selectedOrderForReturn() as order">
-      <div class="return-breadcrumb">
-        <span class="crumb-link" (click)="closeReturnPanel()">Order History</span>
-        <span class="crumb-sep">&gt;</span>
-        <span class="crumb-link" (click)="closeReturnPanel()">ORDER#{{ order.order_code }}</span>
-        <span class="crumb-current">&gt; Request Return</span>
-      </div>
-
-      <h2 class="return-title">Items in Order #{{ order.order_code }}</h2>
-
-      <div class="return-items-list">
-        <div
-          class="return-item"
-          *ngFor="let item of returnableItems(order)"
-          [class.selected]="isReturnItemSelected(item.item_id)"
-          (click)="toggleReturnItem(item.item_id)"
-        >
-          <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" class="return-item-img" />
-          <div class="return-item-name">{{ item.name }}</div>
-          <div class="return-item-qty">x{{ item.quantity }}</div>
-          <div class="return-item-checkbox" [class.checked]="isReturnItemSelected(item.item_id)"></div>
-        </div>
-      </div>
-
-      <h3 class="return-section-label">Return Reason</h3>
-      <textarea
-        class="return-reason-input"
-        placeholder="Nhập lý do trả hàng..."
-        [value]="returnReason()"
-        (input)="onReasonInput($event)"
-      ></textarea>
-
-      <h3 class="return-section-label">Photo Evidence</h3>
-      <div class="return-photo-box">
-        <div class="return-photo-preview" *ngFor="let photo of returnPhotos(); let i = index">
-          <img [src]="photo" alt="Evidence" />
-          <button class="remove-photo-btn" (click)="removePhoto(i)">×</button>
-        </div>
-
-        <label class="return-photo-upload" *ngIf="returnPhotos().length < 4">
-          <input type="file" accept="image/*" multiple hidden (change)="onPhotoSelected($event)" />
-          <span>+</span>
-        </label>
-      </div>
-
-      <button class="btn-submit-return" (click)="onSubmitReturnRequest()">
-        Submit Return Request
-      </button>
-    </div>
-
-    <div class="details-panel" *ngIf="selectedOrderForDetails() as order">
-      <div class="details-breadcrumb">
-        <span class="crumb-link" (click)="closeDetailsPanel()">Order History</span>
-        <span class="crumb-sep">&gt;</span>
-        <span class="crumb-current">ORDER#{{ order.order_code }}</span>
-      </div>
-
-      <div class="details-header">
-        <div class="details-header-row">
-          <h2 class="details-order-code">ORDER#{{ order.order_code }}</h2>
-          <div
-            class="details-status-badge"
-            [ngClass]="{
-              'status-processing': order.status === 'processing',
-              'status-shipping': order.status === 'shipping',
-              'status-completed': order.status === 'completed',
-              'status-cancelled': order.status === 'cancelled'
-            }"
-          >
-            {{ order.status | titlecase }}
-          </div>
-        </div>
-        <div class="details-placed-date">Placed on {{ orderService.formatDate(order.created_at) }}</div>
-      </div>
-
-      <div class="details-timeline" *ngIf="order.status !== 'cancelled'">
-        <div class="timeline-icons-row">
-          <div class="timeline-icon-wrap">
-            <img class="timeline-icon" src="/Icons/order_flow_1.png" alt="Processing" />
-          </div>
-          <div class="timeline-icon-wrap">
-            <img class="timeline-icon" src="/Icons/order_flow_2.png" alt="Shipping" />
-          </div>
-          <div class="timeline-icon-wrap">
-            <img class="timeline-icon" src="/Icons/order_flow_3.png" alt="Completed" />
+            <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" class="return-item-img" />
+            <div class="return-item-name">{{ item.name }}</div>
+            <div class="return-item-qty">x{{ item.quantity }}</div>
+            <div class="return-item-checkbox" [class.checked]="isReturnItemSelected(item.item_id)"></div>
           </div>
         </div>
 
-        <div class="timeline-track">
-          <div class="timeline-track-bg"></div>
-          <div
-            class="timeline-track-fill"
-            [style.width.%]="statusStepIndex(order.status) * 50"
-          ></div>
-          <div class="timeline-dot" *ngFor="let i of [0, 1, 2]" [class.active]="statusStepIndex(order.status) >= i"></div>
-        </div>
-      </div>
+        <h3 class="return-section-label">Return Reason</h3>
+        <textarea
+          class="return-reason-input"
+          placeholder="Nhập lý do trả hàng..."
+          [value]="returnReason()"
+          (input)="onReasonInput($event)"
+        ></textarea>
 
-      <div class="details-info-row">
-        <div class="info-card">
-          <div class="info-card-title">Shipping Information</div>
-          <div class="info-label">Place</div>
-          <div class="info-value">{{ order.address_label || 'N/A' }}</div>
-          <div class="info-label">Recipient</div>
-          <div class="info-value">{{ order.receiver_name }}</div>
-          <div class="info-label">Address</div>
-          <div class="info-value">{{ order.address }}</div>
-        </div>
-
-        <div class="info-card">
-          <div class="info-card-title">Payment Information</div>
-
-          <ng-container *ngIf="selectedOrderTransaction() as tx; else noTransaction">
-            <div class="info-label">Payment method</div>
-            <div class="info-value">{{ paymentGatewayLabel(tx.payment_gateway) }}</div>
-
-            <div class="info-label">Transaction_ID</div>
-            <div class="info-value">{{ tx.gateway_transaction_id || 'N/A' }}</div>
-          </ng-container>
-
-          <ng-template #noTransaction>
-            <div class="info-label">Payment method</div>
-            <div class="info-value">Chưa có giao dịch</div>
-          </ng-template>
-
-          <div class="info-label">Shipping fee</div>
-          <div class="info-value">{{ orderService.formatCurrency(order.shipping_fee) }}</div>
-
-          <div class="info-divider"></div>
-
-          <div class="info-total-row">
-            <span class="info-total-label">Total</span>
-            <span class="info-total-value">{{ orderService.formatCurrency(order.total) }}</span>
+        <h3 class="return-section-label">Photo Evidence</h3>
+        <div class="return-photo-box">
+          <div class="return-photo-preview" *ngFor="let photo of returnPhotos(); let i = index">
+            <img [src]="photo" alt="Evidence" />
+            <button class="remove-photo-btn" (click)="removePhoto(i)">×</button>
           </div>
-        </div>
-      </div>
 
-      <div class="details-actions">
-        <button class="btn-close-order" (click)="closeDetailsPanel()">
-          Close Order
-        </button>
-        <button
-          *ngIf="canCancelInDetail(order)"
-          class="btn-cancel-order-detail"
-          (click)="onCancelOrderDetail()"
-        >
-          Cancel Order
+          <label class="return-photo-upload" *ngIf="returnPhotos().length < 4">
+            <input type="file" accept="image/*" multiple hidden (change)="onPhotoSelected($event)" />
+            <span>+</span>
+          </label>
+        </div>
+
+        <button class="btn-submit-return" (click)="onSubmitReturnRequest()">
+          Submit Return Request
         </button>
       </div>
-    </div>
 
+      <div class="details-panel" *ngIf="selectedOrderForDetails() as order">
+        <div class="details-breadcrumb">
+          <span class="crumb-link" (click)="closeDetailsPanel()">Order History</span>
+          <span class="crumb-sep">&gt;</span>
+          <span class="crumb-current">ORDER#{{ order.order_code }}</span>
+        </div>
+
+        <div class="details-header">
+          <div class="details-header-row">
+            <h2 class="details-order-code">ORDER#{{ order.order_code }}</h2>
+            <div
+              class="details-status-badge"
+              [ngClass]="{
+                'status-processing': order.status === 'processing',
+                'status-shipping': order.status === 'shipping',
+                'status-completed': order.status === 'completed',
+                'status-cancelled': order.status === 'cancelled'
+              }"
+            >
+              {{ order.status | titlecase }}
+            </div>
+          </div>
+          <div class="details-placed-date">Placed on {{ orderService.formatDate(order.created_at) }}</div>
+        </div>
+
+        <div class="details-timeline" *ngIf="order.status !== 'cancelled'">
+          <div class="timeline-icons-row">
+            <div class="timeline-icon-wrap">
+              <img class="timeline-icon" src="/Icons/order_flow_1.png" alt="Processing" />
+            </div>
+            <div class="timeline-icon-wrap">
+              <img class="timeline-icon" src="/Icons/order_flow_2.png" alt="Shipping" />
+            </div>
+            <div class="timeline-icon-wrap">
+              <img class="timeline-icon" src="/Icons/order_flow_3.png" alt="Completed" />
+            </div>
+          </div>
+
+          <div class="timeline-track">
+            <div class="timeline-track-bg"></div>
+            <div
+              class="timeline-track-fill"
+              [style.width.%]="statusStepIndex(order.status) * 50"
+            ></div>
+            <div class="timeline-dot" *ngFor="let i of [0, 1, 2]" [class.active]="statusStepIndex(order.status) >= i"></div>
+          </div>
+        </div>
+
+        <div class="details-info-row">
+          <div class="info-card">
+            <div class="info-card-title">Shipping Information</div>
+            <div class="info-label">Place</div>
+            <div class="info-value">{{ order.address_label || 'N/A' }}</div>
+            <div class="info-label">Recipient</div>
+            <div class="info-value">{{ order.receiver_name }}</div>
+            <div class="info-label">Address</div>
+            <div class="info-value">{{ order.address }}</div>
+          </div>
+
+          <div class="info-card">
+            <div class="info-card-title">Payment Information</div>
+
+            <ng-container *ngIf="selectedOrderTransaction() as tx; else noTransaction">
+              <div class="info-label">Payment method</div>
+              <div class="info-value">{{ paymentGatewayLabel(tx.payment_gateway) }}</div>
+
+              <div class="info-label">Transaction_ID</div>
+              <div class="info-value">{{ tx.gateway_transaction_id || 'N/A' }}</div>
+            </ng-container>
+
+            <ng-template #noTransaction>
+              <div class="info-label">Payment method</div>
+              <div class="info-value">Chưa có giao dịch</div>
+            </ng-template>
+
+            <div class="info-label">Shipping fee</div>
+            <div class="info-value">{{ orderService.formatCurrency(order.shipping_fee) }}</div>
+
+            <div class="info-divider"></div>
+
+            <div class="info-total-row">
+              <span class="info-total-label">Total</span>
+              <span class="info-total-value">{{ orderService.formatCurrency(order.total) }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="details-actions">
+          <button class="btn-close-order" (click)="closeDetailsPanel()">
+            Close Order
+          </button>
+          <button
+            *ngIf="canCancelInDetail(order)"
+            class="btn-cancel-order-detail"
+            (click)="onCancelOrderDetail()"
+          >
+            Cancel Order
+          </button>
+        </div>
+      </div>
+
+    </div>
   </div>
 </div>
