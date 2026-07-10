@@ -1,0 +1,35 @@
+<app-header />
+
+<main class="how-to-roll">
+  <div class="how-to-roll__container"> 
+    <div class="how-to-roll__intro">
+      <h1 class="how-to-roll__title">How to Roll Your Blind Box</h1>
+      <p class="how-to-roll__subtitle">
+        Discover the thrill of the surprise in every box. Follow our simple 4-step process to start
+        your POP MART collection today.
+      </p>
+    </div>
+
+    <div class="how-to-roll__timeline">
+      <div class="how-to-roll__line"></div>
+
+      @for (s of steps; track s.step) {
+        <div class="step" [class.step--reverse]="s.align === 'left'">
+          <div class="step__text">
+            <div class="step__label">{{ s.step }}</div>
+            <div class="step__title">{{ s.title }}</div>
+            <div class="step__desc">{{ s.description }}</div>
+          </div>
+
+          <div class="step__image-wrap">
+            <img class="step__image" [src]="s.imageUrl" [alt]="s.title" />
+          </div>
+
+          <div class="step__dot" [style.background]="s.badgeColor"></div>
+        </div>
+      }
+    </div>
+  </div> 
+</main>
+
+<app-footer />

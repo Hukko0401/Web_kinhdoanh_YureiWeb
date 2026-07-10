@@ -29,5 +29,6 @@ export const routes: Routes = [
       { path: 'topup', loadComponent: () => import('./pages/wallet/topup/topup/topup').then(m => m.Topup) },
       { path: 'history', loadComponent: () => import('./pages/wallet/history/history/history').then(m => m.History) },
     ]
-  }
+  },
+  { path: 'how-to-roll', loadComponent: () => import('./pages/how-to-roll/how-to-roll').then(m => m.HowToRoll) },
 ]

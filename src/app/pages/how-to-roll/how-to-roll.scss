@@ -1,0 +1,270 @@
+// Trong file component (how-to-roll.scss)
+:host {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;           // Chiều cao tối thiểu full màn hình
+    background: rgba(255, 248, 203, 0.482);          // Màu nền cho toàn trang
+    font-family: 'Inclusive Sans', sans-serif;
+  }
+  
+  .how-to-roll {
+    flex: 1;                     
+    display: flex;
+    justify-content: center;
+    width: 100%;
+  
+    &__container {
+      width: 100%;
+      max-width: 1024px;
+      padding: 150px 20px 120px;
+      box-sizing: border-box;
+    }
+  
+    &__intro {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      gap: 24px;
+      margin-bottom: 50px;
+    }
+  
+    &__title {
+      color: #784600;
+      font-size: clamp(24px, 3vw, 32px);
+      font-weight: 600;
+      line-height: 1.25;
+      margin: 0;
+    }
+  
+    &__subtitle {
+      max-width: 672px;
+      color: #47473d;
+      font-size: 16px;
+      line-height: 1.5;
+      margin: 0;
+    }
+  
+    &__timeline {
+      position: relative;
+      width: 100%;
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 96px;
+    }
+  
+    &__line {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #c8c7ba;
+      transform: translateX(-50%);
+    }
+  }
+  
+  .step {
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 100px;
+  
+    &__text {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      text-align: right;
+      gap: 8px;
+    }
+  
+    &__label {
+      color: #8a5101;
+      font-size: 36px;
+      font-weight: 500;
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+    }
+  
+    &__title {
+      color: #784600;
+      font-size: 24px;
+      font-weight: 600;
+    }
+  
+    &__desc {
+      color: #47473d;
+      font-size: 14px;
+      line-height: 1.625;
+    }
+  
+    &__image-wrap {
+      flex: 1;
+      border-radius: 12px;
+      overflow: hidden;
+      background-color: rgba(192, 216, 234, 0.558);
+      border: 4px solid #784600;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+  
+    &__image {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+  
+    &__dot {
+      position: absolute;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      outline: 4px solid #fff8f4;
+      outline-offset: -4px;
+      z-index: 1;
+    }
+  
+    &--reverse {
+      flex-direction: row-reverse;
+  
+      .step__text {
+        align-items: flex-start;
+        text-align: left;
+      }
+    }
+  }
+  
+  @media (max-width: 1024px) {
+    .how-to-roll {
+      &__container {
+        padding: 60px 24px 80px;
+      }
+  
+      &__timeline {
+        gap: 72px;
+      }
+    }
+  
+    .step {
+      gap: 32px;
+  
+      &__title {
+        font-size: 20px;
+      }
+  
+      &__desc {
+        font-size: 13px;
+      }
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .how-to-roll {
+      &__container {
+        padding: 40px 16px 60px;
+      }
+  
+      &__intro {
+        gap: 16px;
+        margin-bottom: 32px;
+      }
+  
+      &__subtitle {
+        font-size: 14px;
+      }
+  
+      &__timeline {
+        gap: 48px;
+      }
+  
+      &__line {
+        left: 24px;
+        transform: none;
+      }
+    }
+  
+    .step {
+      flex-direction: column !important;
+      align-items: flex-start;
+      padding-left: 60px;
+      gap: 16px;
+  
+      &__text {
+        align-items: flex-start !important;
+        text-align: left !important;
+        order: 2; // Text xuống dưới ảnh
+      }
+  
+      &__image-wrap {
+        order: 1; // Ảnh lên trên
+        width: 100%;
+      }
+  
+      &__dot {
+        left: 24px;
+        top: 0;
+        transform: translate(-50%, 0);
+        width: 36px;
+        height: 36px;
+      }
+  
+      &__title {
+        font-size: 18px;
+      }
+  
+      &__desc {
+        font-size: 13px;
+      }
+  
+      &--reverse {
+        flex-direction: column !important;
+      }
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .how-to-roll {
+      &__container {
+        padding: 32px 12px 40px;
+      }
+  
+      &__title {
+        font-size: 20px;
+      }
+  
+      &__subtitle {
+        font-size: 13px;
+      }
+  
+      &__timeline {
+        gap: 40px;
+      }
+    }
+  
+    .step {
+      padding-left: 48px;
+  
+      &__dot {
+        width: 28px;
+        height: 28px;
+        left: 20px;
+      }
+  
+      &__title {
+        font-size: 16px;
+      }
+  
+      &__desc {
+        font-size: 12px;
+      }
+  
+      &__label {
+        font-size: 10px;
+      }
+    }
+  }
