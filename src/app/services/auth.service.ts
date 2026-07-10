@@ -70,51 +70,43 @@ email = data.email
    * username được lưu tạm vào sessionStorage vì trình duyệt sẽ rời app
    * để qua trang Google, rồi mới quay lại /auth-callback.
    */
-  async loginWithGoogle(username?: string) {
-  if (username) {
-    sessionStorage.setItem(PENDING_USERNAME_KEY, username)
-  }
+  
+  /** Gọi ở AuthCallbackComponent sau khi Supabase redirect về */
+  async loginWithGoogle() {
   const { error } = await supabase.auth.signInWithOAuth({
     provider: 'google',
-    options: {
-      redirectTo: `${window.location.origin}/auth-callback`
-    }
+    options: { redirectTo: `${window.location.origin}/auth-callback` }
   })
   if (error) throw error
 }
 
-  /** Gọi ở AuthCallbackComponent sau khi Supabase redirect về */
-  async ensureUserProfileAfterOAuth(): Promise<void> {
-    const { data: { user } } = await supabase.auth.getUser()
-    if (!user) throw new Error('No user session found after OAuth')
+async hasProfile(userId: string): Promise<boolean> {
+  const { data } = await supabase
+    .from('USER')
+    .select('user_id')
+    .eq('user_id', userId)
+    .maybeSingle()
+  return !!data
+}
 
-    const { data: existing } = await supabase
-      .from('USER')
-      .select('user_id')
-      .eq('user_id', user.id)
-      .maybeSingle()
+async completeGoogleProfile(username: string) {
+  const { data: { user } } = await supabase.auth.getUser()
+  if (!user) throw new Error('No active session')
 
-    if (existing) return // đã có profile, không cần tạo lại
+  const { error } = await supabase.from('USER').insert({
+    user_id: user.id,
+    email: user.email,
+    username,
+    role: 'customer'
+  })
+  if (error) throw error
 
-    const pendingUsername = sessionStorage.getItem(PENDING_USERNAME_KEY)
-    const username = pendingUsername || user.email?.split('@')[0] || `user_${user.id.slice(0, 6)}`
+  const { error: customerError } = await supabase.from('CUSTOMER').insert({ user_id: user.id })
+  if (customerError) throw customerError
 
-    const { error } = await supabase.from('USER').insert({
-      user_id: user.id,
-      email: user.email,
-      username,
-      role: 'customer'
-    })
-    if (error) throw error
-
-    const { error: customerError } = await supabase.from('CUSTOMER').insert({ user_id: user.id })
-    if (customerError) throw customerError
-
-    const { error: walletError } = await supabase.from('WALLET').insert({ user_id: user.id, balance: 0 })
-    if (walletError) throw walletError
-
-    sessionStorage.removeItem(PENDING_USERNAME_KEY)
-  }
+  const { error: walletError } = await supabase.from('WALLET').insert({ user_id: user.id, balance: 0 })
+  if (walletError) throw walletError
+}
 
   // ===== PHONE (GIẢ LẬP OTP) =====
   private generateFakeEmail(phone: string): string {

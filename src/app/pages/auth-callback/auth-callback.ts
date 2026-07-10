@@ -15,19 +15,26 @@ export class AuthCallback implements OnInit {
   constructor(private auth: AuthService, private router: Router) {}
 
   async ngOnInit() {
-    const start = Date.now()
-    while (Date.now() - start < 5000) {
-      const { data: { session } } = await supabase.auth.getSession()
-      if (session) break
-      await new Promise(r => setTimeout(r, 300))
-    }
-
-    try {
-      await this.auth.ensureUserProfileAfterOAuth()
-    } catch (e) {
-      console.error('Lỗi tạo profile sau OAuth:', e)
-    } finally {
-      this.router.navigate(['/'])
-    }
+  const start = Date.now()
+  let session = null
+  while (Date.now() - start < 5000) {
+    const { data } = await supabase.auth.getSession()
+    session = data.session
+    if (session) break
+    await new Promise(r => setTimeout(r, 300))
   }
+
+  if (!session) {
+    this.router.navigate(['/login'])
+    return
+  }
+
+  try {
+    const exists = await this.auth.hasProfile(session.user.id)
+    this.router.navigate([exists ? '/' : '/complete-profile'])
+  } catch (e) {
+    console.error('Error checking profile after OAuth:', e)
+    this.router.navigate(['/login'])
+  }
+}
 }

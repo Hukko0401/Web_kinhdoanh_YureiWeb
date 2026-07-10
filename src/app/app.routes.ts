@@ -31,4 +31,6 @@ export const routes: Routes = [
     ]
   },
   { path: 'how-to-roll', loadComponent: () => import('./pages/how-to-roll/how-to-roll').then(m => m.HowToRoll) },
+  { path: 'complete-profile', loadComponent: () => import('./pages/complete-profile/complete-profile').then(m => m.CompleteProfile) }
+
 ]

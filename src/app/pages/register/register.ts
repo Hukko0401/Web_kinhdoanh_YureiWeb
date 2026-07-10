@@ -57,16 +57,15 @@ export class Register {
 }
 
   async onGoogleClick() {
-    if (!this.validateFormStep()) return
-    this.loading.set(true)
-    try {
-      await this.auth.loginWithGoogle(this.username.trim())
-      // trình duyệt sẽ redirect đi, không cần set loading lại
-    } catch (e: any) {
-      this.errorMsg.set(e.message ?? 'Đăng ký Google thất bại')
-      this.loading.set(false)
-    }
+  // Google tự lo email/password, không cần validate username/password ở đây
+  this.loading.set(true)
+  try {
+    await this.auth.loginWithGoogle()
+  } catch (e: any) {
+    this.errorMsg.set(e.message ?? 'Google sign up failed')
+    this.loading.set(false)
   }
+}
 
   onPhoneOptionClick() {
     if (!this.validateFormStep()) return

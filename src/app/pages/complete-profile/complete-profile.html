@@ -1,0 +1,29 @@
+<app-header></app-header>
+
+<div class="register-page">
+  <div class="register-card">
+    <div class="register-form">
+      <h1 class="title">One last step!</h1>
+      <p class="subtitle">Choose a username to finish setting up your account</p>
+
+      <div class="field">
+        <label>Username</label>
+        <input
+          type="text"
+          [(ngModel)]="username"
+          (blur)="onUsernameBlur()"
+          (input)="usernameStatus.set('idle')"
+          placeholder="Value"
+        />
+        <p class="field-hint taken" *ngIf="usernameStatus() === 'taken'">Username is already taken</p>
+        <p class="field-hint ok" *ngIf="usernameStatus() === 'available'">Username is available ✓</p>
+      </div>
+
+      <p class="error" *ngIf="errorMsg()">{{ errorMsg() }}</p>
+
+      <button class="pill-btn" (click)="onSubmit()" [disabled]="loading()">
+        Continue
+      </button>
+    </div>
+  </div>
+</div>
