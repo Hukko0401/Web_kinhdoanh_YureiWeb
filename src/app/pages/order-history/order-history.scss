@@ -1,14 +1,23 @@
+.order-history-page-outer {
+  width: 100%;
+  min-height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background-image: url('/Bg/Bg_OrderHistory.png');
+  background-size: cover;
+  background-position: top center;
+  background-repeat: no-repeat;
+}
+
 .order-history-page {
+  transform-origin: top left;
+  width: 1440px;
   max-width: 1440px;
   margin: 0 auto;
   min-height: 100vh;
   overflow-y: auto;
   padding: 160px 88px 60px;
   position: relative;
-  background-image: url('/Bg/Bg_OrderHistory.png'); // đổi lại đúng path ảnh bg của bạn
-  background-size: cover;
-  background-position: top center;
-  background-repeat: no-repeat;
   display: flex;
   flex-direction: column;
 
