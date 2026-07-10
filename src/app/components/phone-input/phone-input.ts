@@ -1,4 +1,4 @@
-import { Component, forwardRef } from '@angular/core'
+import { Component, forwardRef,Output, EventEmitter } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule, ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms'
 import { COUNTRIES, PREFERRED_COUNTRIES, CountryOption } from '../../shared/country-codes'
@@ -18,6 +18,7 @@ import { COUNTRIES, PREFERRED_COUNTRIES, CountryOption } from '../../shared/coun
   ]
 })
 export class PhoneInput implements ControlValueAccessor {
+  @Output() phoneBlur = new EventEmitter<string>()
   countries = COUNTRIES
   preferred = COUNTRIES.filter(c => PREFERRED_COUNTRIES.includes(c.iso2))
   others = COUNTRIES.filter(c => !PREFERRED_COUNTRIES.includes(c.iso2))
@@ -43,6 +44,12 @@ export class PhoneInput implements ControlValueAccessor {
     this.localNumber = value.replace(/\D/g, '')
     this.emitValue()
   }
+  onBlur() {
+    this.onTouched()
+    const fullNumber = this.localNumber ? `${this.selectedCountry.dialCode}${this.localNumber}` : ''
+    this.phoneBlur.emit(fullNumber)
+  }
+  
 
   private emitValue() {
     // Trả ra dạng E.164-like: +84933498894

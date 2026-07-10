@@ -36,21 +36,25 @@ export class Register {
   constructor(private auth: AuthService, private router: Router) {}
 
   private validateFormStep(): boolean {
-    this.errorMsg.set('')
-    if (!this.username.trim()) {
-      this.errorMsg.set('Vui lòng nhập Username')
-      return false
-    }
-    if (this.password.length < 6) {
-      this.errorMsg.set('Password phải từ 6 ký tự')
-      return false
-    }
-    if (this.password !== this.confirmPassword) {
-      this.errorMsg.set('Password xác nhận không khớp')
-      return false
-    }
-    return true
+  this.errorMsg.set('')
+  if (!this.username.trim()) {
+    this.errorMsg.set('Vui lòng nhập Username')
+    return false
   }
+  if (this.usernameStatus() === 'taken') {
+    this.errorMsg.set('Username đã tồn tại, vui lòng chọn tên khác')
+    return false
+  }
+  if (this.password.length < 6) {
+    this.errorMsg.set('Password phải từ 6 ký tự')
+    return false
+  }
+  if (this.password !== this.confirmPassword) {
+    this.errorMsg.set('Password xác nhận không khớp')
+    return false
+  }
+  return true
+}
 
   async onGoogleClick() {
     if (!this.validateFormStep()) return
@@ -69,17 +73,32 @@ export class Register {
     this.step.set('phone')
   }
 
-  onSendOtp() {
-    this.errorMsg.set('')
-    if (!this.phone || !this.phone.startsWith('+')) {
-      this.errorMsg.set('Vui lòng nhập số điện thoại hợp lệ')
-      return
-    }
-    const code = this.auth.sendFakeOtp(this.phone)
-    this.devOtpHint = code
-    this.otpDigits = ['', '', '', '']
-    this.step.set('otp')
+ async onSendOtp() {
+  this.errorMsg.set('')
+  if (!this.phone || !this.phone.startsWith('+')) {
+    this.errorMsg.set('Vui lòng nhập số điện thoại hợp lệ')
+    return
   }
+  if (this.phoneStatus() === 'taken') {
+    this.errorMsg.set('Số điện thoại này đã được đăng ký')
+    return
+  }
+
+  this.loading.set(true)
+  const exists = await this.auth.checkPhoneExists(this.phone.trim())
+  this.loading.set(false)
+
+  if (exists) {
+    this.phoneStatus.set('taken')
+    this.errorMsg.set('Số điện thoại này đã được đăng ký')
+    return
+  }
+
+  const code = this.auth.sendFakeOtp(this.phone)
+  this.devOtpHint = code
+  this.otpDigits = ['', '', '', '']
+  this.step.set('otp')
+}
 
   onResendOtp() {
     const code = this.auth.sendFakeOtp(this.phone.trim())
@@ -109,6 +128,31 @@ export class Register {
       this.loading.set(false)
     }
   }
+
+  // thêm cùng chỗ với loading, errorMsg
+usernameStatus = signal<'idle' | 'checking' | 'available' | 'taken'>('idle')
+phoneStatus = signal<'idle' | 'checking' | 'available' | 'taken'>('idle')
+
+async onUsernameBlur() {
+  const value = this.username.trim()
+  if (!value) {
+    this.usernameStatus.set('idle')
+    return
+  }
+  this.usernameStatus.set('checking')
+  const exists = await this.auth.checkUsernameExists(value)
+  this.usernameStatus.set(exists ? 'taken' : 'available')
+}
+
+async onPhoneBlur(fullNumber: string) {
+  if (!fullNumber || !fullNumber.startsWith('+')) {
+    this.phoneStatus.set('idle')
+    return
+  }
+  this.phoneStatus.set('checking')
+  const exists = await this.auth.checkPhoneExists(fullNumber)
+  this.phoneStatus.set(exists ? 'taken' : 'available')
+}
 
   goBack() {
     if (this.step() === 'phone') this.step.set('form')

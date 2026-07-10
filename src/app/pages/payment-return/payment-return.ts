@@ -40,14 +40,23 @@ export class PaymentReturn implements OnInit {
     if (txn && txn.status && txn.status !== 'pending') {
       this.orderId.set(txn.reference_id);
       this.txnType.set(txn.type as TxnType);
-      this.state.set(txn.status === 'success' ? 'success' : 'failed');
+
+      const isFailed = txn.status !== 'success';
+      this.state.set(isFailed ? 'failed' : 'success');
+
+      if (isFailed && txn.type === 'order' && txn.reference_id) {
+        await supabase.rpc('cancel_order', { p_order_id: txn.reference_id });
+      }
       return;
     }
 
     await new Promise(resolve => setTimeout(resolve, 1500));
   }
 
-  this.state.set(responseCode === '00' ? 'success' : 'failed');
+  // Hết 5 lần poll mà vẫn không xác định được -> coi theo responseCode, nhưng
+  // lúc này chưa chắc biết orderId/type nếu check-transaction-status chưa từng trả về gì
+  const fallbackFailed = responseCode !== '00';
+  this.state.set(fallbackFailed ? 'failed' : 'success');
 }
 
   goToInventory(): void {

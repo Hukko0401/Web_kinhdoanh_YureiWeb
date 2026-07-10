@@ -43,22 +43,24 @@ export class History implements OnInit {
 
   // Duyệt từ mới -> cũ, lùi dần balance chỉ khi giao dịch success.
   rows = computed<HistoryRow[]>(() => {
-    const sorted = [...this.transactions()].sort(
-      (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
-    );
+  const sorted = [...this.transactions()].sort(
+    (a, b) => new Date(b.time).getTime() - new Date(a.time).getTime()
+  );
 
-    let cursor = this.currentBalance();
-    const result: HistoryRow[] = [];
+  let cursor = this.currentBalance();
+  const result: HistoryRow[] = [];
 
-    for (const tx of sorted) {
-      result.push({ ...tx, displayBalance: cursor });
-      if (tx.status === 'success') {
-        cursor = cursor - this.signedAmount(tx);
-      }
+  for (const tx of sorted) {
+    result.push({ ...tx, displayBalance: cursor });
+
+    // order = tiền thật (VNPay), không đụng ví -> không cho ảnh hưởng cursor
+    if (tx.status === 'success' && tx.type !== 'order') {
+      cursor = cursor - this.signedAmount(tx);
     }
+  }
 
-    return result;
-  });
+  return result;
+});
 
   filteredRows = computed(() => {
     let rows = this.rows();

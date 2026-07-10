@@ -167,30 +167,39 @@ itemCount = computed(() => {
     return;
   }
 
+  const orderId = data.order_id;
+
   // VNPay: gọi Edge Function lấy URL, redirect luôn
-  const { data: sessionData } = await supabase.auth.getSession();
-  const token = sessionData.session?.access_token;
+  try {
+    const { data: sessionData } = await supabase.auth.getSession();
+    const token = sessionData.session?.access_token;
 
-  const res = await fetch('https://rhblxxtrjjwpeaeikhny.supabase.co/functions/v1/create-payment-url', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-      Authorization: `Bearer ${token}`,
-    },
-    body: JSON.stringify({ orderId: data.order_id }),
-  });
+    const res = await fetch('https://rhblxxtrjjwpeaeikhny.supabase.co/functions/v1/create-payment-url', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ orderId }),
+    });
 
-  const result = await res.json();
-  this.submitting.set(false);
+    const result = await res.json();
 
-  if (!res.ok || result.error) {
-    this.errorMsg.set(result.error ?? 'Không tạo được URL thanh toán');
-    return;
+    if (!res.ok || result.error) {
+      await supabase.rpc('cancel_order', { p_order_id: orderId });
+      this.submitting.set(false);
+      this.errorMsg.set(result.error ?? 'Không tạo được URL thanh toán');
+      return;
+    }
+
+    window.location.href = result.paymentUrl; // redirect sang VNPAY
+    // không set submitting = false ở đây vì trang sắp bị redirect đi
+  } catch (err) {
+    await supabase.rpc('cancel_order', { p_order_id: orderId });
+    this.submitting.set(false);
+    this.errorMsg.set('Không thể kết nối tới cổng thanh toán, vui lòng thử lại');
   }
-
-  window.location.href = result.paymentUrl; // redirect sang VNPAY
 }
-
 // Thêm vào class CreateOrder
 
 openAddAddressModal(): void {

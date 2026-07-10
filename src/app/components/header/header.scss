@@ -156,6 +156,8 @@
         height: 40px;
         border-radius: 50%;
         transition: background .15s;
+        text-decoration: none;   // thêm dòng này
+        color: inherit; 
 
         img {
           width: 26px;

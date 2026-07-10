@@ -194,3 +194,15 @@ ngxsmk-tel-input {
   --tel-placeholder: #B3B3B3;
   --tel-focus-shadow: none;
 }
+.field-hint {
+  font-family: 'Inclusive Sans', sans-serif;
+  font-size: 14px;
+  margin: -6px 0 0;
+
+  &.taken {
+    color: #C0392B;
+  }
+  &.ok {
+    color: #2E8B57;
+  }
+}

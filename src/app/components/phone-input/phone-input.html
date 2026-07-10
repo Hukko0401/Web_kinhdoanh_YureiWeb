@@ -6,12 +6,13 @@
   </button>
 
   <input
-    type="tel"
-    [ngModel]="localNumber"
-    (ngModelChange)="onLocalNumberChange($event)"
-    placeholder="Số điện thoại"
-    class="phone-number-input"
-  />
+  type="tel"
+  [ngModel]="localNumber"
+  (ngModelChange)="onLocalNumberChange($event)"
+  (blur)="onBlur()"
+  placeholder="Số điện thoại"
+  class="phone-number-input"
+/>
 
   <div class="country-dropdown" *ngIf="dropdownOpen">
     <div class="group-label">Phổ biến</div>

@@ -191,6 +191,24 @@ email = data.email
     await supabase.auth.signOut()
   }
 
+  async checkUsernameExists(username: string): Promise<boolean> {
+  const { data, error } = await supabase.rpc('check_username_exists', { p_username: username.trim() })
+  if (error) {
+    console.error('checkUsernameExists error:', error)
+    return false
+  }
+  return !!data
+}
+
+async checkPhoneExists(phone: string): Promise<boolean> {
+  const { data, error } = await supabase.rpc('check_phone_exists', { p_phone: phone.trim() })
+  if (error) {
+    console.error('checkPhoneExists error:', error)
+    return false
+  }
+  return !!data
+}
+
   getCurrentUser(): User | null {
     return this.currentUserSubject.value
   }
