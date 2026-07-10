@@ -1,4 +1,4 @@
-import { Component, input, output, HostListener } from '@angular/core';
+import { Component, input, output, HostListener, HostBinding } from '@angular/core';
 
 @Component({
   selector: 'app-result-item-card',
@@ -12,6 +12,11 @@ export class ResultItemCard {
   isHighlighted = input<boolean>(false); // do cha quyết định
 
   hovered = output<void>();
+
+  @HostBinding('class.highlighted')
+  get highlightedClass(): boolean {
+    return this.isHighlighted();
+  }
 
   @HostListener('mouseenter')
   onMouseEnter() {

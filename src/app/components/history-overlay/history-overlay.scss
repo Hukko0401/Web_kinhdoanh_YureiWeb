@@ -33,15 +33,15 @@
 
 .close-btn {
   position: absolute;
-  top: 8cqw;
+  top: 11cqh;
   right: 3cqw;
   width: 4cqw;
   height: 3.6cqw;
-  background: #e0f8ff;
+  background: #668BA2;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.25);
   border: none;
   border-radius: 10%;
-  color: #af7017;
+  color: #e1bd80;
   font-size: clamp(16px, 1.6cqw, 22px);
   font-family: 'Sour Gummy', sans-serif;
   font-weight: 700;
@@ -54,7 +54,7 @@
 
 .history-content {
   position: absolute;
-  inset: 16% 12%;         // padding trong = % của frame, tự scale theo mọi kích thước frame
+  inset: 18% 12%;         // padding trong = % của frame, tự scale theo mọi kích thước frame
   display: flex;
   flex-direction: column;
   gap: 3%;
@@ -78,7 +78,7 @@
 .banner-select select {
   padding: 0.6cqw 1.2cqw;
   border-radius: 1.2cqw;
-  border: 1px solid #70460c;
+  border: 1px solid #bf975e;
   background: #fffef6;
   color: #70460c;
   font-family: 'Delicious Handrawn', sans-serif;
@@ -101,7 +101,7 @@
   th, td {
     padding: 0.8cqw 0.7cqw;
     text-align: center;
-    border: 1px solid rgba(112, 70, 12, 0.25);
+    border: 2px solid rgba(112, 70, 12, 0.4);
     color: #70460c;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -134,9 +134,21 @@
   &__arrow {
     background: none;
     border: none;
-    color: #70460c;
-    font-size: clamp(16px, 1.7cqw, 24px);
     cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+
+    img {
+      width: 1.4cqw;
+      height: auto;
+      display: block;
+    }
+
+    &--next img {
+      transform: scaleX(-1);
+    }
 
     &:disabled {
       opacity: 0.3;

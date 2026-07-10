@@ -201,7 +201,7 @@ export class BannerRoll implements OnInit, OnDestroy {
     if (!this.currentUserId) return;
 
     const { data, error } = await this.gachaService.getRollHistory(
-      this.currentUserId,
+      this.currentUserId, 
       collectionId,
       page,
       HISTORY_PAGE_SIZE

@@ -9,7 +9,9 @@
         <div class="banner-select">
           <select [value]="selectedBannerId() ?? ''" (change)="onBannerSelect($event)">
             @for (b of banners(); track b.collectionId) {
-              <option [value]="b.collectionId">{{ b.name }}</option>
+              <option [value]="b.collectionId" [selected]="b.collectionId === selectedBannerId()">
+                {{ b.name }}
+              </option>
             }
           </select>
         </div>
@@ -47,9 +49,13 @@
       </div>
 
       <div class="pagination">
-        <button class="pagination__arrow" [disabled]="currentPage() === 1" (click)="goPrev()">‹</button>
+        <button class="pagination__arrow pagination__arrow--prev" [disabled]="currentPage() === 1" (click)="goPrev()">
+          <img src="/Icons/btn-next-history.png" alt="Previous" />
+        </button>
         <span class="pagination__current">{{ currentPage() }}</span>
-        <button class="pagination__arrow" [disabled]="currentPage() === totalPages()" (click)="goNext()">›</button>
+        <button class="pagination__arrow pagination__arrow--next" [disabled]="currentPage() === totalPages()" (click)="goNext()">
+          <img src="/Icons/btn-next-history.png" alt="Next" />
+        </button>
       </div>
     </div>
   </div>

@@ -1,8 +1,9 @@
 :host {
   display: flex;
   height: 100%;
-  max-width: 12cqw;   // khớp đúng với cột grid bên banner-roll
-  overflow: hidden;   // chặn nội dung tràn ra ngoài cột, không đè lên main banner
+  width: clamp(110px, 12cqw, 173px);
+  max-width: 12cqw;
+  overflow: visible;   // đổi từ hidden -> visible, để label active phình ra ngoài không bị cắt
 }
 
 .collection-nav {
@@ -11,8 +12,9 @@
   align-items: center;
   height: 100%;
   width: 100%;
-  padding: 0.694cqw;
+  padding: 0.694cqw 1.8cqw;   // tăng padding ngang (từ 0.694cqw đều 4 phía -> riêng ngang rộng hơn)
   box-sizing: border-box;
+  overflow: visible;          // đồng bộ luôn, tránh còn sót chỗ nào cắt
 
   &__line {
     width: 2px;
@@ -33,9 +35,9 @@
     text-align: center;
     color: #70460C;
     font-family: 'Delicious Handrawn', cursive;
-    font-size: clamp(12px, 1.4cqw, 20px); // giảm nhẹ so với trước để chữ dễ vừa khung hơn
+    font-size: clamp(12px, 1.4cqw, 20px);
 
-    white-space: normal;      // đổi lại cho phép xuống dòng tự nhiên nếu tên dài
+    white-space: normal;
     overflow: hidden;
     text-overflow: ellipsis;
     word-break: break-word;
@@ -44,7 +46,7 @@
     transition: transform 0.2s ease;
 
     &--active {
-      transform: scale(1.25); // giảm nhẹ scale để bớt tràn khi active
+      transform: scale(1.25);
       text-shadow: 0px 4px 7px rgba(255, 250, 217, 0.70);
       z-index: 1;
       position: relative;

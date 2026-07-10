@@ -6,7 +6,12 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background: url('/Bg/Bg_Gacha.png') center/cover no-repeat;
+  // background: url('/Bg/Bg_gachapage2.jpg') center/cover no-repeat;
+  background: url('/Bg/Bg_gachapage2.jpg') center/auto repeat;
+  // background-image: url('/Bg/Bg_gachapage.jpg');
+  // background-position: center top;    // Căn giữa theo chiều ngang, sát trên theo chiều dọc
+  // background-size: auto 100%;         // Chiều rộng tự động, chiều cao full 100%
+  // background-repeat: repeat-x;        // Chỉ lặp theo chiều ngang
 }
 
 .gacha-header {
