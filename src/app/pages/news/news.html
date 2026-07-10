@@ -1,0 +1,144 @@
+<app-header></app-header>
+
+<section class="news-hero">
+  <div class="news-hero__text">
+    <span class="news-hero__tag">FEATURED STORY</span>
+    <h1 class="news-hero__title">
+      <span class="news-hero__title-line news-hero__title-line--dark">The Art of the</span>
+      <span class="news-hero__title-line news-hero__title-line--blue">Blind Box</span>
+    </h1>
+    <p class="news-hero__desc">
+      Discover the creative journey behind our latest collaboration with Kenny Wong
+      and the evolution of Molly's whimsical world.
+    </p>
+    <button class="news-hero__cta">Read More <span>→</span></button>
+  </div>
+
+  <div class="news-hero__image-wrap">
+    <div class="news-hero__image-shadow"></div>
+    <img class="news-hero__image" src="/Images/news_intro.jpg" alt="Featured story" />
+  </div>
+</section>
+
+<nav class="news-filters">
+  <button
+    *ngFor="let f of filters"
+    class="news-filters__tab"
+    [class.news-filters__tab--active]="activeFilter === f"
+    (click)="setFilter(f)"
+  >
+    {{ f }}
+  </button>
+</nav>
+
+<section class="news-grid">
+  <div class="news-grid__col news-grid__col--left">
+
+    <!-- Grand opening -->
+    <article class="news-card news-card--grand-opening">
+      <img class="news-card__bg" src="/Images/yureifest.jpg" alt="YUREI Fest" />
+      <div class="news-card__scrim"></div>
+      <div class="news-card__overlay-content">
+        <span class="news-card__tag news-card__tag--light">GRAND OPENING</span>
+        <h2 class="news-card__title news-card__title--white">
+          YUREI Fest: A New Fest to the YUREI Universe in VietNam
+        </h2>
+        <p class="news-card__desc news-card__desc--light">
+          Step inside our largest destination yet, featuring exclusive collections and immersive artist workshops.
+        </p>
+        <button class="news-card__cta news-card__cta--light">Explore Fest <span>↗</span></button>
+      </div>
+    </article>
+
+    <!-- Corporate -->
+    <article class="news-card news-card--corporate">
+      <span class="news-card__tag">CORPORATE</span>
+      <h2 class="news-card__title news-card__title--corporate">Sustainability Initiative 2024</h2>
+      <p class="news-card__desc">Transitioning to 100% recyclable packaging for our blind box series.</p>
+    </article>
+
+    <!-- Community -->
+    <article class="news-card news-card--community">
+      <div class="news-card__community-text">
+        <h2 class="news-card__title news-card__title--community">Join the YUREI Global Community</h2>
+        <p class="news-card__desc news-card__desc--community">
+          Share your collection and participate in exclusive fan events.
+        </p>
+        <div class="news-card__community-actions">
+          <button class="news-card__cta news-card__cta--solid">Join Discord</button>
+          <button class="news-card__cta news-card__cta--outline">Follow IG</button>
+        </div>
+      </div>
+      <div class="news-card__avatars">
+        <span class="news-card__avatar">
+            <img src="/Images/avatar1.jpg" alt="Avatar 1"/>
+        </span>
+        <span class="news-card__avatar">
+            <img src="/Images/avatar2.jpg" alt="Avatar 2" />
+        </span>
+        <span class="news-card__avatar">
+            <img src="/Images/avatar3.jpg" alt="Avatar 3" />
+        </span>
+      </div>
+    </article>
+
+    <!-- Guide + Trend -->
+    <div class="news-grid__pair">
+      <article class="news-card news-card--guide">
+        <div class="news-card__meta-row">
+          <span class="news-card__tag news-card__tag--pill">GUIDE</span>
+          <span class="news-card__readtime">4 min read</span>
+        </div>
+        <h3 class="news-card__title news-card__title--guide">How to Spot a Rare 'Secret' Figurine</h3>
+        <p class="news-card__desc">Our ultimate guide to understanding ratios and identification marks.</p>
+      </article>
+
+      <article class="news-card news-card--trend">
+        <div class="news-card__meta-row">
+          <span class="news-card__tag news-card__tag--pill">TREND</span>
+          <span class="news-card__readtime">6 min read</span>
+        </div>
+        <h3 class="news-card__title news-card__title--trend">Toy Customization: The New Frontier</h3>
+        <p class="news-card__desc">Meet the artists who are turning mass-produced toys into one-of-a-kind art.</p>
+      </article>
+    </div>
+  </div>
+
+  <div class="news-grid__col news-grid__col--right">
+
+    <!-- Drops -->
+    <article class="news-card news-card--drops">
+      <span class="news-card__tag">DROPS</span>
+      <h2 class="news-card__title news-card__title--drops">SKULLPANDA: The Sound Series</h2>
+      <div class="news-card__drops-footer">
+        <span class="news-card__meta-italic">Coming Soon this Friday</span>
+        <span class="news-card__drops-icon">♪</span>
+      </div>
+    </article>
+
+    <!-- Artist spotlight -->
+    <article class="news-card news-card--artist">
+      <img class="news-card__artist-image" src="/Images/artist_news2.jpg" alt="Aiko" />
+      <div class="news-card__artist-caption">
+        <span class="news-card__tag">ARTIST SPOTLIGHT</span>
+        <h2 class="news-card__title news-card__title--artist">Aiko: Finding Zen in Vinyl</h2>
+      </div>
+      <button class="news-card__cta news-card__cta--dark">View Interview</button>
+    </article>
+
+    <!-- Limited edition -->
+    <article class="news-card news-card--limited">
+      <img class="news-card__limited-image" src="/Images/dimoo_christmas.jpg" alt="Dimoo Holiday Dreams" />
+      <div class="news-card__limited-body">
+        <div class="news-card__meta-row">
+          <span class="news-card__tag news-card__tag--limited">LIMITED EDITION</span>
+          <span class="news-card__star">★</span>
+        </div>
+        <h3 class="news-card__title news-card__title--limited">Dimoo: Holiday Dreams</h3>
+        <p class="news-card__desc news-card__desc--italic">Winter 2026 Collection</p>
+      </div>
+    </article>
+  </div>
+</section>
+
+<app-footer></app-footer>
