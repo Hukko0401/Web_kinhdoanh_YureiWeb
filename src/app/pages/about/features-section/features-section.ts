@@ -22,7 +22,7 @@ interface Feature {
 export class FeaturesSection {
   features: Feature[] = [
     {
-      icon: '/Icons/feature-artist.png',
+      icon: '/Icons/ic_about1.png',
       iconBg: '#FFF4B7',
       title: 'Exclusive Artist Collections',
       titleColor: '#E3C14E',
@@ -32,7 +32,7 @@ export class FeaturesSection {
       cardBg: 'rgba(254, 255, 234, 0.80)',
     },
     {
-      icon: '/Icons/feature-gacha.png',
+      icon: '/Icons/ic_about2.png',
       iconBg: '#B4EBFF',
       title: 'Gacha Experience',
       titleColor: '#78DBFF',
@@ -42,7 +42,7 @@ export class FeaturesSection {
       cardBg: 'rgba(231, 249, 255, 0.80)',
     },
     {
-      icon: '/Icons/feature-made.png',
+      icon: '/Icons/ic_about3.png',
       iconBg: '#FFD8EA',
       title: 'Made-to-Order',
       titleColor: '#EFB1D3',
