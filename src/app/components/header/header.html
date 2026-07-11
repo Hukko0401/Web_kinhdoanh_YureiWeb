@@ -123,14 +123,38 @@
         </a>
 
         <!-- Notifications -->
-        <a
-          routerLink="/notifications"
-          class="icon-item"
-          (click)="closeMobileMenu()">
+        <div class="icon-item notification-wrap">
+          <button type="button" class="icon-btn" (click)="toggleNotifications()">
+            <img src="/Icons/notification.png" alt="Notifications" />
+          </button>
 
-          <img src="/Icons/notification.png" alt="Notifications" />
+          <div class="notification-dropdown" *ngIf="isNotificationsOpen()">
+            <div class="noti-header">
+              <span class="noti-title">Notifications</span>
+              <button type="button" class="noti-close" (click)="closeNotifications()">✕</button>
+            </div>
 
-        </a>
+            <div class="noti-divider"></div>
+
+            <ng-container *ngIf="notifications().length > 0; else emptyNoti">
+              <div class="noti-list" [class.scrollable]="showAllNotifications()">
+                <div class="noti-item" *ngFor="let n of visibleNotifications">
+                  <div class="noti-content">{{ n.content }}</div>
+                  <div class="noti-time">{{ formatNotificationTime(n.time) }}</div>
+                </div>
+              </div>
+
+              <ng-container *ngIf="!showAllNotifications()">
+                <div class="noti-divider"></div>
+                <a class="noti-view-all" (click)="onViewAllNotifications()">View all</a>
+              </ng-container>
+            </ng-container>
+
+            <ng-template #emptyNoti>
+              <div class="noti-empty">You don't have any notifications yet.</div>
+            </ng-template>
+          </div>
+        </div>
 
         <!-- Profile -->
         <a
@@ -146,4 +170,5 @@
       </div>
     </div>
   </div>
+  <div class="dropdown-backdrop" *ngIf="isNotificationsOpen()" (click)="closeNotifications()"></div>
 </header>

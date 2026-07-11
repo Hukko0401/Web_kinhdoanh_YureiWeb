@@ -286,3 +286,133 @@
     }
   }
 }
+
+.notification-wrap {
+  position: relative;
+
+  .icon-btn {
+    background: none;
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+  }
+}
+
+.notification-dropdown {
+  position: absolute;
+  top: calc(100% + 10px);
+  right: 0;
+  width: 320px;
+  padding: 10px 5px;
+  background: #FEFAE1;
+  border-radius: 10px;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+  z-index: 100;
+  font-family: 'Inclusive Sans', sans-serif;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  .noti-header {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 0 5px;
+
+    .noti-title {
+      flex: 1;
+      color: #AF7017;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .noti-close {
+      background: none;
+      border: none;
+      color: #AF7017;
+      font-size: 14px;
+      cursor: pointer;
+      padding: 0;
+      line-height: 1;
+
+      &:hover { opacity: 0.7; }
+    }
+  }
+
+  .noti-divider {
+    height: 1px;
+    background: rgba(175, 112, 23, 0.2);
+  }
+
+  .noti-item {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding: 0 5px;
+
+    .noti-content {
+      color: #AF7017;
+      font-size: 14px;
+      font-weight: 400;
+    }
+
+    .noti-time {
+      color: #D9D9D9;
+      font-size: 12px;
+      font-weight: 400;
+    }
+  }
+
+  .noti-view-all {
+    text-align: center;
+    color: #AF7017;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration: none;
+    cursor: pointer;
+    padding: 4px 0;
+
+    &:hover { opacity: 0.75; }
+  }
+
+  .noti-empty {
+    text-align: center;
+    color: #AF7017;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 6px 0;
+  }
+}
+
+.noti-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  &.scrollable {
+    max-height: 400px;
+    overflow-y: auto;
+    padding-right: 4px;
+
+    &::-webkit-scrollbar {
+      width: 4px;
+    }
+    &::-webkit-scrollbar-thumb {
+      background: rgba(175, 112, 23, 0.3);
+      border-radius: 10px;
+    }
+  }
+}
+.dropdown-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+}

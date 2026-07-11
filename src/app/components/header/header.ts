@@ -7,9 +7,13 @@ import { AuthService } from '../../services/auth.service';
 import { CollectionService } from '../../services/collection.service';
 import { WalletService } from '../../services/wallet.service';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { signal } from '@angular/core';
+import { NotificationService } from '../../services/notification.service';
+import { AppNotification } from '../../models/notification.model';
+
 
 interface CollectionMenuItem {
-  id: string | null; // null = chưa có data thật, chỉ minh họa
+  id: string | null;
   name: string;
 }
 
@@ -27,8 +31,10 @@ export class Header implements OnInit, OnDestroy {
   isCollectionsOpen = false;
   isAvatarMenuOpen = false;
   isMobileMenuOpen = false;
+  notifications = signal<AppNotification[]>([]);
+  isNotificationsOpen = signal(false);
+  showAllNotifications = signal(false); 
 
-  // Chỉ khai báo kiểu ở đây, gán giá trị thật trong constructor bên dưới
   coinBalance!: Signal<number>;
 
   private authSub?: Subscription;
@@ -40,14 +46,14 @@ export class Header implements OnInit, OnDestroy {
     { label: 'About Us', path: '/about' }
   ];
 
-  private readonly MENU_SLOT_COUNT = 5; // số ô hiển thị trong dropdown
+  private readonly MENU_SLOT_COUNT = 5;
 
   constructor(
     private authService: AuthService,
     private collectionService: CollectionService,
-    private walletService: WalletService
+    private walletService: WalletService,
+    private notificationService: NotificationService   
   ) {
-    // Đến đây walletService đã chắc chắn được gán xong -> an toàn để đọc this.walletService
     this.coinBalance = toSignal(this.walletService.balance$, { initialValue: 0 });
   }
 
@@ -99,6 +105,7 @@ export class Header implements OnInit, OnDestroy {
   toggleCollections(state: boolean): void {
     this.isCollectionsOpen = state;
   }
+
   toggleMobileMenu(): void {
     this.isMobileMenuOpen = !this.isMobileMenuOpen;
   }
@@ -106,4 +113,50 @@ export class Header implements OnInit, OnDestroy {
   closeMobileMenu(): void {
     this.isMobileMenuOpen = false;
   }
+
+  
+  async toggleNotifications(): Promise<void> {
+    this.isNotificationsOpen.set(!this.isNotificationsOpen());
+    if (this.isNotificationsOpen()) {
+      this.showAllNotifications.set(false);
+      const list = await this.notificationService.getMyNotifications();
+      this.notifications.set(list);
+    }
+  }
+
+  closeNotifications(): void {
+    this.isNotificationsOpen.set(false);
+  }
+
+  get visibleNotifications() {  
+    const list = this.notifications();
+    return this.showAllNotifications() ? list.slice(0, 10) : list.slice(0, 3);
+  }
+
+  onViewAllNotifications(): void {   
+    this.showAllNotifications.set(true);
+  }
+
+  formatNotificationTime(isoTime: string): string {
+  const now = new Date();
+  const time = new Date(isoTime);
+  const diffMs = now.getTime() - time.getTime();
+  const diffMinutes = Math.floor(diffMs / 60000);
+  const diffHours = Math.floor(diffMinutes / 60);
+
+  if (diffMinutes < 1) {
+    return 'Just now';
+  }
+  if (diffMinutes < 60) {
+    return `${diffMinutes} minute${diffMinutes > 1 ? 's' : ''} ago`;
+  }
+  if (diffHours < 24) {
+    return `${diffHours} hour${diffHours > 1 ? 's' : ''} ago`;
+  }
+
+  const day = time.getDate();
+  const month = time.toLocaleString('en-US', { month: 'short' });
+  const year = time.getFullYear();
+  return `${day} ${month} ${year}`;
+}
 }
