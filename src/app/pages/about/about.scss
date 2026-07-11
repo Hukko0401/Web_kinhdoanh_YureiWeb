@@ -1,0 +1,6 @@
+:host {
+    display: block;
+    width: 100%;
+    overflow-x: hidden; // chặn tràn ngang do các phần tử blur/shadow decoration âm margin
+    background-color: rgba(255, 248, 203, 0.482);
+  }

@@ -142,7 +142,7 @@
   @media (max-width: 1024px) {
     .how-to-roll {
       &__container {
-        padding: 60px 24px 80px;
+        padding: 150px 24px 80px;
       }
   
       &__timeline {
@@ -151,7 +151,7 @@
     }
   
     .step {
-      gap: 32px;
+      gap: 100px;
   
       &__title {
         font-size: 20px;
@@ -166,7 +166,7 @@
   @media (max-width: 768px) {
     .how-to-roll {
       &__container {
-        padding: 40px 16px 60px;
+        padding: 150px 16px 60px;
       }
   
       &__intro {
@@ -192,7 +192,7 @@
       flex-direction: column !important;
       align-items: flex-start;
       padding-left: 60px;
-      gap: 16px;
+      gap: 80px;
   
       &__text {
         align-items: flex-start !important;
@@ -230,7 +230,7 @@
   @media (max-width: 480px) {
     .how-to-roll {
       &__container {
-        padding: 32px 12px 40px;
+        padding: 150px 12px 40px;
       }
   
       &__title {

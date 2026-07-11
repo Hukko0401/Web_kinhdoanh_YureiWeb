@@ -1,0 +1,130 @@
+:host {
+    display: block;
+    width: 100%;
+  }
+  
+  .process {
+    width: 100%;
+    max-width: 90rem; // ~1440px
+    margin: 0 auto;
+    padding: clamp(3rem, 7.2vw, 6.5rem) clamp(2rem, 5.5vw, 5rem);
+    display: flex;
+    flex-direction: column;
+    gap: clamp(3rem, 5.3vw, 4.8rem); // ~452px gap gốc giữa 2 step, thu gọn lại hợp lý hơn cho web thường
+  }
+  
+  .process__step {
+    display: flex;
+    align-items: center;
+    gap: clamp(2rem, 5.5vw, 5rem);
+    flex-wrap: wrap;
+  }
+  
+  .process__text {
+    flex: 1 1 20rem;
+    display: flex;
+    flex-direction: column;
+    gap: clamp(1.25rem, 2.15vw, 2rem);
+  }
+  
+  .process__number-row {
+    display: flex;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  
+  .process__number {
+    color: #784600;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 400;
+    font-size: clamp(2.5rem, 5vw, 4.5rem); // ~72px
+    line-height: 1;
+  }
+  
+  .process__label {
+    color: #784600;
+    font-family: 'Sour Gummy', sans-serif;
+    font-weight: 700;
+    font-size: clamp(2rem, 4.4vw, 4rem); // ~64px
+    line-height: 1;
+  }
+  
+  .process__desc {
+    color: #5E3F3C;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: clamp(0.9rem, 1.4vw, 1.25rem); // ~20px
+    line-height: 1.63;
+    margin: 0;
+  }
+  
+  .process__btn {
+    align-self: flex-start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.8rem 2rem;
+    border-radius: 9999px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.85rem, 1.1vw, 1rem); // ~16px
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+  
+    &:hover {
+      transform: translateY(-2px);
+    }
+  
+    &--dark {
+      background: #784600;
+      color: white;
+    }
+  
+    &--outline {
+      background: none;
+      outline: 2px solid #784600;
+      outline-offset: -2px;
+      color: #784600;
+    }
+  
+    &-icon {
+      font-size: 1.1em;
+    }
+  }
+  
+  .process__media {
+    position: relative;
+    flex: 1 1 20rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .process__glow {
+    position: absolute;
+    width: calc(100% + 3rem);
+    height: calc(100% + 3rem);
+    border-radius: 9999px;
+    filter: blur(2rem);
+    z-index: 0;
+  
+    &--teal {
+      background: rgba(0, 103, 126, 0.05);
+    }
+  
+    &--red {
+      background: rgba(188, 0, 20, 0.05);
+    }
+  }
+  
+  .process__image {
+    position: relative;
+    width: 100%;
+    max-width: 34rem;
+    height: auto;
+    aspect-ratio: 3 / 2;
+    object-fit: cover;
+    border-radius: 2.5rem;
+    box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+    z-index: 1;
+  }

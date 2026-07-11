@@ -1,0 +1,28 @@
+<section class="cta">
+    <div class="cta__glow cta__glow--top-right"></div>
+    <div class="cta__glow cta__glow--bottom-left"></div>
+  
+    <h2 class="cta__title">Ready to Begin Your YURĒI Journey?</h2>
+    <p class="cta__desc">
+      Join a community of collectors and art lovers. Be the first to discover new limited-edition collections, exclusive drops, and exciting Gacha events.
+    </p>
+  
+    <div class="cta__form">
+      <input
+        type="email"
+        [(ngModel)]="email"
+        placeholder="you@example.com"
+        class="cta__input"
+        [disabled]="loading()"
+      />
+      <button class="cta__btn" (click)="onSubscribe()" [disabled]="loading()">
+        {{ loading() ? 'Subscribing...' : 'Sign Up Now' }}
+      </button>
+    </div>
+  
+    @if (message()) {
+      <p class="cta__message" [class.cta__message--error]="messageType() === 'error'">
+        {{ message() }}
+      </p>
+    }
+  </section>

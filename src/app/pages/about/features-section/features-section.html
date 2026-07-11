@@ -1,0 +1,21 @@
+<section class="features">
+    <div class="features__header">
+      <h2 class="features__title">What Makes YURĒI Different</h2>
+      <p class="features__subtitle">
+        We're redefining the blind box experience by combining original art, digital collecting, and the excitement of Gacha.
+      </p>
+    </div>
+  
+    <div class="features__grid">
+      @for (f of features; track f.title) {
+        <div class="feature-card" [style.background]="f.cardBg">
+          <div class="feature-card__icon" [style.background]="f.iconBg">
+            <img [src]="f.icon" [alt]="f.title" />
+          </div>
+          <h3 class="feature-card__title" [style.color]="f.titleColor">{{ f.title }}</h3>
+          <p class="feature-card__desc">{{ f.description }}</p>
+          <a href="#" class="feature-card__link" [style.color]="f.linkColor">{{ f.linkText }} →</a>
+        </div>
+      }
+    </div>
+  </section>

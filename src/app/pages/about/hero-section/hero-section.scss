@@ -1,0 +1,103 @@
+:host {
+  display: block;
+  width: 100%;
+}
+
+.hero {
+  width: 100%;
+  min-height: clamp(30rem, 60vw, 53rem);
+  background: linear-gradient(180deg, white 40%, #BAEDFF 100%);
+  display: flex;
+  justify-content: center;
+  padding: clamp(5rem, 7vw, 6.5rem) clamp(2rem, 5vw, 5rem) clamp(2rem, 5vw, 5rem); // giảm top
+
+  &__content {
+    width: min(92%, 75rem);
+    aspect-ratio: 1320 / 690;
+    background-image: url('/Bg/Bg_hero-landscape.png');
+    background-size: contain;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(1rem, 1.6vw, 1.5rem); // giảm nhẹ theo tỉ lệ chữ nhỏ hơn
+    padding: clamp(2rem, 4vw, 4rem);
+    text-align: center;
+  }
+
+  &__badge {
+    padding: 0.5rem 1.5rem;
+    background: rgba(255, 255, 255, 0.20);
+    border-radius: 9999px;
+    outline: 1px solid rgba(255, 255, 255, 0.30);
+    outline-offset: -1px;
+    backdrop-filter: blur(8px);
+    color: #784600;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 700;
+    font-size: clamp(0.65rem, 0.8vw, 0.75rem); // giảm từ 0.875rem
+    text-transform: uppercase;
+    letter-spacing: 0.15rem;
+  }
+
+  &__title {
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    font-weight: 800;
+    font-size: clamp(1.5rem, 4.2vw, 3.75rem); // giảm từ 5.25rem
+    line-height: 1.15;
+    color: #784600;
+    margin: 0;
+
+    &--accent {
+      color: #F2CA50;
+    }
+  }
+
+  &__desc {
+    max-width: 38rem;
+    color: #784600;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-size: clamp(0.85rem, 1.2vw, 1.125rem); // giảm từ 1.5rem
+    line-height: 1.4;
+    margin: 0;
+  }
+
+  &__actions {
+    display: flex;
+    gap: 1.25rem;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding-top: 0.5rem;
+  }
+
+  &__btn {
+    padding: 0.8rem 2rem; // giảm nhẹ theo
+    border-radius: 9999px;
+    font-family: 'Be Vietnam Pro', sans-serif;
+    font-weight: 600;
+    font-size: clamp(0.8rem, 1vw, 1rem); // giảm từ 1.125rem
+    text-decoration: none;
+    cursor: pointer;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+
+    &:hover {
+      transform: translateY(-2px);
+    }
+
+    &--primary {
+      background: #4A9EF5;
+      color: white;
+      box-shadow: 0px 25px 50px -12px rgba(0, 0, 0, 0.25);
+    }
+
+    &--secondary {
+      background: rgba(209, 188, 255, 0.30);
+      outline: 1px solid rgba(255, 255, 255, 0.40);
+      outline-offset: -1px;
+      backdrop-filter: blur(6px);
+      color: white;
+    }
+  }
+}
