@@ -130,10 +130,11 @@
       min-height: 212px; // = min-height cha trừ 2*padding (218 - 2*3)
       background: #FDF5E7;
       display: flex;
+      align-items: flex-start;
       align-items: center;
       padding: 20px 30px;
       gap: 24px;
-      flex-wrap: wrap;
+      flex-wrap: nowrap;
 
       --notch-size-inner: 21px; // = notch-size ngoài (24px) trừ padding (3px)
       -webkit-mask:
@@ -155,6 +156,7 @@
     .order-info {
       width: 160px;
       flex-shrink: 0;
+      padding-top: 8px;
 
       .order-code {
         font-family: 'Inter', sans-serif;
@@ -174,6 +176,8 @@
 
     .order-items {
       flex: 1 1 auto;
+      min-width: 0;
+      max-width: 100%;
       display: flex;
       align-items: center;
       gap: 28px;
@@ -225,6 +229,7 @@
     .order-side {
       width: 220px;
       flex-shrink: 0;
+      padding-top: 8px;
       display: flex;
       flex-direction: column;
       align-items: flex-start;
