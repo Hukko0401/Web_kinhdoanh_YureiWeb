@@ -136,21 +136,9 @@ async cancelOrder(order_id: string): Promise<boolean> {
     this.loading.set(true);
     this.error.set(null);
 
-    const current = this.rawOrders().find(o => o.order_id === order_id);
-
-    if (current) {
-      const diffMinutes = (Date.now() - new Date(current.created_at).getTime()) / (1000 * 60);
-      if (diffMinutes > 30) {
-        this.error.set('Đơn hàng chỉ có thể huỷ trong vòng 30 phút sau khi đặt.');
-        this.loading.set(false);
-        return false;
-      }
-    }
-
-    const { error } = await supabase
-      .from('ORDER')
-      .update({ status: 'cancelled' })
-      .eq('order_id', order_id);
+    const { error } = await supabase.rpc('cancel_order_processing', {
+      p_order_id: order_id
+    });
 
     if (error) {
       this.error.set(error.message);
