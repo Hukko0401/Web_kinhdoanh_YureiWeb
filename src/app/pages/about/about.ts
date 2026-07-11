@@ -10,7 +10,8 @@ import { CtaSection } from './cta-section/cta-section';
 @Component({
   selector: 'app-about',
   standalone: true,
-  imports: [Header, Footer, HeroSection, AboutSection, FeaturesSection, ProcessSection, CtaSection],
+  // imports: [Header, Footer, HeroSection, AboutSection, FeaturesSection, ProcessSection, CtaSection],
+  imports: [Header, Footer, HeroSection, AboutSection, FeaturesSection, ProcessSection],
   templateUrl: './about.html',
   styleUrl: './about.scss'
 })

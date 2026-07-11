@@ -1,5 +1,5 @@
 .overlay-backdrop {
-  position: absolute;   // đổi từ fixed
+  position: absolute;
   inset: 0;
   display: flex;
   align-items: center;
@@ -9,9 +9,11 @@
 }
 
 .overlay-card {
-  width: clamp(280px, 28cqw, 500px);
-  min-height: 18cqh;
-  padding: clamp(16px, 1.4cqw, 32px) clamp(20px, 2.1cqw, 40px);
+  width: fit-content;
+  min-width: clamp(240px, 40cqw, 320px); // sàn tối thiểu, tránh card quá bé với message 1-2 chữ
+  max-width: min(85cqw, 560px);          // trần tối đa, tránh tràn khi message quá dài
+  min-height: unset;                     // bỏ ép cao cố định, để height tự theo nội dung + padding
+  padding: clamp(16px, 1.4cqw, 32px) clamp(24px, 2.8cqw, 48px);
   background: #FFFEF6;
   box-shadow: 0.7cqw 1.4cqw 0.28cqw rgba(0, 0, 0, 0.25);
   border-radius: 2.1cqw;
@@ -26,11 +28,13 @@
 }
 
 .overlay-title {
+  padding-top: clamp(16px, 1.4cqw, 24px);
   text-align: center;
   color: #AF7017;
   font-family: 'Sour Gummy', sans-serif;
   font-weight: 700;
   font-size: clamp(22px, 3.5cqw, 42px);
+  white-space: nowrap;
 }
 
 .overlay-message {
@@ -39,13 +43,14 @@
   font-family: 'Sour Gummy', sans-serif;
   font-weight: 700;
   font-size: clamp(14px, 1.8cqw, 22px);
+  max-width: 42ch;
 }
 
 .overlay-actions {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: clamp(12px, 2.8cqw, 32px);
+  gap: clamp(20px, 2.8cqw, 32px);
   flex-wrap: wrap;
 }
 
@@ -62,13 +67,9 @@
   font-family: 'Sour Gummy', sans-serif;
   font-weight: 700;
   font-size: clamp(14px, 1.4cqw, 20px);
+  white-space: nowrap;
   transition: transform 0.1s ease;
 
-  &:hover {
-    transform: scale(1.03);
-  }
-
-  &:active {
-    transform: scale(0.97);
-  }
+  &:hover { transform: scale(1.03); }
+  &:active { transform: scale(0.97); }
 }

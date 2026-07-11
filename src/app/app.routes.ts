@@ -31,17 +31,12 @@ export const routes: Routes = [
     ]
   },
   { path: 'how-to-roll', loadComponent: () => import('./pages/how-to-roll/how-to-roll').then(m => m.HowToRoll) },
-<<<<<<< Updated upstream
   { path: 'complete-profile', loadComponent: () => import('./pages/complete-profile/complete-profile').then(m => m.CompleteProfile) },
 
   { path: 'news', loadComponent: () => import('./pages/news/news').then(m => m.News) },
   {
     path: 'shipping',
     loadComponent: () => import('./pages/shipping-policy/shipping-policy').then(m => m.ShippingPolicy)
-  }
-
-
-=======
+  },
   { path: 'about', loadComponent: () => import('./pages/about/about').then(m => m.About) },
->>>>>>> Stashed changes
 ]

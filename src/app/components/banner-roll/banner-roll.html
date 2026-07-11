@@ -17,19 +17,26 @@
       </video>
 
       @if (phase() === 'idle') {
-        @if (isLoggedIn) {
-          <button class="roll-btn roll-btn--x5" (click)="onRollClick('x5')">Roll x5</button>
-          <button class="roll-btn roll-btn--x1" (click)="onRollClick('x1')">Roll x1</button>
-        } @else {
-          <div class="roll-btn roll-btn--disabled">Roll x5</div>
-          <div class="roll-btn roll-btn--disabled">Roll x1</div>
-        }
+        <button class="roll-btn roll-btn--x5" (click)="onRollClick('x5')">Roll x5</button>
+        <button class="roll-btn roll-btn--x1" (click)="onRollClick('x1')">Roll x1</button>
       }
+
     </div>
   </div>
 </div>
 
 @switch (overlay().type) {
+  @case ('confirm-register') {
+    <app-confirmation-overlay
+      title="Register to Roll"
+      message="Create an account to start collecting and unlock your first roll!"
+      confirmText="Register"
+      cancelText="Cancel"
+      (confirm)="onGoRegister()"
+      (cancel)="onCancelConfirm()"
+    />
+  }
+  
   @case ('confirm-roll') {
     <app-confirmation-overlay
       title="Confirm Roll"

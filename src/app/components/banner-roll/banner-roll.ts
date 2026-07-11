@@ -15,6 +15,7 @@ type RollPhase = 'idle' | 'playing' | 'done';
 
 type OverlayState =
   | { type: 'none' }
+  | { type: 'confirm-register' }
   | { type: 'confirm-roll'; rollType: 'x1' | 'x5' }
   | { type: 'insufficient-coin' }
   | { type: 'error'; message: string }
@@ -119,7 +120,14 @@ export class BannerRoll implements OnInit, OnDestroy {
   }
 
   onRollClick(type: 'x1' | 'x5'): void {
-    if (!this.isLoggedIn || !this.activeCollectionId() || this.phase() !== 'idle') return;
+    if (this.phase() !== 'idle') return;
+  
+    if (!this.isLoggedIn) {
+      this.overlay.set({ type: 'confirm-register' });
+      return;
+    }
+  
+    if (!this.activeCollectionId()) return;
     this.overlay.set({ type: 'confirm-roll', rollType: type });
   }
 
@@ -155,6 +163,11 @@ export class BannerRoll implements OnInit, OnDestroy {
 
   onCancelConfirm(): void {
     this.overlay.set({ type: 'none' });
+  }
+
+  onGoRegister(): void {
+    this.overlay.set({ type: 'none' });
+    this.router.navigate(['/register']);
   }
 
   onGoTopUp(): void {
