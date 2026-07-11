@@ -61,10 +61,10 @@ export class ReturnRequestService {
         order_id: orderId,
         quantity: totalQuantity,
         reason,
-        images,
+        images: JSON.stringify(images),
         status: 'pending'
       })
-      .select('return_request_id')
+      .select('return_id')
       .single();
 
     if (error || !data) {
@@ -73,10 +73,10 @@ export class ReturnRequestService {
       return false;
     }
 
-    const returnRequestId = data.return_request_id;
+    const returnRequestId = data.return_id;
 
     const itemRows = items.map(i => ({
-      return_request_id: returnRequestId,
+      return_id: returnRequestId,
       item_id: i.itemId,
       quantity: i.quantity
     }));
