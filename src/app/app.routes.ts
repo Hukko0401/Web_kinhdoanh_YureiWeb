@@ -51,4 +51,11 @@ export const routes: Routes = [
     loadComponent: () => import('./pages/shipping-policy/shipping-policy').then(m => m.ShippingPolicy)
   },
   { path: 'about', loadComponent: () => import('./pages/about/about').then(m => m.About) },
+  {
+  path: 'online-returns',
+  loadComponent: () => import('./pages/online-returns/online-returns').then(m => m.OnlineReturns)
+  },
+  { path: 'terms', loadComponent: () => import('./pages/terms-conditions/terms-conditions').then(m => m.TermsConditions) },
+
+
 ]

@@ -37,7 +37,7 @@ export class Footer implements OnInit {
   ]
   helpLinks = [
     { label: 'Terms & Conditions', route: '/terms' },
-    { label: 'Online Returns', route: '/returns' },
+    { label: 'Online Returns', route: '/online-returns' },
     { label: 'Shipping Policy', route: '/shipping' },
     { label: 'Track Your Order', route: '/tracking' }
   ]

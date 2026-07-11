@@ -1,0 +1,157 @@
+<app-header></app-header>
+
+<div class="online-returns">
+  <!-- Phần Hero: tiêu đề chính -->
+  <section class="online-returns__hero">
+    <div class="online-returns__hero-content">
+      <h1 class="online-returns__title">Returns & Shipping Refund Policy</h1>
+      <p class="online-returns__subtitle">
+        We are committed to providing a transparent shopping experience. Please review our specific
+        policies regarding product returns and shipping fee refunds below.
+      </p>
+    </div>
+  </section>
+
+  <!-- Nội dung chính -->
+  <div class="online-returns__main">
+    <!-- 3 thẻ: No Product Refunds, Shipping Refunds, Return Eligibility -->
+    <div class="online-returns__cards">
+      <div class="online-returns__card online-returns__card--no-refund">
+        <img src="/Icons/no.png" alt="No refund" class="online-returns__card-icon" />
+        <h3 class="online-returns__card-title">No Product Refunds</h3>
+        <p class="online-returns__card-desc">
+          Please note that POP MART does not offer refunds for product purchases once the order is finalized.
+        </p>
+      </div>
+      <div class="online-returns__card online-returns__card--shipping-refund">
+        <img src="/Icons/shipping.png" alt="Shipping refund" class="online-returns__card-icon" />
+        <h3 class="online-returns__card-title">Shipping Refunds</h3>
+        <p class="online-returns__card-desc">
+          Shipping fees are only refundable in the case of a valid and approved order cancellation.
+        </p>
+      </div>
+      <div class="online-returns__card online-returns__card--return-eligibility">
+        <img src="/Icons/blindbox.png" alt="Return eligibility" class="online-returns__card-icon" />
+        <h3 class="online-returns__card-title">Return Eligibility</h3>
+        <p class="online-returns__card-desc">
+          Returns for exchange are only accepted for items in original packaging with seals intact, or manufacturing defects.
+        </p>
+      </div>
+    </div>
+
+    <!-- Return Process (4 bước) -->
+    <section class="online-returns__process">
+      <h2 class="online-returns__process-title">Return Process</h2>
+      <div class="online-returns__steps">
+        <!-- Step 1 -->
+        <div class="online-returns__step">
+          <div class="online-returns__step-number">1</div>
+          <h4 class="online-returns__step-title">Submit Request</h4>
+          <p class="online-returns__step-desc">
+            Go to Order Detail, select a <strong>Completed</strong> order, and choose 'Return'. Provide reason and photo evidence.
+          </p>
+        </div>
+        <!-- Step 2 -->
+        <div class="online-returns__step">
+          <div class="online-returns__step-number">2</div>
+          <h4 class="online-returns__step-title">System Check</h4>
+          <p class="online-returns__step-desc">
+            The system verifies eligibility, order status, and evidence. Invalid requests are <span class="highlight-red">Rejected</span>.
+          </p>
+        </div>
+        <!-- Step 3 -->
+        <div class="online-returns__step">
+          <div class="online-returns__step-number">3</div>
+          <h4 class="online-returns__step-title">Admin Review</h4>
+          <p class="online-returns__step-desc">
+            Valid requests are set to <span class="highlight-blue">Pending</span>. Admin reviews and decides <span class="highlight-green">Approved</span> or <span class="highlight-red">Rejected</span>.
+          </p>
+        </div>
+        <!-- Step 4 -->
+        <div class="online-returns__step">
+          <div class="online-returns__step-number">4</div>
+          <h4 class="online-returns__step-title">Shipping & Completion</h4>
+          <p class="online-returns__step-desc">
+            If approved, a return shipment is created. Once the carrier confirms, status becomes <strong>Completed</strong>.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Eligibility Standards + ảnh lớn -->
+    <section class="online-returns__eligibility">
+      <div class="online-returns__eligibility-image">
+        <img src="/Images/return.jpg" alt="Return illustration" />
+      </div>
+      <div class="online-returns__eligibility-content">
+        <h2 class="online-returns__eligibility-title">Eligibility Standards</h2>
+        <p class="online-returns__eligibility-desc">
+          To ensure fairness for all collectors, returns for exchange must meet these criteria:
+        </p>
+        <ul class="online-returns__eligibility-list">
+          <li>
+            <img src="/Icons/important.png" alt="Intact Seals" />
+            <div>
+              <strong>Intact Seals</strong>
+              <span>Blind Boxes and limited editions must remain sealed and unused for return eligibility.</span>
+            </div>
+          </li>
+          <li>
+            <img src="/Icons/important.png" alt="Manufacturing Defects" />
+            <div>
+              <strong>Manufacturing Defects</strong>
+              <span>Issues like paint defects, broken parts, or missing accessories from the factory will be prioritized.</span>
+            </div>
+          </li>
+          <li>
+            <img src="/Icons/important.png" alt="Proof of Purchase" />
+            <div>
+              <strong>Proof of Purchase</strong>
+              <span>A valid order ID or receipt from official POP MART stores is required.</span>
+            </div>
+          </li>
+        </ul>
+        <!-- Important Note box -->
+        <div class="online-returns__note">
+          <img src="/Icons/important.png" alt="Important note" />
+          <div>
+            <h4>Important Note</h4>
+            <p>Promotional items, gifts, and opened Blind Boxes (not due to manufacturing defects) cannot be returned to maintain the surprise element of the product.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Shipping Refund Timelines -->
+    <section class="online-returns__timelines">
+      <h2 class="online-returns__timelines-title">Shipping Refund Timelines (Cancellations Only)</h2>
+      <p class="online-returns__timelines-desc">
+        For valid order cancellations where a shipping fee refund is applicable, the following timeline applies:
+      </p>
+      <div class="online-returns__timelines-cards">
+        <div class="online-returns__timeline-card">
+          <span class="online-returns__timeline-value">3-5 Business Days</span>
+          <span class="online-returns__timeline-label">PROCESSING TIME</span>
+        </div>
+        <div class="online-returns__timeline-card">
+          <span class="online-returns__timeline-value">7-10 Days</span>
+          <span class="online-returns__timeline-label">BANK TRANSFER</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Need more help? -->
+    <section class="online-returns__help">
+      <h2 class="online-returns__help-title">Need more help?</h2>
+      <p class="online-returns__help-desc">
+        Our 24/7 support team is here to assist with any specific questions regarding your orders or our policies.
+      </p>
+      <div class="online-returns__help-actions">
+        <button class="online-returns__help-btn online-returns__help-btn--primary">Contact Support</button>
+        <button class="online-returns__help-btn online-returns__help-btn--secondary">Visit Help Center</button>
+      </div>
+    </section>
+  </div>
+</div>
+
+<app-footer></app-footer>

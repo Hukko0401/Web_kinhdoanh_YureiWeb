@@ -11,7 +11,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 48px;
+    padding: 60px;
     text-align: center;
     min-height: 40vh;
   }
@@ -19,13 +19,13 @@
   &__hero-content {
     max-width: 672px;
     background: rgba(255, 255, 255, 0.2);
-    padding: 24px 48px;
+    padding: 30px 48px;
     border-radius: 12px;
     backdrop-filter: blur(4px);
   }
 
   &__title {
-    font-family: 'Inclusive Sans', sans-serif;
+    font-family: 'Sour Gummy', sans-serif;
     font-size: 48px;
     font-weight: 700;
     line-height: 40px;
@@ -67,7 +67,7 @@
   }
 
   &__card-title {
-    font-family: 'Inclusive Sans', sans-serif;
+    font-family: 'Sour Gummy', sans-serif;
     font-size: 24px;
     font-weight: 700;
     line-height: 32px;
@@ -142,6 +142,24 @@
     }
   }
 
+  // Note dưới bảng
+  &__note {
+    margin-top: 16px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(200, 199, 186, 0.4);
+    p {
+      font-family: 'Inclusive Sans', sans-serif;
+      font-size: 14px;
+      line-height: 20px;
+      color: #47473D;
+      margin: 0;
+      strong {
+        font-weight: 600;
+        color: #231A0F;
+      }
+    }
+  }
+
   // ROW
   &__row {
     display: grid;
@@ -182,7 +200,7 @@
   }
 
   &__track-title {
-    font-family: 'Inclusive Sans', sans-serif;
+    font-family: 'Sour Gummy', sans-serif;
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
@@ -191,7 +209,7 @@
   }
 
   &__eco-title {
-    font-family: 'Inclusive Sans', sans-serif;
+    font-family: 'Sour Gummy', sans-serif;
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
@@ -291,7 +309,7 @@
   }
 
   &__global-title {
-    font-family: 'Inclusive Sans', sans-serif;
+    font-family: 'Sour Gummy', sans-serif;
     font-size: 24px;
     font-weight: 600;
     line-height: 32px;
@@ -319,7 +337,7 @@
   }
 
   &__faq-title {
-    font-family: 'Inclusive Sans', sans-serif;
+    font-family: 'Sour Gummy', sans-serif;
     font-size: 24px;
     font-weight: 400;
     line-height: 32px;
@@ -363,7 +381,7 @@
   }
 
   &__contact-title {
-    font-family: 'Inclusive Sans', sans-serif;
+    font-family: 'Sour Gummy', sans-serif;
     font-size: 24px;
     font-weight: 700;
     line-height: 32px;

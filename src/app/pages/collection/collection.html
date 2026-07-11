@@ -16,22 +16,25 @@
       ></app-book-flip>
     </section>
 
-    <section class="collection-grid" [style.backgroundImage]="'url(' + c.bg_framecard + ')'">
-      <!-- <div class="collection-grid__overlay"></div> -->
-      <h2 class="collection-grid__title">LET'S ROLL!!</h2>
-      <div class="collection-grid__cards">
-        <app-gacha-card
-          *ngFor="let item of c.items"
-          [rarity]="item.rarity"
-          [name]="item.name"
-          [image]="item.image"
-        ></app-gacha-card>
+      <section class="collection-grid" [style.backgroundImage]="'url(' + c.bg_framecard + ')'">
+      <div class="collection-grid__inner">
+        <h2 class="collection-grid__title">LET'S ROLL!!</h2>
+        <div class="collection-grid__cards">
+          <app-gacha-card
+            *ngFor="let item of c.items"
+            [rarity]="item.rarity"
+            [name]="item.name"
+            [image]="item.image"
+          ></app-gacha-card>
+        </div>
       </div>
     </section>
 
     <section class="collection-quote" [style.backgroundImage]="'url(' + c.bg_quotes + ')'">
-      <p class="collection-quote__text">{{ quoteText }}</p>
-      <p class="collection-quote__title">- {{ quoteAuthor }}</p>
+      <div class="collection-quote__inner">
+        <p class="collection-quote__text">{{ quoteText }}</p>
+        <p class="collection-quote__title">- {{ quoteAuthor }}</p>
+      </div>
     </section>
   </ng-container>
 </ng-container>
