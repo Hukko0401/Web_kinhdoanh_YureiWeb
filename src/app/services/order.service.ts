@@ -64,7 +64,7 @@ export class OrderService {
   }
 
   canCancelOrder(order: OrderWithDetails): boolean {
-    if (order.status !== 'processing' && order.status !== 'shipping') {
+    if (order.status !== 'processing') {
       return false;
     }
     const diffMinutes = (Date.now() - new Date(order.created_at).getTime()) / (1000 * 60);

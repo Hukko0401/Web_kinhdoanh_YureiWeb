@@ -199,10 +199,14 @@
         .item-name {
           position: absolute;
           left: 6px;
+          right: 40px; // chừa chỗ cho item-qty bên phải, ép tên phải dừng lại trước đó
           top: 165px;
           font-family: 'Inclusive Sans', sans-serif;
           font-size: 16px;
           color: #000;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
         }
 
         .item-qty {
@@ -212,6 +216,8 @@
           font-family: 'Inclusive Sans', sans-serif;
           font-size: 16px;
           color: #AF7017;
+          white-space: nowrap;
+          background: white; // đè lên phần tên nếu bị tràn nhẹ, đảm bảo luôn đọc được số lượng
         }
       }
     }
@@ -473,7 +479,6 @@
     background: #FDF5E7;
     border-radius: 10px;
     border: 1px solid #E5D3AA;
-    cursor: pointer;
     box-sizing: border-box;
     flex-shrink: 0;
 
@@ -492,11 +497,51 @@
       color: #000;
     }
 
-    .return-item-qty {
+    .return-item-qty-label {
       font-family: 'Inclusive Sans', sans-serif;
-      font-size: 14px;
+      font-size: 12px;
       color: #AF7017;
-      margin-right: 8px;
+      flex-shrink: 0;
+    }
+
+    .return-item-qty-stepper {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-shrink: 0;
+
+      .qty-btn {
+        width: 22px;
+        height: 22px;
+        border-radius: 50%;
+        border: 1px solid #DDC69F;
+        background: white;
+        color: #764A00;
+        font-size: 14px;
+        line-height: 1;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &:disabled {
+          opacity: 0.4;
+          cursor: not-allowed;
+        }
+
+        &:hover:not(:disabled) {
+          background: #FFF8E5;
+        }
+      }
+
+      .qty-value {
+        min-width: 16px;
+        text-align: center;
+        font-family: 'Inter', sans-serif;
+        font-size: 13px;
+        font-weight: 600;
+        color: #000;
+      }
     }
 
     .return-item-checkbox {
@@ -506,6 +551,7 @@
       border: 1px solid #DDC69F;
       border-radius: 5px;
       flex-shrink: 0;
+      cursor: pointer;
       display: flex;
       align-items: center;
       justify-content: center;

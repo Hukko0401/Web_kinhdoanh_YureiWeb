@@ -115,12 +115,22 @@
             class="return-item"
             *ngFor="let item of returnableItems(order)"
             [class.selected]="isReturnItemSelected(item.item_id)"
-            (click)="toggleReturnItem(item.item_id)"
           >
+            <div class="return-item-checkbox" [class.checked]="isReturnItemSelected(item.item_id)" (click)="toggleReturnItem(item.item_id, item.quantity)"></div>
+
             <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" class="return-item-img" />
             <div class="return-item-name">{{ item.name }}</div>
-            <div class="return-item-qty">x{{ item.quantity }}</div>
-            <div class="return-item-checkbox" [class.checked]="isReturnItemSelected(item.item_id)"></div>
+            <div class="return-item-qty-label">/ x{{ item.quantity }}</div>
+
+            <div class="return-item-qty-stepper" *ngIf="isReturnItemSelected(item.item_id)">
+              <button class="qty-btn" (click)="decrementReturnQty(item.item_id)">-</button>
+              <span class="qty-value">{{ getReturnQty(item.item_id) }}</span>
+              <button
+                class="qty-btn"
+                (click)="incrementReturnQty(item.item_id, item.quantity)"
+                [disabled]="getReturnQty(item.item_id) >= item.quantity"
+              >+</button>
+            </div>
           </div>
         </div>
 

@@ -6,14 +6,13 @@ export class ReturnRequestService {
   loading = signal(false);
   error = signal<string | null>(null);
 
-  // Map: order_id -> Set(item_id đã request return)
-  returnedItemIdsByOrder = signal<Map<string, Set<string>>>(new Map());
+  // Map: order_id -> Map(item_id -> tổng số lượng đã request return)
+  returnedQtyByOrder = signal<Map<string, Map<string, number>>>(new Map());
 
-  getReturnedItemIds(orderId: string): Set<string> {
-    return this.returnedItemIdsByOrder().get(orderId) ?? new Set<string>();
+  getReturnedQty(orderId: string, itemId: string): number {
+    return this.returnedQtyByOrder().get(orderId)?.get(itemId) ?? 0;
   }
 
-  // Gọi 1 lần sau khi load xong danh sách order
   async loadReturnedItems(orderIds: string[]) {
     if (orderIds.length === 0) return;
 
@@ -21,7 +20,7 @@ export class ReturnRequestService {
       .from('RETURN_REQUEST')
       .select(`
         order_id,
-        RETURN_REQUEST_ITEM ( item_id )
+        RETURN_REQUEST_ITEM ( item_id, quantity )
       `)
       .in('order_id', orderIds);
 
@@ -30,14 +29,17 @@ export class ReturnRequestService {
       return;
     }
 
-    const map = new Map<string, Set<string>>();
+    const map = new Map<string, Map<string, number>>();
     (data ?? []).forEach((r: any) => {
-      const set = map.get(r.order_id) ?? new Set<string>();
-      (r.RETURN_REQUEST_ITEM ?? []).forEach((ri: any) => set.add(ri.item_id));
-      map.set(r.order_id, set);
+      const itemMap = map.get(r.order_id) ?? new Map<string, number>();
+      (r.RETURN_REQUEST_ITEM ?? []).forEach((ri: any) => {
+        const current = itemMap.get(ri.item_id) ?? 0;
+        itemMap.set(ri.item_id, current + ri.quantity);
+      });
+      map.set(r.order_id, itemMap);
     });
 
-    this.returnedItemIdsByOrder.set(map);
+    this.returnedQtyByOrder.set(map);
   }
 
   // TODO: images hiện đang lưu base64 preview.
@@ -62,7 +64,7 @@ export class ReturnRequestService {
         images,
         status: 'pending'
       })
-      .select('return_id')
+      .select('return_request_id')
       .single();
 
     if (error || !data) {
@@ -71,10 +73,10 @@ export class ReturnRequestService {
       return false;
     }
 
-    const returnRequestId = data.return_id;
+    const returnRequestId = data.return_request_id;
 
     const itemRows = items.map(i => ({
-      return_id: returnRequestId,
+      return_request_id: returnRequestId,
       item_id: i.itemId,
       quantity: i.quantity
     }));
@@ -90,11 +92,14 @@ export class ReturnRequestService {
     }
 
     // Cập nhật state local ngay, không cần load lại từ DB
-    const map = new Map(this.returnedItemIdsByOrder());
-    const set = new Set(map.get(orderId) ?? []);
-    items.forEach(i => set.add(i.itemId));
-    map.set(orderId, set);
-    this.returnedItemIdsByOrder.set(map);
+    const map = new Map(this.returnedQtyByOrder());
+    const itemMap = new Map(map.get(orderId) ?? new Map<string, number>());
+    items.forEach(i => {
+      const current = itemMap.get(i.itemId) ?? 0;
+      itemMap.set(i.itemId, current + i.quantity);
+    });
+    map.set(orderId, itemMap);
+    this.returnedQtyByOrder.set(map);
 
     this.loading.set(false);
     return true;

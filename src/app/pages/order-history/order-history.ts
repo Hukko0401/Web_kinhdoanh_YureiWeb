@@ -26,7 +26,7 @@ export class OrderHistory implements OnInit {
 
   // ===== State cho panel Request Return =====
   selectedOrderForReturn = signal<OrderWithDetails | null>(null);
-  selectedReturnItemIds = signal<Set<string>>(new Set());
+  selectedReturnQuantities = signal<Map<string, number>>(new Map());
   returnReason = signal('');
   returnPhotos = signal<string[]>([]);
 
@@ -69,14 +69,19 @@ export class OrderHistory implements OnInit {
     if (!order) return;
 
     this.selectedOrderForReturn.set(order);
-    this.selectedReturnItemIds.set(new Set());
+    this.selectedReturnQuantities.set(new Map());
     this.returnReason.set('');
     this.returnPhotos.set([]);
   }
 
   returnableItems(order: OrderWithDetails) {
-    const returnedIds = this.returnRequestService.getReturnedItemIds(order.order_id);
-    return order.items.filter(i => !returnedIds.has(i.item_id));
+    return order.items
+      .map(item => {
+        const returnedQty = this.returnRequestService.getReturnedQty(order.order_id, item.item_id);
+        const remainingQty = item.quantity - returnedQty;
+        return { ...item, quantity: remainingQty };
+      })
+      .filter(item => item.quantity > 0);
   }
 
   hasReturnableItems(order: OrderWithDetails): boolean {
@@ -87,18 +92,43 @@ export class OrderHistory implements OnInit {
     this.selectedOrderForReturn.set(null);
   }
 
-  isReturnItemSelected(itemId: string): boolean {
-    return this.selectedReturnItemIds().has(itemId);
+  getReturnQty(itemId: string): number {
+    return this.selectedReturnQuantities().get(itemId) ?? 0;
   }
 
-  toggleReturnItem(itemId: string) {
-    const current = new Set(this.selectedReturnItemIds());
-    if (current.has(itemId)) {
-      current.delete(itemId);
-    } else {
-      current.add(itemId);
-    }
-    this.selectedReturnItemIds.set(current);
+  isReturnItemSelected(itemId: string): boolean {
+      return this.getReturnQty(itemId) > 0;
+  }
+
+  toggleReturnItem(itemId: string, maxQty: number) {
+      const current = new Map(this.selectedReturnQuantities());
+      if (current.has(itemId)) {
+        current.delete(itemId);
+      } else {
+        current.set(itemId, 1); // mặc định chọn 1 khi vừa tick
+      }
+      this.selectedReturnQuantities.set(current);
+  }
+
+  incrementReturnQty(itemId: string, maxQty: number) {
+      const current = new Map(this.selectedReturnQuantities());
+      const qty = current.get(itemId) ?? 0;
+      if (qty < maxQty) {
+        current.set(itemId, qty + 1);
+        this.selectedReturnQuantities.set(current);
+      }
+  }
+
+  decrementReturnQty(itemId: string) {
+      const current = new Map(this.selectedReturnQuantities());
+      const qty = current.get(itemId) ?? 0;
+      if (qty > 1) {
+        current.set(itemId, qty - 1);
+        this.selectedReturnQuantities.set(current);
+      } else if (qty === 1) {
+        current.delete(itemId); // về 0 thì bỏ chọn luôn
+        this.selectedReturnQuantities.set(current);
+      }
   }
 
   onReasonInput(event: Event) {
@@ -132,11 +162,14 @@ export class OrderHistory implements OnInit {
     const order = this.selectedOrderForReturn();
     if (!order) return;
 
-    const selectedItems = order.items.filter(i => this.selectedReturnItemIds().has(i.item_id));
+    const quantities = this.selectedReturnQuantities();
+    const selectedItems = order.items
+          .filter(i => (quantities.get(i.item_id) ?? 0) > 0)
+          .map(i => ({ ...i, quantity: quantities.get(i.item_id)! }));
 
     if (selectedItems.length === 0) {
-      alert('Vui lòng chọn ít nhất 1 sản phẩm cần trả.');
-      return;
+          alert('Vui lòng chọn ít nhất 1 sản phẩm cần trả.');
+          return;
     }
     if (!this.returnReason().trim()) {
       alert('Vui lòng nhập lý do trả hàng.');
@@ -212,7 +245,7 @@ export class OrderHistory implements OnInit {
   }
 
   canCancelInDetail(order: OrderWithDetails): boolean {
-      return order.status === 'processing' || order.status === 'shipping';
+    return this.orderService.canCancelOrder(order);
   }
 
   async onCancelOrderDetail() {
