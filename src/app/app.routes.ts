@@ -17,6 +17,18 @@ export const routes: Routes = [
   { path: 'reset-password', loadComponent: () => import('./pages/reset-password/reset-password').then(m => m.ResetPassword) },
   { path: 'create-order', loadComponent: () => import('./pages/create-order/create-order').then(m => m.CreateOrder), canActivate: [authGuard] },
   {
+    path: 'profile',
+    loadComponent: () => import('./pages/profile/profile').then(m => m.Profile),
+    canActivate: [authGuard],
+    children: [
+      { path: '', redirectTo: 'account', pathMatch: 'full' },
+      { path: 'account', loadComponent: () => import('./pages/profile/account/account').then(m => m.Account) },
+      { path: 'addresses', loadComponent: () => import('./pages/profile/addresses/addresses').then(m => m.Addresses) },
+      { path: 'favorites', loadComponent: () => import('./pages/profile/favorites/favorites').then(m => m.Favorites) },
+      { path: 'settings', loadComponent: () => import('./pages/profile/settings/settings').then(m => m.Settings) },
+    ]
+  },
+  {
     path: 'payment-return',
     loadComponent: () => import('./pages/payment-return/payment-return').then(m => m.PaymentReturn),
   },

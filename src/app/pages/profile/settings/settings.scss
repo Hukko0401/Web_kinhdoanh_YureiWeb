@@ -1,0 +1,131 @@
+@import '../profile-shared';
+
+.panel-title {
+  color: $brown;
+  font-size: cq(28);
+  font-weight: 600;
+  text-align: center;
+  margin: 0 0 cq(6);
+}
+
+.panel-subtitle {
+  color: rgba($brown, 0.7);
+  font-size: cq(14);
+  text-align: center;
+  margin: 0 0 cq(16);
+  padding-bottom: cq(14);
+  border-bottom: 1px solid rgba(175, 112, 23, 0.2);
+}
+
+.loading-text {
+  color: $brown;
+  text-align: center;
+}
+
+.section-title {
+  color: $brown;
+  font-size: cq(24);
+  font-weight: 600;
+  font-family: $font-main;
+  margin: cq(20) 0 cq(12);
+
+  &:first-of-type { margin-top: 0; }
+}
+
+// ===== LINKED ACCOUNT =====
+.linked-row {
+  display: flex;
+  gap: cq(12);
+}
+
+.linked-btn {
+  display: flex;
+  align-items: center;
+  gap: cq(10);
+  padding: cq(10) cq(16);
+  border-radius: 100px;
+  border: 1px solid $brown;
+  background: transparent;
+  color: $brown;
+  font-size: cq(14);
+  font-family: 'Roboto', sans-serif;
+  font-weight: 500;
+  cursor: pointer;
+
+  img { width: cq(20); height: cq(20); }
+
+  &:hover { background: rgba($brown, 0.08); }
+
+  &.connected {
+    background: rgba(#009951, 0.1);
+    border-color: #009951;
+    cursor: default;
+  }
+}
+
+// ===== NEWSLETTER TOGGLE =====
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: cq(12);
+  padding: cq(8) 0;
+}
+
+.toggle-text {
+  flex: 1;
+  color: $brown;
+  font-size: cq(16);
+  font-family: 'Inter', sans-serif;
+  line-height: 1.4;
+}
+
+.toggle-switch {
+  width: cq(40);
+  height: cq(24);
+  border-radius: 9999px;
+  background: #ccc;
+  border: 1px solid #ccc;
+  position: relative;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: background-color 0.2s ease;
+
+  .toggle-knob {
+    position: absolute;
+    top: cq(3);
+    left: cq(3);
+    width: cq(18);
+    height: cq(18);
+    border-radius: 50%;
+    background: white;
+    transition: transform 0.2s ease;
+  }
+
+  &.on {
+    background: #009951;
+    border-color: #009951;
+
+    .toggle-knob {
+      transform: translateX(cq(16));
+    }
+  }
+}
+
+// ===== DELETE ACCOUNT =====
+.btn-delete {
+  background: none;
+  border: none;
+  padding: 0;
+  transform: rotate(-1deg);
+  cursor: pointer;
+
+  img {
+    height: cq(44);       
+    width: auto;
+    display: block;
+  }
+
+  &:hover { opacity: 0.85; }
+}

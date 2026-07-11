@@ -1,0 +1,52 @@
+<h1 class="panel-title">Settings</h1>
+<p class="panel-subtitle">Manage your account, preferences, and notifications.</p>
+
+<ng-container *ngIf="loading(); else content">
+  <p class="loading-text">Đang tải...</p>
+</ng-container>
+
+<ng-template #content>
+  <!-- Linked account -->
+  <div class="section-title">Linked account</div>
+  <div class="linked-row">
+    <button type="button" class="linked-btn" [class.connected]="linkedGoogle()" (click)="onConnectGoogle()">
+      <img src="/Icons/google.png" alt="Google" />
+      {{ linkedGoogle() ? 'Google Connected' : 'Connect Google' }}
+    </button>
+    <button type="button" class="linked-btn" [class.connected]="linkedApple()" (click)="onConnectApple()">
+      <img src="/Icons/apple.png" alt="Apple" />
+      {{ linkedApple() ? 'Apple Connected' : 'Connect Apple' }}
+    </button>
+  </div>
+
+  <!-- Newsletter -->
+  <div class="section-title">Newsletter</div>
+
+  <div class="toggle-row">
+    <div class="toggle-text">Be the first to know about promotions and special events.</div>
+    <button type="button" class="toggle-switch" [class.on]="notifyPromotions()" (click)="toggleNotifyPromotions()">
+      <span class="toggle-knob"></span>
+    </button>
+  </div>
+
+  <div class="toggle-row">
+    <div class="toggle-text">Receive email reminders before your favorite collections expire.</div>
+    <button type="button" class="toggle-switch" [class.on]="notifyExpiry()" (click)="toggleNotifyExpiry()">
+      <span class="toggle-knob"></span>
+    </button>
+  </div>
+
+  <div class="toggle-row">
+    <div class="toggle-text">Get notified when new collections are released.</div>
+    <button type="button" class="toggle-switch" [class.on]="notifyNewCollections()" (click)="toggleNotifyNewCollections()">
+      <span class="toggle-knob"></span>
+    </button>
+  </div>
+
+  <!-- Delete account -->
+  <div class="section-title">Delete account</div>
+  <button type="button" class="btn-delete" (click)="onDeleteAccount()" [disabled]="deleting()">
+    <img src="/Icons/btn_delete.png" alt="Delete account" />
+  </button>
+</ng-template>
+

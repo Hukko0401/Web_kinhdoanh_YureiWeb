@@ -1,0 +1,19 @@
+<div class="ap-overlay" *ngIf="alert.message()">
+  <div class="ap-box">
+    <div class="ap-message" [innerHTML]="alert.message()"></div>
+
+    <button
+      type="button"
+      class="ap-btn-ok"
+      *ngIf="alert.mode() === 'ok'"
+      (click)="onOk()"
+    >
+      OK
+    </button>
+
+    <div class="ap-btn-row" *ngIf="alert.mode() === 'confirm'">
+      <button type="button" class="ap-btn-no" (click)="onNo()">No</button>
+      <button type="button" class="ap-btn-yes" (click)="onYes()">Yes</button>
+    </div>
+  </div>
+</div>

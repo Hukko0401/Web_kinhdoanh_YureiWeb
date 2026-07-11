@@ -1,0 +1,105 @@
+<h1 class="panel-title">Account</h1>
+
+<ng-container *ngIf="loading(); else content">
+  <p class="loading-text">Đang tải...</p>
+</ng-container>
+
+<ng-template #content>
+  <p class="error-text" *ngIf="errorMessage()">{{ errorMessage() }}</p>
+
+  <div class="form-grid">
+    <div class="form-col">
+      <label>Username</label>
+      <input type="text" [(ngModel)]="username" />
+
+      <label>Date of Birth</label>
+      <div class="date-input-wrap">
+        <input type="date" [(ngModel)]="dateOfBirth" />
+        <img src="/Icons/Ic_calendar.png" alt="" class="calendar-icon" />
+      </div>
+
+      <label>Gender</label>
+      <div class="custom-select" [class.open]="genderDropdownOpen()">
+        <button type="button" class="select-trigger" (click)="toggleGenderDropdown()">
+          <span [class.placeholder]="!gender">{{ gender || 'Select' }}</span>
+          <svg class="select-arrow" width="14" height="14" viewBox="0 0 14 14" fill="none">
+            <path d="M3 5L7 9L11 5" stroke="#AF7017" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+
+        <div class="select-options" *ngIf="genderDropdownOpen()">
+          <div class="select-option" *ngFor="let g of genderOptions" [class.selected]="gender === g" (click)="selectGender(g)">
+            {{ g }}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="dropdown-backdrop" *ngIf="genderDropdownOpen()" (click)="closeGenderDropdown()"></div>
+
+    <div class="form-col">
+      <label>Phone Number</label>
+      <input type="text" [(ngModel)]="phoneNumber" />
+
+      <label>Email</label>
+      <input type="email" [(ngModel)]="email" [readonly]="authProvider() === 'google'" />
+
+      <label class="password-row" *ngIf="authProvider() !== 'google'">
+        Password
+        <button class="icon-btn" type="button" (click)="onChangePasswordClick()">
+          <img src="/Icons/Ic_edit.png" alt="Edit password" />
+        </button>
+      </label>
+    </div>
+  </div>
+
+  <div class="actions">
+    <button class="btn btn-secondary" type="button" (click)="onCancel()"></button>
+    <button class="btn btn-primary" type="button" (click)="onSave()" [disabled]="saving()"></button>
+  </div>
+</ng-template>
+
+
+<!-- Change Password Overlay -->
+<div class="cp-overlay" appAppendToBody *ngIf="showChangePasswordModal()" (click)="closeChangePasswordModal()">
+  <div class="cp-modal" (click)="$event.stopPropagation()">
+    <img src="/Bg/Bg_pass.png" alt="" class="cp-bg" />
+    <div class="cp-content">
+      <div class="cp-title">Change Password</div>
+      <img src="/Icons/line.png" alt="" class="cp-divider" />
+
+      <div class="cp-field">
+        <label class="cp-label">Current password</label>
+        <div class="cp-input-wrap">
+          <input [type]="showCurrentPassword() ? 'text' : 'password'" [(ngModel)]="currentPassword" placeholder="Enter your current password" class="cp-input" />
+          <img [src]="showCurrentPassword() ? '/Icons/Ic_openeye.png' : '/Icons/Ic_closeeye.png'" alt="toggle" class="cp-eye" (click)="toggleCurrentPasswordVisibility()" />
+        </div>
+      </div>
+
+      <div class="cp-field">
+        <label class="cp-label">New password</label>
+        <div class="cp-input-wrap">
+          <input [type]="showNewPassword() ? 'text' : 'password'" [(ngModel)]="newPassword" placeholder="Enter your new password" class="cp-input" />
+          <img [src]="showNewPassword() ? '/Icons/Ic_openeye.png' : '/Icons/Ic_closeeye.png'" alt="toggle" class="cp-eye" (click)="toggleNewPasswordVisibility()" />
+        </div>
+      </div>
+
+      <div class="cp-field">
+        <label class="cp-label">Confirm password</label>
+        <div class="cp-input-wrap">
+          <input [type]="showConfirmPassword() ? 'text' : 'password'" [(ngModel)]="confirmPassword" placeholder="Re-enter your new password" class="cp-input" />
+          <img [src]="showConfirmPassword() ? '/Icons/Ic_openeye.png' : '/Icons/Ic_closeeye.png'" alt="toggle" class="cp-eye" (click)="toggleConfirmPasswordVisibility()" />
+        </div>
+      </div>
+
+      <div class="cp-error" *ngIf="changePasswordError()">{{ changePasswordError() }}</div>
+
+      <div class="cp-actions">
+        <button type="button" class="cp-btn cp-btn-back" (click)="closeChangePasswordModal()">Back</button>
+        <button type="button" class="cp-btn cp-btn-save" (click)="onSaveNewPassword()" [disabled]="changePasswordLoading()">
+          {{ changePasswordLoading() ? 'Saving...' : 'Save' }}
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

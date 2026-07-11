@@ -1,0 +1,85 @@
+@import url('https://fonts.googleapis.com/css2?family=Sour+Gummy:wght@600;700&display=swap');
+
+.ap-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 99999;
+}
+
+.ap-box {
+  width: 100%;
+  max-width: 420px;
+  padding: 30px 24px;
+  background: #FFFEF6;
+  box-shadow: 10px 20px 4px rgba(0, 0, 0, 0.25);
+  border-radius: 30px;
+  outline: 10px solid #FFFAD9;
+  outline-offset: -10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  box-sizing: border-box;
+}
+
+.ap-message {
+  text-align: center;
+  color: #AF7017;
+  font-size: 28px;
+  font-family: 'Sour Gummy', cursive;
+  font-weight: 700;
+}
+
+.ap-btn-ok {
+  width: 117px;
+  height: 48px;
+  padding: 0 31px;
+  background: #BAEEFF;
+  border: none;
+  border-radius: 50px;
+  color: #AF7017;
+  font-size: 24px;
+  font-family: 'Sour Gummy', cursive;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+
+  &:hover { filter: brightness(0.97); }
+}
+
+.ap-btn-row {
+  display: flex;
+  gap: 16px;
+}
+
+.ap-btn-yes,
+.ap-btn-no {
+  width: 117px;
+  height: 48px;
+  padding: 0 24px;
+  border: none;
+  border-radius: 50px;
+  font-size: 24px;
+  font-family: 'Sour Gummy', cursive;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: 0.15px;
+  cursor: pointer;
+
+  &:hover { filter: brightness(0.97); }
+}
+
+.ap-btn-yes {
+  background: #BAEEFF;
+  color: #AF7017;
+}
+
+.ap-btn-no {
+  background: #FFD6D6;
+  color: #AF7017;
+}

@@ -1,0 +1,68 @@
+<h1 class="panel-title">My Addresses</h1>
+<p class="panel-subtitle">Add and manage the addresses you use frequently.</p>
+
+<ng-container *ngIf="loading(); else content">
+  <p class="loading-text">Đang tải...</p>
+</ng-container>
+
+<ng-template #content>
+  <!-- Empty state -->
+  <div class="empty-state" *ngIf="addresses().length === 0">
+    <p class="empty-text">You haven't saved any addresses.</p>
+    <button type="button" class="btn-add-address" (click)="onAddNew()">
+      <img src="/Icons/btn_address.png" alt="Add new addresses" />
+    </button>
+  </div>
+
+  <!-- List state -->
+  <div class="address-list" *ngIf="addresses().length > 0">
+    <div class="address-card" *ngFor="let addr of addresses()">
+      <div class="address-info">
+        <div class="address-label">{{ addr.label }}</div>
+        <div class="address-line">{{ addr.recipientName }}</div>
+        <div class="address-line">{{ addr.phoneNumber }}</div>
+        <div class="address-line">{{ addr.address }}</div>
+
+        <div class="default-row" *ngIf="addr.isDefault">
+          <span class="default-tag">Default</span>
+        </div>
+        <button
+          type="button"
+          class="set-default-btn"
+          *ngIf="!addr.isDefault"
+          (click)="onSetDefault(addr)"
+        >
+          Set as default
+        </button>
+      </div>
+
+      <div class="address-actions">
+        <button type="button" class="icon-action" (click)="onEdit(addr)">
+          <img src="/Icons/edit.png" alt="Edit" />
+        </button>
+        <button
+          type="button"
+          class="icon-action"
+          (click)="onDelete(addr)"
+          [disabled]="deletingId() === addr.addressId"
+        >
+          <img src="/Icons/delete.png" alt="Delete" />
+        </button>
+      </div>
+    </div>
+
+    <button type="button" class="btn-add-address btn-add-more" (click)="onAddNew()">
+      <img src="/Icons/btn_address.png" alt="Add new addresses" />
+    </button>
+  </div>
+</ng-template>
+
+<!-- Modal Add/Edit address có sẵn -->
+<div appAppendToBody *ngIf="showModal()">
+  <app-add-address-modal
+    [editingAddress]="editingAddress()"
+    (close)="onModalClose()"
+    (added)="onModalAdded()"
+  >
+  </app-add-address-modal>
+</div>

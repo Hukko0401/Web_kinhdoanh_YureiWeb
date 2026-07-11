@@ -1,0 +1,61 @@
+<app-header></app-header>
+
+<div class="profile-page">
+  <img class="bg-img" src="/Bg/Bg_Profile.png" alt="" />
+
+  <!-- Avatar -->
+  <div class="avatar-wrap" *ngIf="!loading()">
+    <img [src]="avatarUrl || '/Icons/Ic_avatar.png'" alt="Avatar" class="avatar" />
+    <button class="avatar-edit-btn" type="button" (click)="onAvatarClick()">
+      <img src="/Icons/Ic_changeava.png" alt="Change avatar" />
+    </button>
+
+    <input
+      #avatarInput
+      type="file"
+      accept="image/*"
+      style="display: none"
+      (change)="onAvatarFileSelected($event)"
+    />
+  </div>
+
+  <div class="username-banner">{{ username }}</div>
+  <div class="member-since">Member since {{ memberSince }}</div>
+
+  <div class="history-menu">
+    <a class="history-link" routerLink="/wallet/history">
+      <img src="/Icons/Ic_Award.png" alt="" class="side-icon" />
+      Coin history
+    </a>
+    <a class="history-link" routerLink="/order-history">
+      <img src="/Icons/Ic_order.png" alt="" class="side-icon" />
+      Order history
+    </a>
+  </div>
+
+  <div class="side-menu">
+    <a class="side-link" (click)="onLogout()">
+      <img src="/Icons/Ic_logout.png" alt="" class="side-icon" />
+      Log out
+    </a>
+    <a class="side-link" routerLink="/about">
+      <img src="/Icons/Ic_about.png" alt="" class="side-icon" />
+      About
+    </a>
+    <a class="side-link" routerLink="/support">
+      <img src="/Icons/Ic_help.png" alt="" class="side-icon" />
+      Support
+    </a>
+  </div>
+
+  <!-- Tabs -->
+  <a class="tab tab-account" routerLink="/profile/account" routerLinkActive="active">Account</a>
+  <a class="tab tab-addresses" routerLink="/profile/addresses" routerLinkActive="active">My Addresses</a>
+  <a class="tab tab-favorites" routerLink="/profile/favorites" routerLinkActive="active">Favorites</a>
+  <a class="tab tab-settings" routerLink="/profile/settings" routerLinkActive="active">Settings</a>
+
+  <!-- Nội dung tab con -->
+  <div class="panel">
+    <router-outlet></router-outlet>
+  </div>
+</div>

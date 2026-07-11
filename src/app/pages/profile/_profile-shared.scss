@@ -1,0 +1,23 @@
+@use 'sass:math';
+@import url('https://fonts.googleapis.com/css2?family=Inclusive+Sans:wght@400;500;600;700&display=swap');
+
+$brown: #AF7017;
+$bg-input: #FEF6EB;
+$border-input: #F9D09F;
+$btn-green: #8fae5d;
+$btn-green-dark: #7c9950;
+$font-main: 'Inclusive Sans', sans-serif;
+
+@function cq($px) {
+  @return math.div($px, 1440) * 100cqw;
+}
+
+// Scale theo viewport, dùng cho overlay (vì nó nằm ngoài .profile-page)
+@function cqv($px) {
+  @return math.div($px, 1440) * 100vw;
+}
+
+// Scale theo chính kích thước modal (645px là width gốc trong Figma)
+@function cqm($px) {
+  @return math.div($px, 645) * 100cqw;
+}

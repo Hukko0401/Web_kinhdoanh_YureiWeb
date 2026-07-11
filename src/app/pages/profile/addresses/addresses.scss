@@ -1,0 +1,153 @@
+@import '../profile-shared';
+
+.panel-title {
+  color: $brown;
+  font-size: cq(28);
+  font-weight: 600;
+  text-align: center;
+  margin: 0 0 cq(6);
+}
+
+.panel-subtitle {
+  color: rgba($brown, 0.7);
+  font-size: cq(14);
+  text-align: center;
+  margin: 0 0 cq(16);
+  padding-bottom: cq(14);
+  border-bottom: 1px solid rgba(175, 112, 23, 0.2);
+}
+
+.loading-text,
+.error-text {
+  color: $brown;
+  text-align: center;
+}
+
+// ===== EMPTY STATE =====
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: cq(16);
+  padding-top: cq(60);
+}
+
+.empty-text {
+  color: $brown;
+  font-size: cq(16);
+  font-family: $font-main;
+}
+
+.btn-add-address {
+  background: none;
+  border: none;
+  padding: 0;
+  transform: rotate(-1.5deg);
+  cursor: pointer;
+
+  img {
+    height: cq(44);       
+    width: auto;
+    display: block;
+  }
+
+  &:hover { opacity: 0.85; }
+}
+
+.btn-add-more {
+  align-self: center;
+  margin-top: cq(10);
+}
+
+// ===== ADDRESS LIST =====
+.address-list {
+  display: flex;
+  flex-direction: column;
+  gap: cq(12);
+}
+
+.address-card {
+  display: flex;
+  align-items: flex-start;
+  gap: cq(10);
+  background: white;
+  border: 1.5px solid #E2D4BB;
+  border-radius: cq(20);
+  padding: cq(10) cq(15);
+}
+
+.address-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: cq(2);
+  padding: cq(5) cq(10);
+}
+
+.address-label {
+  color: $brown;
+  font-size: cq(16);
+  font-weight: 600;
+  font-family: $font-main;
+}
+
+.address-line {
+  color: $brown;
+  font-size: cq(14);
+  font-weight: 400;
+  font-family: $font-main;
+}
+
+.default-row {
+  margin-top: cq(4);
+}
+
+.default-tag {
+  display: inline-block;
+  color: #FF0B0B;
+  font-size: cq(14);
+  font-family: $font-main;
+  border: 1px solid #FF0B0B;
+  border-radius: cq(5);
+  padding: cq(2) cq(10);
+}
+
+.set-default-btn {
+  margin-top: cq(4);
+  align-self: flex-start;
+  background: none;
+  border: 1px solid rgba($brown, 0.4);
+  border-radius: cq(5);
+  color: $brown;
+  font-size: cq(13);
+  font-family: $font-main;
+  padding: cq(2) cq(10);
+  cursor: pointer;
+
+  &:hover { background: rgba($brown, 0.08); }
+}
+
+.address-actions {
+  display: flex;
+  gap: cq(8);
+  flex-shrink: 0;
+}
+
+.icon-action {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: cq(32.52);
+  height: cq(30.55);
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  &:hover { opacity: 0.75; }
+  &:disabled { opacity: 0.4; cursor: not-allowed; }
+}
