@@ -22,6 +22,9 @@ export class Collection implements OnInit {
   collection = signal<CollectionDetail | null>(null);
   isLoading = signal(true);
 
+  // Card đang được focus (phóng to giữa màn hình), null = không có card nào được chọn
+  selectedItemId = signal<string | null>(null);
+
   readonly bookCoverImage = '/Images/bookcover.png';
   readonly bookCoverBackImage = '/Images/page1.png';
   readonly bookRightPageImage = '/Images/page2.png';
@@ -49,5 +52,13 @@ export class Collection implements OnInit {
       this.collection.set(data);
       this.isLoading.set(false);
     });
+  }
+
+  selectCard(itemId: string): void {
+    this.selectedItemId.set(this.selectedItemId() === itemId ? null : itemId);
+  }
+
+  closeFocus(): void {
+    this.selectedItemId.set(null);
   }
 }

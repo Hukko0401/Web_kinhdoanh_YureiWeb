@@ -16,19 +16,28 @@
       ></app-book-flip>
     </section>
 
-      <section class="collection-grid" [style.backgroundImage]="'url(' + c.bg_framecard + ')'">
+    <section class="collection-grid" [style.backgroundImage]="'url(' + c.bg_framecard + ')'">
       <div class="collection-grid__inner">
         <h2 class="collection-grid__title">LET'S ROLL!!</h2>
         <div class="collection-grid__cards">
-          <app-gacha-card
+          <div
             *ngFor="let item of c.items"
-            [rarity]="item.rarity"
-            [name]="item.name"
-            [image]="item.image"
-          ></app-gacha-card>
+            class="collection-grid__card-wrap"
+            [class.is-selected]="selectedItemId() === item.item_id"
+            [class.is-dimmed]="selectedItemId() && selectedItemId() !== item.item_id"
+            (click)="selectCard(item.item_id)"
+          >
+            <app-gacha-card
+              [rarity]="item.rarity"
+              [name]="item.name"
+              [image]="item.image"
+            ></app-gacha-card>
+          </div>
         </div>
       </div>
     </section>
+
+    <div class="focus-backdrop" *ngIf="selectedItemId()" (click)="closeFocus()"></div>
 
     <section class="collection-quote" [style.backgroundImage]="'url(' + c.bg_quotes + ')'">
       <div class="collection-quote__inner">
