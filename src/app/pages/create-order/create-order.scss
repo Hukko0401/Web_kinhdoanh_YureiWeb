@@ -7,7 +7,12 @@
   padding: 200px 124px 80px;
   display: flex;
   gap: 40px;
-  background: url('/Bg/Bg_CreateOrder.png') center/cover no-repeat;
+  // background: url('/Bg/Bg_CreateOrder.png') center/cover no-repeat;
+  background-image: url('/Bg/Bg_CreateOrder.png');
+  background-repeat: no-repeat;
+  background-position: top center;
+  background-size: 100% auto; // thay cho center/cover
+  background-color: #F3E4C0; //
 
   .panel-title {
     font-family: 'Roboto', sans-serif;
@@ -208,6 +213,8 @@
         }
 
         .address-info {
+          min-width: 0;
+
           .address-label {
             font-family: 'Roboto', sans-serif;
             font-weight: 600;
@@ -219,6 +226,7 @@
             font-family: 'Roboto', sans-serif;
             font-size: 11px;
             color: #937B6B;
+            word-break: break-word;
           }
         }
 
@@ -402,6 +410,68 @@
       }
     }
   }
+
+  // ===== RESPONSIVE =====
+  @media (max-width: 1200px) {
+    padding: 160px 60px 60px;
+    gap: 24px;
+
+    .selected-items-panel {
+      width: 380px;
+    }
+
+    .order-panel {
+      padding: 24px 30px;
+    }
+  }
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 140px 24px 60px;
+    gap: 20px;
+
+    .selected-items-panel,
+    .order-panel {
+      width: 100%;
+      max-height: none;
+    }
+
+    .order-panel {
+      padding: 24px 24px;
+    }
+  }
+
+  @media (max-width: 480px) {
+    padding: 120px 12px 40px;
+
+    .panel-title {
+      font-size: 18px;
+    }
+
+    .selected-items-panel {
+      padding: 16px;
+
+      .item-row {
+        .item-thumb { width: 56px; height: 56px; }
+        .item-info .item-name { font-size: 13px; }
+      }
+    }
+
+    .order-panel {
+      padding: 16px;
+
+      .payment-options {
+        grid-template-columns: 1fr;
+      }
+
+      .action-buttons {
+        flex-direction: column;
+        gap: 12px;
+
+        button { justify-content: center; width: 100%; }
+      }
+    }
+  }
 }
 
 // ===== Modal Success =====
@@ -413,6 +483,7 @@
   align-items: center;
   justify-content: center;
   z-index: 200;
+  padding: 20px; // tránh modal dính sát mép màn nhỏ
 
   .success-modal {
     background: #FFFEF6;
@@ -421,6 +492,9 @@
     padding: 60px 40px;
     text-align: center;
     max-width: 600px;
+    width: 100%;
+    max-height: 90vh;
+    overflow-y: auto;
 
     h1 {
       font-family: 'Sour Gummy', sans-serif;
@@ -450,6 +524,21 @@
       color: #AF7017;
       cursor: pointer;
       box-shadow: 5px 5px 4px rgba(0, 0, 0, 0.15);
+    }
+  }
+
+  @media (max-width: 480px) {
+    .success-modal {
+      padding: 40px 24px;
+      border-width: 8px;
+
+      h1 { font-size: 32px; }
+      p { font-size: 16px; }
+
+      .btn-ok {
+        padding: 12px 32px;
+        font-size: 18px;
+      }
     }
   }
 }

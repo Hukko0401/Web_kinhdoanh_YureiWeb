@@ -119,6 +119,9 @@ export class History implements OnInit {
   if (tx.type === 'topup' || tx.type === 'exchange') return abs;
   return -abs;
 }
+isPositive(tx: WalletTransaction): boolean {
+  return tx.type === 'topup' || tx.type === 'exchange';
+}
 
  changeLabel(tx: WalletTransaction): string {
   const abs = Math.abs(tx.amount);

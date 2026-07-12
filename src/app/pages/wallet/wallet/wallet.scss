@@ -1,3 +1,13 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: #FFF8EC; // màu nền phẳng, hoặc thay bằng pattern bên dưới
+  
+  // Nếu muốn có texture nhẹ thay vì màu phẳng đơn điệu:
+  background-image: url('/Bg/Bg_grass_tile.png'); // ảnh pattern nhỏ, lặp được
+  background-repeat: repeat;
+}
+
 .wallet-shell {
   position: relative;
   width: min(100%, 90rem); // 1440px
@@ -6,6 +16,10 @@
   background-repeat: no-repeat;
   background-position: center;
   background-size: 100% 100%;
+
+  // thêm 2 dòng này
+  -webkit-mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
+  mask-image: linear-gradient(to bottom, black 92%, transparent 100%);
 }
 
 .tab-hit {

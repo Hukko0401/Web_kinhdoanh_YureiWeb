@@ -1,25 +1,44 @@
 .inventory-page {
   max-width: 1440px;
   margin: 0 auto;
- min-height: 100vh;
-  overflow-y: auto;  
-  padding: 200px 236px 40px;
+  min-height: 100vh; 
+  padding: clamp(80px, 13.9vw, 200px) 16.4% 40px; // thay clamp(...)
   position: relative;
-  background-color: #F3E4C0;
   background-image: url('/Bg/Bg_Inventory.png');
-  background-size: 100% auto;
-  background-position: top center;
   background-repeat: no-repeat;
+  background-position: top center;
+  // background-size: 100% auto, 400px auto; // 400px là kích thước 1 tile hoa cỏ, chỉnh nếu thấy hoa quá to/nhỏ
+  background-size: 1440px auto;
+  // layer 2 bắt đầu đúng tại điểm layer 1 kết thúc (1024/1440 ≈ 71.11vw)
+  background-position: center top, left 0 top 59vw;
+
+  // Khi vượt quá max-width 1440px, container không còn co theo vw nữa
+  // (bị khoá cứng ở 1440px) nên offset cần đổi sang giá trị px cố định
+  @media (min-width: 1440px) {
+    background-position: center top, left 0 top 850px;
+  }
+
   display: flex;
   flex-direction: column;
 
+  //  &::after {
+  //   content: '';
+  //   position: absolute;
+  //   top: 0; left: 0; right: 0;
+  //   width: 100%;
+  //   aspect-ratio: 1440 / 1024; // giữ đúng tỉ lệ ảnh gốc, tự scale theo mọi kích thước màn hình
+  //   background: linear-gradient(to bottom, transparent 75%, #F3E4C0 100%);
+  //   pointer-events: none;
+  //   z-index: 0;
+  // }
+
   .inventory-heading {
-    margin-bottom: 24px;
+    margin-bottom: 12px;
     flex-shrink: 0;
 
     .page-title {
       font-family: 'Inclusive Sans', sans-serif;
-      font-size: 48px;
+      font-size: clamp(24px, 3.33vw, 48px);
       font-weight: 400;
       color: #000;
       margin: 0;
@@ -27,10 +46,10 @@
 
     .page-subtitle {
       font-family: 'Inclusive Sans', sans-serif;
-      font-size: 32px;
+      font-size: clamp(16px, 2.22vw, 32px);
       font-weight: 400;
       color: #000;
-      margin: 8px 0 0;
+      margin: 4px 0 0;
     }
   }
 
@@ -43,6 +62,35 @@
     gap: 16px;
     flex-shrink: 0;
 
+    .right-controls {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+
+  .search-control {
+    .search-input {
+      height: 37px;
+      padding: 0 16px;
+      border: none;
+      border-radius: 8px;
+      background: white;
+      box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+      font-family: 'Inter', sans-serif;
+      font-size: 14px;
+      color: #000;
+      width: 200px;
+
+      &::placeholder {
+        color: #999;
+      }
+
+      &:focus {
+        outline: 2px solid #F8D186;
+      }
+    }
+  }
     .filter-label {
       font-family: 'Inter', sans-serif;
       font-size: 14px;
@@ -138,7 +186,7 @@
     border-radius: 10px;
     outline: 1px solid #F8D186;
     outline-offset: -1px;
-    margin-bottom: 20px;
+    margin-bottom: 12px;
     flex-shrink: 0;
 
     .selected-count {
@@ -173,27 +221,44 @@
   }
 
   // Vùng chứa card — đây là phần duy nhất cuộn được, nằm gọn trong "miệng túi"
+  // max-height: 340px; // chiếm hết khoảng trống còn lại trong khung 100vh
   .card-grid-wrapper {
-    max-height: 340px; // chiếm hết khoảng trống còn lại trong khung 100vh
-    overflow-y: auto;
-    padding-right: 8px; // chừa chỗ scrollbar, không đè lên card
+  margin: 0 -7%;
+  padding: 8px clamp(24px, 5vw, 120px);
+  max-height: 340px;
+  overflow-y: auto;
+  scrollbar-width: none;      // ẩn scrollbar trên Firefox
+  -ms-overflow-style: none;   // ẩn scrollbar trên IE/Edge cũ
 
-    &::-webkit-scrollbar {
-      width: 6px;
-    }
-    &::-webkit-scrollbar-thumb {
-      background: #DDC69F;
-      border-radius: 10px;
-    }
+  &::-webkit-scrollbar {
+    display: none;             // ẩn scrollbar trên Chrome/Safari/Edge mới
+  }
+
+    // &::-webkit-scrollbar {
+    //   width: 6px;
+    // }
+    // &::-webkit-scrollbar-thumb {
+    //   background: #DDC69F;
+    //   border-radius: 10px;
+    // }
   }
 
   .card-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 221px); // đổi từ 4 -> 3 item/hàng
-    gap: 30px;
+  display: grid;
+  max-width: 1160px;      // giới hạn trần số cột (~4 cột)
+  margin: 0 auto;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 260px)); // hạ sàn từ 221 -> 200px
+  gap: 30px;
+  justify-content: center;
+
+  @media (max-width: 900px) { gap: 16px; }
+  @media (max-width: 600px) {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
 
     .item-card {
-      width: 221px;
+      width: 100%;
       background: #FFFDF8;
       border: 1px solid #E5D3AA;
       border-radius: 20px;
@@ -207,7 +272,7 @@
 
       .card-image {
         position: relative;
-        width: 221px;
+        width: 100%;
         height: 213.58px;
         overflow: hidden;
 
@@ -324,6 +389,147 @@
       &:hover { background: #8f5b12; }
     }
   }
+  @media (max-width: 640px) {
+  .inventory-heading {
+    margin-bottom: 8px;
+
+    .page-title { font-size: 22px; }
+    .page-subtitle { font-size: 14px; }
+  }
+
+  .inventory-controls {
+    flex-direction: column;
+    align-items: stretch;
+    margin-bottom: 10px;
+    gap: 8px;
+
+    .filter-label {
+      font-size: 12px;
+      margin-right: 8px;
+    }
+
+    .rarity-filters {
+      gap: 6px;
+
+      .rarity-chip {
+        height: 22px;
+        padding: 0 8px;
+        font-size: 11px;
+      }
+    }
+
+    .right-controls {
+      flex-direction: column;
+      align-items: stretch;
+      width: 100%;
+      gap: 8px;
+    }
+
+    .search-control {
+      width: 100%;
+
+      .search-input {
+        width: 100%;
+        box-sizing: border-box;
+        height: 32px;
+        font-size: 13px;
+        padding: 0 12px;
+      }
+    }
+
+    .sort-control {
+      width: 100%;
+      justify-content: space-between;
+
+      .filter-label {
+        white-space: nowrap;
+        margin: 0 8px 0 0;
+      }
+
+      .sort-dropdown {
+        flex: 1;
+        min-width: 0;
+        width: 100%;
+
+        .sort-trigger {
+          width: 100%;
+          min-width: 0;
+          height: 32px;
+          padding: 0 12px;
+          font-size: 13px;
+        }
+
+        .sort-menu {
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .toolbar {
+    height: auto;
+    min-height: 40px;
+    padding: 8px 16px;
+    flex-wrap: wrap;
+
+    .selected-count {
+      width: 100%;
+      margin-right: 0;
+      font-size: 12px;
+    }
+
+    .btn-clear,
+    .btn-ship {
+      font-size: 12px;
+    }
+
+    .btn-ship {
+      padding: 6px 16px;
+    }
+  }
+
+  // Đóng .toolbar ở trên, .card-grid tách riêng ra ngoài — không lồng vào toolbar nữa
+  .card-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px;
+
+    .item-card {
+      .card-image {
+        height: 0;
+        padding-bottom: 100%;
+        position: relative;
+
+        img {
+          position: absolute;
+          top: 0; left: 0;
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .card-footer {
+        padding: 8px 10px 10px;
+
+        .item-name {
+          font-size: 14px;
+          margin-bottom: 4px;
+        }
+
+        .rarity-row {
+          margin-bottom: 6px;
+
+          .rarity-badge { height: 18px; }
+          .item-quantity { font-size: 12px; }
+        }
+
+        .btn-exchange {
+          height: 22px;
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}
 }
 .toast {
   position: fixed;

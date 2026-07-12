@@ -114,9 +114,100 @@
     color: #8A6D1F;
   }
 }
+.change--positive {
+  color: #2E7D32;
+  font-weight: 700;
+}
 
+.change--negative {
+  color: #C0392B;
+  font-weight: 700;
+}
 .table__empty {
   padding: 2rem;
   text-align: center;
   color: #A08658;
+}
+// ===== RESPONSIVE: chuyển table -> card list trên mobile =====
+@media (max-width: 640px) {
+  .table {
+    border: none;
+    background: transparent;
+    overflow: visible;
+  }
+
+  .table__header {
+    display: none; // ẩn header cột, card tự có label
+  }
+
+  .table__body {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    overflow-y: visible;
+  }
+
+  .table__row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "type    status"
+      "change  balance"
+      "time    time";
+    gap: 0.4rem 0.75rem;
+    background: #FFF6D9;
+    border: 1px solid #E5D3AA;
+    border-radius: 0.75rem;
+    padding: 0.9rem 1rem;
+    border-top: none;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.06);
+
+    // gán từng span theo thứ tự cố định trong HTML
+    > span:nth-child(1) { // Type
+      grid-area: type;
+      font-weight: 700;
+      font-size: 1rem;
+      color: #744214;
+    }
+    > span:nth-child(2) { // Change
+      grid-area: change;
+      font-size: 0.95rem;
+      font-weight: 600;
+    }
+    > span:nth-child(3) { // Balance
+      grid-area: balance;
+      justify-self: end;
+      font-size: 0.85rem;
+      color: #937B6B;
+
+      &::before {
+        content: "Balance: ";
+        font-weight: 400;
+      }
+    }
+    > span.table__time { // Time
+      grid-area: time;
+      justify-self: start;
+      font-size: 0.75rem;
+      color: #A08658;
+      white-space: normal;
+      border-top: 1px dashed #E5D3AA;
+      padding-top: 0.4rem;
+      margin-top: 0.2rem;
+    }
+    > span.badge { // Status
+      grid-area: status;
+      justify-self: end;
+      align-self: start;
+    }
+  }
+
+  .filters {
+    flex-direction: column;
+    align-items: stretch;
+
+    .date-range {
+      flex-wrap: wrap;
+    }
+  }
 }

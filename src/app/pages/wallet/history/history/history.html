@@ -23,7 +23,10 @@
     <div class="table__body">
       <div class="table__row" *ngFor="let row of filteredRows()">
         <span>{{ typeLabel(row.type) }}</span>
-        <span>{{ changeLabel(row) }}</span>
+        <span
+  [class.change--positive]="isPositive(row)"
+  [class.change--negative]="!isPositive(row)"
+>{{ changeLabel(row) }}</span>
         <span>{{ row.displayBalance }}</span>
         <span class="table__time">{{ formatDate(row.time) }}</span>
         <span

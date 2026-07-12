@@ -23,83 +23,95 @@ export class Home implements OnInit, OnDestroy {
   isLoggedIn = false
   private authSub?: Subscription
 
-  // TODO: thay bằng collectionService.getCollections() khi có data thật
   mockCollections: CollectionSlideData[] = [
     {
       id: '1',
-      title: 'Collection 1',
-      description: 'Lorem ipsum dolor sit amet consectetur. Eget id eleifend nulla proin massa. Cras feugiat faucibus pharetra id a gravida bibendum enim ut. Suspendisse nibh tortor a scelerisque fringilla consectetur feugiat elit vitae. Consectetur neque viverra fermentum vitae risus venenatis massa magna tincidunt.',
-      imageUrl: 'https://placehold.co/432x502'
+      title: 'willusion',
+      description: 'Step into Willusion and discover a dreamy village alive with the gentle magic of mini witches. Let these sweet, enchanting wanderers bring a touch of fairytale wonder straight to your collection.',
+      imageUrl: '/Images/willusion.png'
     },
     {
       id: '2',
-      title: 'Collection 2',
-      description: 'Lorem ipsum dolor sit amet consectetur. Eget id eleifend nulla proin massa. Cras feugiat faucibus pharetra id a gravida bibendum enim ut. Suspendisse nibh tortor a scelerisque fringilla consectetur feugiat elit vitae. Consectetur neque viverra fermentum vitae risus venenatis massa magna tincidunt.',
-      imageUrl: 'https://placehold.co/432x502'
+      title: 'Celestial Zodiac',
+      description: 'Hidden above the clouds, where dreams quietly shape the world, twelve Celestial Zodiac Spirits watch over the harmony of nature and the heart. Each guardian protects a precious blessing - from dreams and starlight to memories, hope, and happiness - bringing a timeless Eastern fantasy to life in this enchanting designer toy collection.',
+      imageUrl: '/Images/celestial_zodiac.png'
     },
     {
       id: '3',
-      title: 'Collection 3',
-      description: 'Lorem ipsum dolor sit amet consectetur. Eget id eleifend nulla proin massa. Cras feugiat faucibus pharetra id a gravida bibendum enim ut. Suspendisse nibh tortor a scelerisque fringilla consectetur feugiat elit vitae. Consectetur neque viverra fermentum vitae risus venenatis massa magna tincidunt.',
-      imageUrl: 'https://placehold.co/432x502'
-    }
+      title: "Auré's Whispers",
+      description: "Hidden between reality and dreams, Auré is an ancient perfume house where fragrances are distilled from flowers, memories, and emotions. Each scent awakens into a tiny Fragrance Spirit, bringing every story in Auré's Whispers to life.",
+      imageUrl: '/Images/aure.png'
+    },
+    {
+      id: '4',
+      title: "Starseed- Crystal Genesis",
+      description: "Hidden within the heart of ancient crystals, twelve Starseeds quietly await their awakening. Inspired by the beauty of natural gemstones, each spirit carries a unique emotion and a fragment of starlight, inviting collectors into a world where the cosmos and the Earth become one.",
+      imageUrl: '/Images/starseed.png'
+    },
+    {
+      id: '5',
+      title: "FORGOTTEN SOULS",
+      description: "Within a forgotten island, twelve lost souls remain trapped in an endless cycle. Each figure preserves a fragment of memory, waiting for someone to piece together the truth that was never meant to be found, where every identity hides another piece of the same fractured mind.",
+      imageUrl: '/Images/FS.png'
+    },
   ]
 
-  // TODO: thay bằng data thật lấy từ 5 collection khi backend xong
   mockSpotlightItems: SpotlightItem[] = [
     {
       id: 'sp1',
-      name: 'Astro Kid',
-      imageUrl: 'https://placehold.co/347x469',
+      name: 'Willusion',
+      imageUrl: '/Images/will_item1.png',
       collectionId: '1'
     },
     {
       id: 'sp2',
-      name: 'Happy Bunny',
-      imageUrl: 'https://placehold.co/289x401',
+      name: 'Celestial',
+      imageUrl: '/Images/celestial_item2.png',
       collectionId: '2'
     },
     {
       id: 'sp3',
-      name: 'Shadow Twin',
-      imageUrl: 'https://placehold.co/269x298',
+      name: 'Aure',
+      imageUrl: '/Images/aure_item3.png',
       collectionId: '3'
     },
     {
       id: 'sp4',
-      name: 'Flower Head',
-      imageUrl: 'https://placehold.co/289x401',
+      name: 'Starseed',
+      imageUrl: '/Images/starseed_item4.png',
       collectionId: '4'
     },
     {
       id: 'sp5',
-      name: 'Santa Bear',
-      imageUrl: 'https://placehold.co/269x298',
+      name: 'Forgotten Souls',
+      imageUrl: '/Images/FS_item5.png',
       collectionId: '5'
     }
   ];
 
   comingSoonItems: ComingSoonItem[] = [
   {
-    title: 'Title',
-    description: 'Lorem ipsum dolor sit amet consectetur. Arcu a urna egestas convallis diam euismod mauris.',
-    videoUrl: '/Videos/Comming_soon_1.mp4' // cậu tự sửa path đúng khi lưu video vào public/
+    title: 'Twinkle Twinkle',
+    description: 'A sparkling journey beneath the stars, filled with dreamy moments and adorable surprises.',
+    videoUrl: '/Videos/Comming_soon_1.mp4' 
   },
   {
-    title: 'Title',
-    description: 'Lorem ipsum dolor sit amet consectetur. Arcu a urna egestas convallis diam euismod mauris.'
+    title: 'Shibuya Scramble',
+    description: 'Experience the excitement of Tokyo through vibrant characters and energetic street adventures',
+    imageUrl:'/Images/shibuya.png'
   },
   {
-    title: 'Title',
-    description: 'Lorem ipsum dolor sit amet consectetur. Arcu a urna egestas convallis diam euismod mauris.'
+    title: 'Daydream',
+    description: 'Escape into a world of sunshine, soft breezes, and peaceful little dreams.',
+    imageUrl:'/Images/daydream.png'
   }
 ];
 mockArtists: ArtistData[] = [
-  { id: 'a1', name: 'ARTIST NAME', bio: 'a scelerisque fringilla consectetur feugiat elit vitae. bjciakc f fv vdvs risus venenatis massa magna tincidunt.', imageUrl: 'https://placehold.co/450x329' },
-  { id: 'a2', name: 'ARTIST NAME', bio: 'a scelerisque fringilla consectetur feugiat elit vitae. bjciakc f fv vdvs risus venenatis massa magna tincidunt.', imageUrl: 'https://placehold.co/322x234' },
-  { id: 'a3', name: 'ARTIST NAME', bio: 'a scelerisque fringilla consectetur feugiat elit vitae. bjciakc f fv vdvs risus venenatis massa magna tincidunt.', imageUrl: 'https://placehold.co/322x234' },
-  { id: 'a4', name: 'ARTIST NAME', bio: 'a scelerisque fringilla consectetur feugiat elit vitae. bjciakc f fv vdvs risus venenatis massa magna tincidunt.', imageUrl: 'https://placehold.co/322x234' },
-  { id: 'a5', name: 'ARTIST NAME', bio: 'a scelerisque fringilla consectetur feugiat elit vitae. bjciakc f fv vdvs risus venenatis massa magna tincidunt.', imageUrl: 'https://placehold.co/322x234' }
+  { id: 'a1', name: 'nae', bio: "I like sleep. I hope sleep likes me too, because I'm clearly putting more effort into this relationship.", imageUrl: '/Images/nae.png' },
+  { id: 'a2', name: 'MINA', bio: 'A dreamer with a deep love for Eastern mythology, quiet moments, and the magic hidden in everyday life.', imageUrl: '/Images/MINA.png' },
+  { id: 'a3', name: 'GRIZZLY', bio: 'Loves tarot, crystals, and collecting little moments of wonder. Probably taking a nap when not making art.', imageUrl: '/Images/GRIZZLY.png' },
+  { id: 'a4', name: 'SOPHIA', bio: 'Powered by tea and a questionable sleep schedule. Always chasing pretty colors and one more creative idea.', imageUrl: '/Images/SOPHIA.png' },
+  { id: 'a5', name: 'HukKo', bio: 'A cheerful soul with a curious mind, turning little moments and big emotions into stories.', imageUrl: '/Images/HukKo.png' }
 ];
 
   constructor(private authService: AuthService) {}

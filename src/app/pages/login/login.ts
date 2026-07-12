@@ -16,7 +16,7 @@ type LoginMode = 'email' | 'phone'
   styleUrl: './login.scss'
 })
 export class Login {
-  mode = signal<LoginMode>('email')
+  mode = signal<LoginMode>('phone')
 
   email = ''
   phone = '' // giá trị full E.164 do PhoneInput trả ra, vd "+84933498894"

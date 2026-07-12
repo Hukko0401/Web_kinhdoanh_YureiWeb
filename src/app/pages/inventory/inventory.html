@@ -21,6 +21,17 @@
       </button>
     </div>
 
+    <div class="right-controls">
+    <div class="search-control">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Search by collection..."
+        [value]="inventoryService.searchKeyword()"
+        (input)="onSearchInput($event)"
+      />
+    </div>
+
     <div class="sort-control">
       <span class="filter-label">Sắp xếp theo:</span>
       <div class="sort-dropdown">
@@ -41,6 +52,7 @@
         </div>
       </div>
     </div>
+  </div>
   </div>
 
   <div class="toolbar">

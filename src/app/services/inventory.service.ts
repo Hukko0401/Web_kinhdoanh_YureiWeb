@@ -37,6 +37,7 @@ export class InventoryService {
   selectedRarity = signal<Rarity | 'All'>('All');
   sortKey = signal<SortKey>('newest');
   selectedIds = signal<Set<string>>(new Set());
+  searchKeyword = signal<string>('');
 
   constructor(
   private authService: AuthService,
@@ -116,33 +117,43 @@ export class InventoryService {
   });
 
   displayItems = computed(() => {
-    let items = this.rawItems();
+  let items = this.rawItems();
 
-    const rarity = this.selectedRarity();
-    if (rarity !== 'All') {
-      items = items.filter(i => i.rarity === rarity);
+  const rarity = this.selectedRarity();
+  if (rarity !== 'All') {
+    items = items.filter(i => i.rarity === rarity);
+  }
+
+  const keyword = this.searchKeyword().trim().toLowerCase();
+  if (keyword) {
+    items = items.filter(i => i.collectionName.toLowerCase().includes(keyword));
+  }
+
+  const sort = this.sortKey();
+  items = [...items].sort((a, b) => {
+    switch (sort) {
+      case 'newest':
+        return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
+      case 'rarity_desc':
+        return RARITY_ORDER[b.rarity] - RARITY_ORDER[a.rarity];
+      case 'rarity_asc':
+        return RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity];
+      case 'qty_desc':
+        return b.quantity - a.quantity;
+      case 'qty_asc':
+        return a.quantity - b.quantity;
+      default:
+        return 0;
     }
-
-    const sort = this.sortKey();
-    items = [...items].sort((a, b) => {
-      switch (sort) {
-        case 'newest':
-          return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-        case 'rarity_desc':
-          return RARITY_ORDER[b.rarity] - RARITY_ORDER[a.rarity];
-        case 'rarity_asc':
-          return RARITY_ORDER[a.rarity] - RARITY_ORDER[b.rarity];
-        case 'qty_desc':
-          return b.quantity - a.quantity;
-        case 'qty_asc':
-          return a.quantity - b.quantity;
-        default:
-          return 0;
-      }
-    });
-
-    return items;
   });
+
+  return items;
+});
+
+// Thêm method set, để component gọi
+setSearchKeyword(keyword: string): void {
+  this.searchKeyword.set(keyword);
+}
 
   toggleSelect(userInventoryId: string): void {
     const set = new Set(this.selectedIds());

@@ -17,6 +17,7 @@
   display: grid;
   grid-template-columns: repeat(5, 1fr);
   gap: clamp(0.5rem, 1vw, 1rem);
+  padding: 0.25rem;
 }
 
 .package-card {
@@ -189,7 +190,54 @@
     opacity: 0.5;
     cursor: not-allowed;
   }
-  .package-card__bonus--empty {
+}
+
+.package-card__bonus--empty {
   visibility: hidden;
 }
+@media (max-width: 640px) {
+  .section {
+    position: relative; // để định vị fade theo section
+  }
+
+  .packages {
+    display: flex;
+    overflow-x: auto;
+    scroll-snap-type: x mandatory;
+    padding-left: 1rem;
+    gap: 0.75rem;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+
+  // Gợi ý còn card bên phải, mờ dần vào nền
+  .section:has(.packages)::after {
+    content: '';
+    position: absolute;
+    top: clamp(2rem, 4vw, 2.5rem); // né hàng section__title
+    right: 0;
+    bottom: 0.5rem;
+    width: 2rem;
+    background: linear-gradient(to right, transparent, #FDF3DC 80%);
+    pointer-events: none;
+  }
+
+  .package-card {
+    flex: 0 0 auto;
+    width: 7.5rem;
+    scroll-snap-align: start;
+  }
+
+  .payment-methods,
+  .submit-btn {
+    width: 100%;
+  }
+
+  .section__title {
+    font-size: 0.95rem;
+  }
 }

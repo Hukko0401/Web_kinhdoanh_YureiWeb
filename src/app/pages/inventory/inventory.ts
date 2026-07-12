@@ -19,11 +19,11 @@ export class Inventory implements OnInit {
   rarities: (Rarity | 'All')[] = ['All', 'Common', 'Rare', 'Epic', 'Legendary', 'Secret'];
 
   sortOptions: { value: SortKey; label: string }[] = [
-    { value: 'newest', label: 'Mới nhất' },
-    { value: 'rarity_desc', label: 'Độ hiếm: Cao → Thấp' },
-    { value: 'rarity_asc', label: 'Độ hiếm: Thấp → Cao' },
-    { value: 'qty_desc', label: 'Số lượng: Cao → Thấp' },
-    { value: 'qty_asc', label: 'Số lượng: Thấp → Cao' },
+    { value: 'newest', label: 'Newest' },
+    { value: 'rarity_desc', label: 'Rarity-desc' },
+    { value: 'rarity_asc', label: 'Rarity-asc' },
+    { value: 'qty_desc', label: 'Quanity-desc' },
+    { value: 'qty_asc', label: 'Quanity-asc' },
   ];
 
   isSortOpen = false;
@@ -36,6 +36,10 @@ export class Inventory implements OnInit {
   selectRarity(rarity: Rarity | 'All'): void {
     this.inventoryService.setRarityFilter(rarity);
   }
+  onSearchInput(event: Event): void {
+  const value = (event.target as HTMLInputElement).value;
+  this.inventoryService.setSearchKeyword(value);
+}
 
   selectSort(key: SortKey): void {
     this.inventoryService.setSortKey(key);
