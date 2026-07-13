@@ -1,7 +1,8 @@
 import { createClient } from '@supabase/supabase-js'
+import { environment } from '../environments/environment'
 
-const supabaseUrl = 'https://rhblxxtrjjwpeaeikhny.supabase.co'
-const supabaseKey = 'sb_publishable_HjxiaprMDrPfiaW0GP_3iw_mA_a-xnd'
+const supabaseUrl = environment.supabaseUrl
+const supabaseKey = environment.supabaseKey
 
 const REMEMBER_FLAG_KEY = 'yurei_remember_me'
 
