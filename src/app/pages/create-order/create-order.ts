@@ -145,7 +145,7 @@ itemCount = computed(() => {
     quantity: this.getShipQty(item.userInventoryId),
   }));
 
-  const isMock = this.selectedPayment() !== 'vnpay'; // MoMo/ZaloPay tạm mock, VNPay đi luồng thật
+  const isMock = this.selectedPayment() === 'zalopay'; // ZaloPay tạm mock, VNPay/MoMo đi luồng thật
 
   const { data, error } = await supabase.rpc('create_order', {
     p_address_id: address.addressId,
@@ -169,12 +169,15 @@ itemCount = computed(() => {
 
   const orderId = data.order_id;
 
-  // VNPay: gọi Edge Function lấy URL, redirect luôn
+  // VNPay/MoMo: gọi đúng Edge Function theo gateway đã chọn, lấy URL rồi redirect
+  const functionName =
+    this.selectedPayment() === 'momo' ? 'create-momo-payment' : 'create-payment-url';
+
   try {
     const { data: sessionData } = await supabase.auth.getSession();
     const token = sessionData.session?.access_token;
 
-    const res = await fetch('https://rhblxxtrjjwpeaeikhny.supabase.co/functions/v1/create-payment-url', {
+    const res = await fetch(`https://rhblxxtrjjwpeaeikhny.supabase.co/functions/v1/${functionName}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -192,7 +195,7 @@ itemCount = computed(() => {
       return;
     }
 
-    window.location.href = result.paymentUrl; // redirect sang VNPAY
+    window.location.href = result.paymentUrl; // redirect sang cổng thanh toán tương ứng
     // không set submitting = false ở đây vì trang sắp bị redirect đi
   } catch (err) {
     await supabase.rpc('cancel_order', { p_order_id: orderId });

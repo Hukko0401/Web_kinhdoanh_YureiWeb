@@ -55,7 +55,7 @@ export class WalletService {
       this.balanceSubject.next(data);
     }
   }
-  // 👇 thêm hàm này ngay đây
+  // thêm hàm này ngay đây
   setBalance(newBalance: number): void {
     this.balanceSubject.next(newBalance);
   }
