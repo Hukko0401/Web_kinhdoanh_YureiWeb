@@ -145,7 +145,7 @@ itemCount = computed(() => {
     quantity: this.getShipQty(item.userInventoryId),
   }));
 
-  const isMock = this.selectedPayment() === 'zalopay'; // ZaloPay tạm mock, VNPay/MoMo đi luồng thật
+  const isMock = false; // không còn gateway nào mock nữa, cả 3 đều đi luồng thật
 
   const { data, error } = await supabase.rpc('create_order', {
     p_address_id: address.addressId,
@@ -171,7 +171,9 @@ itemCount = computed(() => {
 
   // VNPay/MoMo: gọi đúng Edge Function theo gateway đã chọn, lấy URL rồi redirect
   const functionName =
-    this.selectedPayment() === 'momo' ? 'create-momo-payment' : 'create-payment-url';
+  this.selectedPayment() === 'momo' ? 'create-momo-payment' :
+  this.selectedPayment() === 'zalopay' ? 'create-zalopay-payment' :
+  'create-payment-url';
 
   try {
     const { data: sessionData } = await supabase.auth.getSession();
