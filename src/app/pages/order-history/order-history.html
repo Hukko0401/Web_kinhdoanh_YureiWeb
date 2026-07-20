@@ -51,16 +51,18 @@
                   <div class="order-side">
                     <div class="status-row">
                       <div
-                        class="status-badge"
-                        [ngClass]="{
-                          'status-processing': order.status === 'processing',
-                          'status-shipping': order.status === 'shipping',
-                          'status-completed': order.status === 'completed',
-                          'status-cancelled': order.status === 'cancelled'
-                        }"
-                      >
-                        {{ order.status | titlecase }}
-                      </div>
+  class="status-badge"
+  [ngClass]="{
+    'status-processing': order.status === 'processing',
+    'status-shipping': order.status === 'shipping',
+    'status-completed': order.status === 'completed',
+    'status-cancelled': order.status === 'cancelled',
+    'status-pending': order.status === 'pending',
+    'status-payment_failed': order.status === 'payment_failed'
+  }"
+>
+  {{ order.status | titlecase }}
+</div>
                     </div>
 
                     <div class="order-total">
@@ -171,16 +173,18 @@
           <div class="details-header-row">
             <h2 class="details-order-code">ORDER#{{ order.order_code }}</h2>
             <div
-              class="details-status-badge"
-              [ngClass]="{
-                'status-processing': order.status === 'processing',
-                'status-shipping': order.status === 'shipping',
-                'status-completed': order.status === 'completed',
-                'status-cancelled': order.status === 'cancelled'
-              }"
-            >
-              {{ order.status | titlecase }}
-            </div>
+  class="details-status-badge"
+  [ngClass]="{
+    'status-processing': order.status === 'processing',
+    'status-shipping': order.status === 'shipping',
+    'status-completed': order.status === 'completed',
+    'status-cancelled': order.status === 'cancelled',
+    'status-pending': order.status === 'pending',
+    'status-payment_failed': order.status === 'payment_failed'
+  }"
+>
+  {{ order.status | titlecase }}
+</div>
           </div>
           <div class="details-placed-date">Placed on {{ orderService.formatDate(order.created_at) }}</div>
         </div>
