@@ -92,7 +92,8 @@ export class Topup implements OnInit {
     this.submitting.set(true);
     this.errorMsg.set(null);
 
-    const mock = method !== 'vnpay';
+    const mock = false; // cả 3 gateway đều đi luồng thật rồi
+
     const result = await this.walletService.createTopupTransaction(pkg.packageId, mock);
 
     if (!result) {
@@ -110,7 +111,7 @@ export class Topup implements OnInit {
       return;
     }
 
-    const paymentUrl = await this.walletService.createTopupPaymentUrl(result.transactionId);
+    const paymentUrl = await this.walletService.createTopupPaymentUrl(result.transactionId, method);
     if (!paymentUrl) {
       this.errorMsg.set('Không tạo được link thanh toán, thử lại nhé.');
       this.submitting.set(false);

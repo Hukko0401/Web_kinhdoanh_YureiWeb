@@ -143,16 +143,21 @@ export class WalletService {
     };
   }
 
-  async createTopupPaymentUrl(transactionId: string): Promise<string | null> {
-    const { data, error } = await supabase.functions.invoke('create-topup-payment-url', {
-      body: { transactionId },
-    });
+  async createTopupPaymentUrl(transactionId: string, gateway: 'vnpay' | 'momo' | 'zalopay'): Promise<string | null> {
+  const functionName =
+    gateway === 'momo' ? 'create-momo-topup-payment' :
+    gateway === 'zalopay' ? 'create-zalopay-topup-payment' :
+    'create-topup-payment-url';
 
-    if (error) {
-      console.error('createTopupPaymentUrl failed:', error.message);
-      return null;
-    }
+  const { data, error } = await supabase.functions.invoke(functionName, {
+    body: { transactionId },
+  });
 
-    return data?.paymentUrl ?? null;
+  if (error) {
+    console.error('createTopupPaymentUrl failed:', error.message);
+    return null;
   }
+
+  return data?.paymentUrl ?? null;
+}
 }
