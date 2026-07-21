@@ -4,6 +4,7 @@ import { RouterOutlet, RouterLink, RouterLinkActive, Router } from '@angular/rou
 import { Header } from '../../components/header/header';
 import { UserService } from '../../services/user.service';
 import { User } from '../../models/user.model';
+import { supabase } from '../../supabase.client';
 
 @Component({
   selector: 'app-profile',
@@ -66,31 +67,67 @@ export class Profile implements OnInit {
     this.avatarInput.nativeElement.click();
   }
 
-  onAvatarFileSelected(event: Event) {
-    const input = event.target as HTMLInputElement;
-    const file = input.files?.[0];
-    if (!file) return;
+  async onAvatarFileSelected(event: Event) {
+  const input = event.target as HTMLInputElement;
+  const file = input.files?.[0];
+  if (!file) return;
 
-    if (!file.type.startsWith('image/')) {
-      alert('Vui lòng chọn file ảnh');
-      return;
-    }
-
-    this.avatarFile = file;
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.avatarUrl = reader.result as string;
-      this.cdr.detectChanges();
-    };
-    reader.readAsDataURL(file);
-    input.value = '';
-
-    // TODO: upload lên Supabase Storage rồi update vào user.avatar
-    // (giống logic uploadAvatar() bạn đã có trong onSave() cũ,
-    // giờ có thể tách thành 1 hàm riêng gọi ngay khi chọn ảnh,
-    // hoặc giữ nguyên trong account.ts nếu bạn muốn lưu chung lúc bấm Save)
+  if (!file.type.startsWith('image/')) {
+    alert('Vui lòng chọn file ảnh');
+    return;
   }
+
+  if (!this.currentUser) return;
+
+  // Preview ngay lập tức
+  const reader = new FileReader();
+  reader.onload = () => {
+    this.avatarUrl = reader.result as string;
+    this.cdr.detectChanges();
+  };
+  reader.readAsDataURL(file);
+  input.value = '';
+
+  // Upload lên Supabase Storage ngay, không cần đợi bấm Save
+  try {
+    const publicUrl = await this.uploadAvatar(this.currentUser.user_id, file);
+
+    const updated = await this.userService.updateUser(this.currentUser.user_id, {
+      avatar: publicUrl
+    });
+
+    this.currentUser = updated;
+    this.avatarUrl = publicUrl;   // dùng URL thật từ server, thay cho base64 preview tạm
+    this.cdr.detectChanges();
+  } catch (err) {
+    console.error('Upload avatar failed:', err);
+    // rollback preview nếu upload lỗi
+    this.avatarUrl = this.currentUser.avatar ?? '';
+    this.cdr.detectChanges();
+  }
+}
+
+async uploadAvatar(userId: string, file: File): Promise<string> {
+  const fileExt = file.name.split('.').pop();
+  const fileName = `${userId}_${Date.now()}.${fileExt}`;
+
+  const { error: uploadError } = await supabase.storage
+    .from('avatars')
+    .upload(fileName, file, {
+      cacheControl: '3600',
+      upsert: true
+    });
+
+  if (uploadError) {
+    throw new Error(uploadError.message);
+  }
+
+  const { data } = supabase.storage
+    .from('avatars')
+    .getPublicUrl(fileName);
+
+  return data.publicUrl;
+}
 
   async onLogout() {
     await this.userService.logout();
