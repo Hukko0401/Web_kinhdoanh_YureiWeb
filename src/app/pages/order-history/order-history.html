@@ -61,7 +61,7 @@
     'status-payment_failed': order.status === 'payment_failed'
   }"
 >
-  {{ order.status | titlecase }}
+  {{ statusLabel(order.status) }}
 </div>
                     </div>
 
@@ -183,7 +183,7 @@
     'status-payment_failed': order.status === 'payment_failed'
   }"
 >
-  {{ order.status | titlecase }}
+  {{ statusLabel(order.status) }}
 </div>
           </div>
           <div class="details-placed-date">Placed on {{ orderService.formatDate(order.created_at) }}</div>

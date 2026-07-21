@@ -25,31 +25,31 @@ export class Home implements OnInit, OnDestroy {
 
   mockCollections: CollectionSlideData[] = [
     {
-      id: '1',
+      id: 'f5e2ec58-141e-4e72-8377-8d1a2771adf6',
       title: 'willusion',
       description: 'Step into Willusion and discover a dreamy village alive with the gentle magic of mini witches. Let these sweet, enchanting wanderers bring a touch of fairytale wonder straight to your collection.',
       imageUrl: '/Images/willusion.png'
     },
     {
-      id: '2',
+      id: '2569c2fc-b5a6-4994-b959-527bf19aa543',
       title: 'Celestial Zodiac',
       description: 'Hidden above the clouds, where dreams quietly shape the world, twelve Celestial Zodiac Spirits watch over the harmony of nature and the heart. Each guardian protects a precious blessing - from dreams and starlight to memories, hope, and happiness - bringing a timeless Eastern fantasy to life in this enchanting designer toy collection.',
       imageUrl: '/Images/celestial_zodiac.png'
     },
     {
-      id: '3',
+      id: '599d6acd-a951-43a7-a736-2c80b5a337a2',
       title: "Auré's Whispers",
       description: "Hidden between reality and dreams, Auré is an ancient perfume house where fragrances are distilled from flowers, memories, and emotions. Each scent awakens into a tiny Fragrance Spirit, bringing every story in Auré's Whispers to life.",
       imageUrl: '/Images/aure.png'
     },
     {
-      id: '4',
+      id: 'c5cdb514-873a-4937-a3d2-0ae5b86f3839',
       title: "Starseed- Crystal Genesis",
       description: "Hidden within the heart of ancient crystals, twelve Starseeds quietly await their awakening. Inspired by the beauty of natural gemstones, each spirit carries a unique emotion and a fragment of starlight, inviting collectors into a world where the cosmos and the Earth become one.",
       imageUrl: '/Images/starseed.png'
     },
     {
-      id: '5',
+      id: '640ebab1-a211-4fe5-8a4a-7a574c4df078',
       title: "FORGOTTEN SOULS",
       description: "Within a forgotten island, twelve lost souls remain trapped in an endless cycle. Each figure preserves a fragment of memory, waiting for someone to piece together the truth that was never meant to be found, where every identity hides another piece of the same fractured mind.",
       imageUrl: '/Images/FS.png'

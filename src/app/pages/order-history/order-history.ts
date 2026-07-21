@@ -74,6 +74,18 @@ export class OrderHistory implements OnInit {
     this.returnPhotos.set([]);
   }
 
+  statusLabel(status: string): string {
+  const labels: Record<string, string> = {
+    pending_payment: 'Pending Payment',
+    payment_failed: 'Payment Failed',
+    processing: 'Processing',
+    shipping: 'Shipping',
+    completed: 'Completed',
+    cancelled: 'Cancelled',
+  };
+  return labels[status] ?? status;
+}
+
   returnableItems(order: OrderWithDetails) {
     return order.items
       .map(item => {

@@ -122,12 +122,12 @@
         <h4>Gallery</h4>
 
         <a
-          *ngFor="let item of galleryLinks"
-          [routerLink]="item.route">
-
-          {{ item.label }}
-
-        </a>
+         *ngFor="let link of galleryLinks"
+  [routerLink]="link.route"
+  [fragment]="link.fragment"
+>
+  {{ link.label }}
+</a>
 
       </div>
 

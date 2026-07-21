@@ -20,7 +20,7 @@
     </a>
 </div>
 </section>
-<section class="collection-section">
+<section class="collection-section" id="collection-section">
 <app-carousel [slideCount]="mockCollections.length">
     <app-collection-slide *ngFor="let c of mockCollections" [data]="c"></app-collection-slide>
 </app-carousel>
@@ -38,7 +38,7 @@
 
 <app-village-banner></app-village-banner>
 
-<app-coming-soon [items]="comingSoonItems"></app-coming-soon>
+<app-coming-soon [items]="comingSoonItems" id="coming-soon-section"></app-coming-soon>
 
 <section class="artists-section">
   <h2 class="artists-section__title">Meet Our Artists</h2>

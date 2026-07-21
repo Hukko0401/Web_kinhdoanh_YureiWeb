@@ -264,6 +264,10 @@
         overflow: hidden;
         text-overflow: ellipsis;
       }
+      .status-badge {
+  font-size: 12px;
+  padding: 0 8px;
+}
 
       .status-badge {
         cursor: default;
@@ -803,6 +807,17 @@
         border: 1px solid #888;
         color: #666;
       }
+      &.status-pending_payment {
+  background: #F0F0F0;
+  border: 1px solid #9D9898;
+  color: #676767;
+}
+
+&.status-payment_failed {
+  background: #FFE4E4;
+  border: 1px solid #E97070;
+  color: #C24D4D;
+}
     }
 
     .details-placed-date {

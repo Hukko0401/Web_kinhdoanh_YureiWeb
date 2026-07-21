@@ -98,7 +98,7 @@ export class PaymentReturn implements OnInit {
   }
 
   goToOrders(): void {
-    this.router.navigate(['/inventory']);
+    this.router.navigate(['/order-history']);
   }
 
   goToWallet(): void {

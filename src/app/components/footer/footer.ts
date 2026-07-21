@@ -26,9 +26,9 @@ export class Footer implements OnInit {
   supportEmail = 'hkhoasupercute@gmail.com'
 
   galleryLinks = [
-    { label: 'All Collection', route: '/collections' },
-    { label: 'Coming Soon', route: '/coming-soon' }
-  ]
+  { label: 'All Collection', route: '/', fragment: 'collection-section' },
+  { label: 'Coming Soon', route: '/', fragment: 'coming-soon-section' }
+]
   informationLinks = [
     { label: 'How to Roll', route: '/how-to-roll' },
     { label: 'About Us', route: '/about' },
@@ -39,7 +39,7 @@ export class Footer implements OnInit {
     { label: 'Terms & Conditions', route: '/terms' },
     { label: 'Online Returns', route: '/online-returns' },
     { label: 'Shipping Policy', route: '/shipping' },
-    { label: 'Track Your Order', route: '/tracking' }
+    { label: 'Track Your Order', route: '/order-history' }
   ]
 
   constructor(
