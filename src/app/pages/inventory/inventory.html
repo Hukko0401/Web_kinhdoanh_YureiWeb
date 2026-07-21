@@ -81,7 +81,19 @@
       </div>
 
       <div class="card-footer">
-        <div class="item-name">{{ item.name }}</div>
+        <div class="name-row">
+          <div class="item-name">{{ item.name }}</div>
+          <button
+            type="button"
+            class="btn-like"
+            (click)="onToggleFavorite($event, item)"
+          >
+            <img
+              [src]="item.isFavorite ? '/Icons/Ic_like.png' : '/Icons/Ic_nolike.png'"
+              alt="favorite"
+            />
+          </button>
+        </div>
         <div class="rarity-row">
           <img class="rarity-badge" [src]="inventoryService.getRarityBadgePath(item.rarity)" [alt]="item.rarity" />
           <span class="item-quantity">x{{ item.quantity }}</span>

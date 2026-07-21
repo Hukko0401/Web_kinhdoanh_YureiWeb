@@ -315,13 +315,60 @@
       .card-footer {
         padding: 12px 16px 16px;
 
+        .name-row {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 8px;
+          margin-bottom: 8px;
+        }
         .item-name {
           font-family: 'Inclusive Sans', sans-serif;
           font-size: 18px;
           color: #000;
-          margin-bottom: 8px;
+          margin-bottom: 0;
         }
 
+        .btn-like {
+        width: 32px;
+        height: 32px;
+
+        display: flex;
+        align-items: center;
+        justify-content: right;
+
+        padding: 0;
+        border: none;
+        border-radius: 50%;
+        background: #FFFDF8;
+
+        cursor: pointer;
+        flex-shrink: 0;
+
+        transition: all .2s ease;
+
+        img {
+          width: 20px;
+          height: 20px;
+          display: block;
+          object-fit: contain;
+          transition: transform .2s ease;
+        }
+
+        &:hover {
+          background: #FFFDF8;
+          transform: translateY(-1px);
+
+          img {
+            transform: scale(1.15);
+          }
+        }
+
+        &:active img {
+          transform: scale(.95);
+        }
+      }
+        
         .rarity-row {
           display: flex;
           align-items: center;

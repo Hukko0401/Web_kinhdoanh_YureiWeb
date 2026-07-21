@@ -86,4 +86,9 @@ export class Inventory implements OnInit {
     if (rarity === 'All') return this.inventoryService.totalItems();
     return this.inventoryService.rarityCounts()[rarity];
   }
+
+  onToggleFavorite(event: Event, item: InventoryItem): void {
+    event.stopPropagation();
+    this.inventoryService.toggleFavorite(item.itemId);
+  }
 }

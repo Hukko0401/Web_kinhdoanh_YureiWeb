@@ -1,1 +1,50 @@
-<p>favorites works!</p>
+<h1 class="panel-title">Favorites</h1>
+<p class="panel-subtitle">Your liked characters, all in one place.</p>
+
+<p *ngIf="inventoryService.loading()" class="loading-text">Đang tải...</p>
+<p *ngIf="inventoryService.error()" class="error-text">{{ inventoryService.error() }}</p>
+
+<div class="card-grid-wrapper" *ngIf="!inventoryService.loading()">
+  <div class="card-grid" *ngIf="inventoryService.favoriteItems().length > 0">
+    <div
+      *ngFor="let item of inventoryService.favoriteItems()"
+      class="item-card"
+    >
+      <div class="card-image">
+        <img [src]="item.image || '/placeholder-item.png'" [alt]="item.name" />
+        
+      </div>
+
+      <div class="card-footer">
+        <div class="name-row">
+          <div class="item-name">{{ item.name }}</div>
+          <button type="button" class="btn-like" (click)="onToggleFavorite($event, item)">
+            <img
+              [src]="item.isFavorite ? '/Icons/Ic_like.png' : '/Icons/Ic_nolike.png'"
+              alt="favorite"
+            />
+          </button>
+        </div>
+        <div class="rarity-row">
+          <img class="rarity-badge" [src]="inventoryService.getRarityBadgePath(item.rarity)" [alt]="item.rarity" />
+          
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="inventoryService.favoriteItems().length === 0" class="empty-state">
+    <p class="empty-text">You haven't liked any character yet.</p>
+    <button class="btn-roll" routerLink="/inventory">Go to Inventory</button>
+  </div>
+</div>
+
+<app-exchange-modal
+  *ngIf="exchangingItem() as item"
+  [item]="item"
+  (close)="onCloseExchangeModal()"
+  (exchanged)="onExchangeSuccess($event)"
+></app-exchange-modal>
+
+<div class="toast" *ngIf="toastMessage()">{{ toastMessage() }}</div>

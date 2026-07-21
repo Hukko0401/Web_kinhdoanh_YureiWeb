@@ -26,6 +26,7 @@ export interface InventoryItem {
   collectionId: string;
   collectionName: string;
   createdAt: string;
+  isFavorite: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
@@ -39,24 +40,30 @@ export class InventoryService {
   selectedIds = signal<Set<string>>(new Set());
   searchKeyword = signal<string>('');
 
+  favoriteItems = computed(() =>                    
+    this.rawItems().filter(item => item.isFavorite)
+  );
+  hasLoadedItems = computed(() => this.rawItems().length > 0);
+  
   constructor(
   private authService: AuthService,
   private router: Router,
   private orderDraftService: OrderDraftService
 ) {}
   
-  async loadInventory(): Promise<void> {
-    this.loading.set(true);
-    this.error.set(null);
+async loadInventory(): Promise<void> {
+  this.loading.set(true);
+  this.error.set(null);
 
-    const userId = this.authService.getCurrentUser()?.id;
-    if (!userId) {
-      this.error.set('Chưa đăng nhập');
-      this.loading.set(false);
-      return;
-    }
+  const userId = this.authService.getCurrentUser()?.id;
+  if (!userId) {
+    this.error.set('Chưa đăng nhập');
+    this.loading.set(false);
+    return;
+  }
 
-    const { data, error } = await supabase
+  const [{ data, error }, favoriteItemIds] = await Promise.all([
+    supabase
       .from('USER_INVENTORY')
       .select(`
         user_inventory_id,
@@ -73,29 +80,85 @@ export class InventoryService {
         )
       `)
       .eq('user_id', userId)
-      .gt('quantity', 0);
+      .gt('quantity', 0),
+    this.fetchFavoriteItemIds(userId),
+  ]);
+
+  if (error) {
+    this.error.set(error.message);
+    this.loading.set(false);
+    return;
+  }
+
+  const mapped: InventoryItem[] = (data ?? []).map((row: any) => ({
+    userInventoryId: row.user_inventory_id,
+    itemId: row.item_id,
+    name: row.ITEM.name,
+    image: row.ITEM.image,
+    rarity: row.ITEM.rarity,
+    quantity: row.quantity,
+    collectionId: row.ITEM.collection_id,
+    collectionName: row.ITEM.COLLECTION?.name ?? '',
+    createdAt: row.created_at,
+    isFavorite: favoriteItemIds.has(row.item_id),   // 👈 gán trạng thái like
+  }));
+
+  this.rawItems.set(mapped);
+  this.loading.set(false);
+}
+
+private async fetchFavoriteItemIds(userId: string): Promise<Set<string>> {
+  const { data, error } = await supabase
+    .from('FAVORITE')
+    .select('item_id')
+    .eq('user_id', userId);
+
+  if (error) {
+    console.error('Load favorites failed:', error.message);
+    return new Set();
+  }
+
+  return new Set((data ?? []).map((row: any) => row.item_id));
+}
+
+async toggleFavorite(itemId: string): Promise<void> {
+  const userId = this.authService.getCurrentUser()?.id;
+  if (!userId) return;
+
+  const current = this.rawItems();
+  const target = current.find(i => i.itemId === itemId);
+  if (!target) return;
+
+  const nextIsFavorite = !target.isFavorite;
+
+  // Cập nhật lạc quan trên UI trước, không đợi network
+  this.rawItems.set(
+    current.map(i => i.itemId === itemId ? { ...i, isFavorite: nextIsFavorite } : i)
+  );
+
+  if (nextIsFavorite) {
+    const { error } = await supabase
+      .from('FAVORITE')
+      .insert({ user_id: userId, item_id: itemId });
 
     if (error) {
-      this.error.set(error.message);
-      this.loading.set(false);
-      return;
+      console.error('Add favorite failed:', error.message);
+      // rollback nếu lỗi
+      this.rawItems.set(current);
     }
+  } else {
+    const { error } = await supabase
+      .from('FAVORITE')
+      .delete()
+      .eq('user_id', userId)
+      .eq('item_id', itemId);
 
-    const mapped: InventoryItem[] = (data ?? []).map((row: any) => ({
-      userInventoryId: row.user_inventory_id,
-      itemId: row.item_id,
-      name: row.ITEM.name,
-      image: row.ITEM.image,
-      rarity: row.ITEM.rarity,
-      quantity: row.quantity,
-      collectionId: row.ITEM.collection_id,
-      collectionName: row.ITEM.COLLECTION?.name ?? '',
-      createdAt: row.created_at,
-    }));
-
-    this.rawItems.set(mapped);
-    this.loading.set(false);
+    if (error) {
+      console.error('Remove favorite failed:', error.message);
+      this.rawItems.set(current);
+    }
   }
+}
 
   totalItems = computed(() =>
     this.rawItems().reduce((sum, i) => sum + i.quantity, 0)
