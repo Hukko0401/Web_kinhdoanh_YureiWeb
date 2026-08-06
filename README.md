@@ -1,59 +1,36 @@
-# YureiWeb
+# YureiWeb — Gacha Collectibles E-commerce Platform
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 22.0.5.
+A full-stack gacha/collectibles e-commerce web application, built as a course project for "Phát triển web kinh doanh" (Business Web Development), covering the full product lifecycle from data model design to payment integration.
 
-## Development server
+**Live demo:** [yurei-collectibles.netlify.app](https://yurei-collectibles.netlify.app)
 
-To start a local development server, run:
+## Overview
 
-```bash
-ng serve
-```
+YureiWeb lets users purchase gacha boxes, collect items, manage their inventory, and exchange duplicate items with other users — with a full order, payment, and wallet system behind it.
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+## Key Features
 
-## Code scaffolding
+- **Relational data model** (PostgreSQL/Supabase) with an ERD covering gacha mechanics, inventory, notifications, and user profiles
+- **Row-Level Security (RLS)** enforced via SQL RPC functions, including `security definer` functions to safely bypass RLS for controlled operations (e.g., real-time username/phone duplicate validation during registration)
+- **Atomic transactions** for item exchange, implemented as a Supabase RPC to guarantee consistency
+- **Order & payment flow**: full create-order pipeline with shipping address management, Haversine-distance-based shipping fee tiers, and sandbox integration with **VNPAY** and **MoMo**
+- **Wallet & transaction history**, built with a signal-based Angular architecture
+- **Google OAuth** authentication via Supabase Auth
+- **Inventory management** with a responsive UI
 
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
+## Tech Stack
 
-```bash
-ng generate component component-name
-```
+**Frontend:** Angular 18, SCSS
+**Backend:** Supabase (PostgreSQL, Edge Functions, RPC, Row-Level Security, Auth)
+**Deployment:** Netlify (frontend), ngrok (dev tunneling for payment sandbox callbacks)
+**Payments:** VNPAY, MoMo (sandbox integration)
 
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
+## Development
 
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
-
-```bash
-ng build
-```
-
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
-
-## Running unit tests
-
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+This project was generated using [Angular CLI](https://github.com/angular/angular-cli).
 
 ```bash
-ng test
+ng serve       # local dev server at http://localhost:4200
+ng build       # production build
+ng test        # unit tests (Vitest)
 ```
-
-## Running end-to-end tests
-
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
